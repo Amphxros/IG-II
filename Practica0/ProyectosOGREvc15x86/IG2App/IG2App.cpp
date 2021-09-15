@@ -4,6 +4,7 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
+#include <OGRE\Bites\OgreBitesConfigDialog.h>
 
 using namespace Ogre;
 
@@ -34,22 +35,24 @@ void IG2App::shutdown()
 
 void IG2App::setup(void)
 {
-  // do not forget to call the base first
-  IG2ApplicationContext::setup();
+	//mRoot->showConfigDialog(OgreBites::getNativeConfigDialog());
 
-  mSM = mRoot->createSceneManager();  
+	// do not forget to call the base first
+	IG2ApplicationContext::setup();
 
-  // register our scene with the RTSS
-  mShaderGenerator->addSceneManager(mSM);
+	mSM = mRoot->createSceneManager();
 
-  mSM->addRenderQueueListener(mOverlaySystem);
+	// register our scene with the RTSS
+	mShaderGenerator->addSceneManager(mSM);
 
-  mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);  
-  mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-  addInputListener(mTrayMgr);
+	mSM->addRenderQueueListener(mOverlaySystem);
 
-  addInputListener(this);   
-  setupScene();
+	mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);  
+	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	addInputListener(mTrayMgr);
+
+	addInputListener(this);   
+	setupScene();
 }
 
 void IG2App::setupScene(void)
@@ -70,7 +73,7 @@ void IG2App::setupScene(void)
   
   // and tell it to render into the main window
   Viewport* vp = getRenderWindow()->addViewport(cam);
-  //vp->setBackgroundColour(Ogre::ColourValue(1, 1, 1));
+  vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
 
   //------------------------------------------------------------------------
 
@@ -90,17 +93,27 @@ void IG2App::setupScene(void)
   //------------------------------------------------------------------------
 
   // finally something to render
-
+  ///Sinbad, Sword, DamagedHelmet, ogrehead, facial
   Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
 
   mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
   mSinbadNode->attachObject(ent);
 
   //mSinbadNode->setPosition(400, 100, -300);
+  mSinbadNode->setPosition(0, 20, 0);
   mSinbadNode->setScale(20, 20, 20);
   //mSinbadNode->yaw(Ogre::Degree(-45));
   //mSinbadNode->showBoundingBox(true);
   //mSinbadNode->setVisible(false);
+
+  Ogre::Entity* bathUp = mSM->createEntity("RomanBathUpper.mesh");
+  Ogre::Entity* bathDown = mSM->createEntity("RomanBathLower.mesh");
+  Ogre::Entity* bathCols = mSM->createEntity("Columns.mesh");
+
+  mTempleNode = mSM->getRootSceneNode()->createChildSceneNode("nTemple");
+  mTempleNode->attachObject(bathUp);
+  mTempleNode->attachObject(bathDown);
+  mTempleNode->attachObject(bathCols);
 
   //------------------------------------------------------------------------
 
