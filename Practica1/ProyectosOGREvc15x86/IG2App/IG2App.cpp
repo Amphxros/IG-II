@@ -10,12 +10,18 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-  if (evt.keysym.sym == SDLK_ESCAPE)
-  {
-    getRoot()->queueEndRendering();
-  }
-  //else if (evt.keysym.sym == SDLK_???)
-  
+	switch(evt.keysym.sym) {
+	case SDLK_ESCAPE:
+		getRoot()->queueEndRendering();
+		break;
+	case SDLK_g:
+		mClockNode->roll(Ogre::Degree(5));
+		break;
+	case SDLK_h:
+		mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
+		break;
+	}
+
   return true;
 }
 
@@ -92,12 +98,13 @@ void IG2App::setupScene(void)
 
 
 	mClockNode = mSM->getRootSceneNode()->createChildSceneNode("nClock");
+	Ogre::SceneNode* n = mSM->getSceneNode("nClock")->createChildSceneNode("esferas");
 	float angle = 90.0f;
 	for (int i = 0; i < 12; i++) {
 		float x = Ogre::Math::Cos(Ogre::Degree(angle));
 		float z = Ogre::Math::Sin(Ogre::Degree(angle));
 
-		mHourNode[i] = mSM->getSceneNode("nClock")->createChildSceneNode("Hora " + std::to_string(i + 1));
+		mHourNode[i] = mSM->getSceneNode("esferas")->createChildSceneNode("Hora " + std::to_string(i + 1));
 		mHourNode[i]->setPosition(Vector3(1000 * x, 1000 * z, 0));
 		if (i % 2 == 0) {
 			mSM->getSceneNode("Hora " + std::to_string(i + 1))->setScale(Vector3(0.5f, 0.5f, 0.5f));
@@ -108,27 +115,28 @@ void IG2App::setupScene(void)
 		angle += 360.0f / 12;
 	}
 
+	Ogre::SceneNode* node = mSM->getSceneNode("nClock")->createChildSceneNode("n");
 	for (int i = 0; i < 3; i++) {
-		mNeedles[i] = mSM->getSceneNode("nClock")->createChildSceneNode("Aguja " + std::to_string(i));
 
-		Ogre::SceneNode* n = mSM->getSceneNode("n " + std::to_string(i))->createChildSceneNode();
-
+		mNeedles[i] = mSM->getSceneNode("n")->createChildSceneNode("Aguja " + std::to_string(i));
+		
 		Entity* e = mSM->createEntity("cube.mesh");
-		n->attachObject(e);
+		mNeedles[i]->attachObject(e);
 
 	}
 
 	//horas
-	mNeedles[0]->getChild("n 0")->setScale(0.3f, 6, 3);
-	mNeedles[0]->getChild("n 0")->setPosition(0, 250, 30);
+	mNeedles[0]->setScale(6, 0.3f, 3);
+	mNeedles[0]->setPosition(250, 0, 30);
+	
 	//minutos
-	mNeedles[1]->getChild("n 1")->setScale(0.3f, 10, 3);
-	mNeedles[1]->getChild("n 1")->setPosition(0, 300, 15);
+	mNeedles[1]->setScale(0.3f, 8, 3);
+	mNeedles[1]->setPosition(0, 300, 15);
+	
 	//segundos
-	mNeedles[2]->getChild("n 2")->setScale(0.1f, 12, 3);
-	mNeedles[2]->getChild("n 2")->setPosition(5, 300, 0);
-
-
+	mNeedles[2]->setScale(0.1f, 10, 3);
+	mNeedles[2]->roll(Ogre::Degree(-45), Ogre::Node::TransformSpace::TS_PARENT); /*TS_LOCAL, TS_PARENT, TS_WORLD*/
+	mNeedles[2]->setPosition(-250, -250, 0);
 
   //------------------------------------------------------------------------
 
