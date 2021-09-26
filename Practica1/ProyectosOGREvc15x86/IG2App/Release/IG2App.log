@@ -1,0 +1,20 @@
+﻿  AspasMolino.cpp
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251: 'Ogre::HardwareBuffer::mShadowBuffer': class 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<_Ty>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::HardwareBuffer'
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251:         with
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251:         [
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251:             _Ty=Ogre::HardwareBuffer
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251:         ]
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message : vea la declaración de 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<_Ty>>'
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message :         with
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message :         [
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message :             _Ty=Ogre::HardwareBuffer
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message :         ]
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\IG2App\AspasMolino.cpp(25,33): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\IG2App\AspasMolino.cpp(33,20): warning C4018: '<': no coinciden signed/unsigned
+  Generando código
+  3 of 657 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+SDL2main.lib(SDL_windows_main.obj) : warning LNK4099: no se encontró PDB 'SDL2main.pdb' con 'SDL2main.lib(SDL_windows_main.obj)' o en 'C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\bin\SDL2main.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  IG2App.vcxproj -> C:\Users\ampac\Documents\git_Repositorios\UCM_Repos\IG-II\ProyectosOGREvc15x86\bin\IG2AppRelease.exe
