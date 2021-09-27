@@ -4,7 +4,7 @@ class Aspa :
 	public Obj
 {
 public: 
-	Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof);
+	Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn);
 	virtual ~Aspa() {};
 
 protected:

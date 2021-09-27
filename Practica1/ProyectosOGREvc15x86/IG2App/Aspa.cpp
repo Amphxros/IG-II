@@ -1,6 +1,6 @@
 #include "Aspa.h"
 
-Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof):
+Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn):
 	Obj(mNode), largo_(largo), ancho_(ancho), prof_(prof)
 {
 	// tablero
@@ -10,10 +10,13 @@ Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof):
 	Ogre::Entity* e = mSM->createEntity("cube.mesh");
 	tabNode->attachObject(e);
 
-	// adorno (ESTO NO SE VE /!\)
+	// adorno
 	Ogre::SceneNode* adornoNode = mNode_->createChildSceneNode();
 	adornoNode->setPosition(0,0,0);
 	adornoNode->setScale(largo_, ancho_, prof_);
-	Ogre::Entity* en = mSM->createEntity("Barrel.mesh");
-	adornoNode->attachObject(en);
+	if (orn)
+	{
+		Ogre::Entity* en = mSM->createEntity("Barrel.mesh");
+		adornoNode->attachObject(en);
+	}
 }

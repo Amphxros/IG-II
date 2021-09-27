@@ -4,7 +4,7 @@
 #include <OgreInput.h>
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
-#include "AspasMolino.h"
+
 
 using namespace Ogre;
 
@@ -16,13 +16,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		getRoot()->queueEndRendering();
 		break;
 	case SDLK_g:
-		mClockNode->roll(Ogre::Degree(5));
+		//	mClockNode->roll(Ogre::Degree(5));
 		break;
 	case SDLK_h:
-		mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
+		//mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
 		break;
 	}
-  
+
+	m->keyPressed(evt);
+
+
   return true;
 }
 
@@ -156,7 +159,7 @@ void IG2App::setupScene(void)
   // finally something to render
 
 
-  AspasMolino* m = new AspasMolino(mSM->getRootSceneNode()->createChildSceneNode("nAspas"), 6);
+  m = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 10);
   addInputListener(m);
   //------------------------------------------------------------------------
 

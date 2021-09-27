@@ -6,7 +6,8 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
-
+#include "AspasMolino.h"
+#include "Molino.h"
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
 public:
@@ -19,7 +20,9 @@ protected:
   virtual void setupScene();
 
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
-      
+  
+  Molino* m;
+
   Ogre::SceneManager* mSM = nullptr;
   OgreBites::TrayManager* mTrayMgr = nullptr;    
   Ogre::SceneNode* mLightNode = nullptr;
