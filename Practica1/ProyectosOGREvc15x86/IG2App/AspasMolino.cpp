@@ -10,7 +10,7 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, int largo, bool o
 
 	float angle = 90.0f;
 	for (int i = 0; i < numAspas_; i++) {
-		Aspa* a = new Aspa(mContainer->createChildSceneNode(), 2, largo, 0.5, orn);
+		Aspa* a = new Aspa(mContainer->createChildSceneNode(), largo/4, largo, 0.5, orn);
 		a->getNode()->roll(Ogre::Degree(angle));
 		mAspas_vec[i] = a;
 
@@ -19,8 +19,8 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, int largo, bool o
 
 	Ogre::Entity* centro = mSM->createEntity("Barrel.mesh");
 	mCenter->pitch(Ogre::Degree(90.0));
-	mCenter->setPosition(10, 10, 10);
-	mCenter->setScale(30,10,30);
+	mCenter->setPosition(largo, largo, largo);
+	mCenter->setScale(largo/2,largo/4,largo/2);
 	mCenter->attachObject(centro);
 }
 

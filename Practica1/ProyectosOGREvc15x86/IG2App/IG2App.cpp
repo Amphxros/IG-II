@@ -22,8 +22,8 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		//mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
 		break;
 	}
-
-	m->keyPressed(evt);
+//mMolino_->keyPressed(evt);
+	mBrazo_->keyPressed(evt);
 
 
   return true;
@@ -159,9 +159,15 @@ void IG2App::setupScene(void)
   // finally something to render
 
 
-  m = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 10);
-  addInputListener(m);
-  //------------------------------------------------------------------------
+ /* mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 10);
+  addInputListener(mMolino_);*/
+
+  Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
+ 
+ 
+  mBrazo_ = new BrazoDron(node, 10, 0.1, 4);
+
+  //---------------------------------------------
 
   mCamMgr = new OgreBites::CameraMan(mCamNode);
   addInputListener(mCamMgr);
