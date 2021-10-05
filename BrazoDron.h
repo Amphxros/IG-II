@@ -5,7 +5,7 @@ class BrazoDron :
     public Obj
 {
 public:
-    BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas);
+    BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso);
     virtual ~BrazoDron();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);

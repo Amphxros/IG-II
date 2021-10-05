@@ -5,8 +5,10 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 
-
 using namespace Ogre;
+
+const bool E1 = 0;
+const bool E1RELOJ = 0;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -16,18 +18,21 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		getRoot()->queueEndRendering();
 		break;
 	case SDLK_g:
-		// mClockNode->roll(Ogre::Degree(5));
+		// rotacion reloj
+		if (mClockNode) mClockNode->roll(Ogre::Degree(5));
 		break;
 	case SDLK_h:
-		// mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
+		// rotacion esferas reloj
+		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
 		break;
 	}
-	//mMolino_->keyPressed(evt);
-	mDron_->keyPressed(evt);
 
+	// evento pasa al molino
+	if (mMolino_) mMolino_->keyPressed(evt);
+	// evento pasa al dron
+	if (mDron_) mDron_->keyPressed(evt);
 
-
-  return true;
+	return true;
 }
 
 void IG2App::createClock()
@@ -52,12 +57,10 @@ void IG2App::createClock()
 
 	Ogre::SceneNode* node = mSM->getSceneNode("nClock")->createChildSceneNode("n");
 	for (int i = 0; i < 3; i++) {
-
 		mNeedles[i] = mSM->getSceneNode("n")->createChildSceneNode("Aguja " + std::to_string(i));
 
 		Entity* e = mSM->createEntity("cube.mesh");
 		mNeedles[i]->attachObject(e);
-
 	}
 
 	//horas
@@ -76,110 +79,116 @@ void IG2App::createClock()
 
 void IG2App::shutdown()
 {
-  mShaderGenerator->removeSceneManager(mSM);  
-  mSM->removeRenderQueueListener(mOverlaySystem);  
-					
-  mRoot->destroySceneManager(mSM);  
+	mShaderGenerator->removeSceneManager(mSM);
+	mSM->removeRenderQueueListener(mOverlaySystem);
 
-  delete mTrayMgr;  mTrayMgr = nullptr;
-  delete mCamMgr; mCamMgr = nullptr;
-  
-  // do not forget to call the base 
-  IG2ApplicationContext::shutdown();
+	mRoot->destroySceneManager(mSM);
+
+	delete mTrayMgr;  mTrayMgr = nullptr;
+	delete mCamMgr; mCamMgr = nullptr;
+
+	// do not forget to call the base 
+	IG2ApplicationContext::shutdown();
 }
 
 void IG2App::setup(void)
 {
-  // do not forget to call the base first
-  IG2ApplicationContext::setup();
+	// do not forget to call the base first
+	IG2ApplicationContext::setup();
 
-  mSM = mRoot->createSceneManager();  
+	mSM = mRoot->createSceneManager();
 
-  // register our scene with the RTSS
-  mShaderGenerator->addSceneManager(mSM);
+	// register our scene with the RTSS
+	mShaderGenerator->addSceneManager(mSM);
 
-  mSM->addRenderQueueListener(mOverlaySystem);
+	mSM->addRenderQueueListener(mOverlaySystem);
 
-  mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);  
-  mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
-  addInputListener(mTrayMgr);
+	mTrayMgr = new OgreBites::TrayManager("TrayGUISystem", mWindow.render);
+	mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
+	addInputListener(mTrayMgr);
 
-  addInputListener(this);   
-  setupScene();
+	addInputListener(this);
+	setupScene();
 }
 
 void IG2App::setupScene(void)
 {
-  // create the camera
-  Camera* cam = mSM->createCamera("Cam");
-  cam->setNearClipDistance(1); 
-  cam->setFarClipDistance(10000);
-  cam->setAutoAspectRatio(true);
-  //cam->setPolygonMode(Ogre::PM_WIREFRAME); 
+	// create the camera
+	Camera* cam = mSM->createCamera("Cam");
+	cam->setNearClipDistance(1);
+	cam->setFarClipDistance(10000);
+	cam->setAutoAspectRatio(true);
+	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
-  mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
-  mCamNode->attachObject(cam);
+	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
+	mCamNode->attachObject(cam);
 
-  mCamNode->setPosition(0, 0, 1000);
-  mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
-  //mCamNode->setDirection(Ogre::Vector3(0, 0, -1));  
-  
-  // and tell it to render into the main window
-  Viewport* vp = getRenderWindow()->addViewport(cam);
-  vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+	mCamNode->setPosition(0, 0, 1000);
+	mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
+	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));  
 
-  //------------------------------------------------------------------------
+	// and tell it to render into the main window
+	Viewport* vp = getRenderWindow()->addViewport(cam);
+	vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
 
-  // without light we would just get a black screen 
+	//------------------------------------------------------------------------
 
-  Light* luz = mSM->createLight("Luz");
-  luz->setType(Ogre::Light::LT_DIRECTIONAL);
-  luz->setDiffuseColour(0.75, 0.75, 0.75);
+	// without light we would just get a black screen 
 
-  mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
-  //mLightNode = mCamNode->createChildSceneNode("nLuz");
-  mLightNode->attachObject(luz);
+	Light* luz = mSM->createLight("Luz");
+	luz->setType(Ogre::Light::LT_DIRECTIONAL);
+	luz->setDiffuseColour(0.75, 0.75, 0.75);
 
-  mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
-  //lightNode->setPosition(0, 0, 1000);
- 
+	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
+	//mLightNode = mCamNode->createChildSceneNode("nLuz");
+	mLightNode->attachObject(luz);
 
-  Light* luzA = mSM->createLight("LuzA");
-  luzA->setType(Ogre::Light::LT_DIRECTIONAL);
-  luzA->setDiffuseColour(0.75, 0.75, 0.75);
-  
-  Ogre::SceneNode* luzB = mSM->getRootSceneNode()->createChildSceneNode("nLuzB");
-  //mLightNode = mCamNode->createChildSceneNode("nLuz");
-  luzB->attachObject(luzA);
-
-  luzB->setDirection(Ogre::Vector3(1, -1, 1));  //vec3.normalise();
-  //lightNode->setPosition(0, 0, 1000);
-
-  //------------------------------------------------------------------------
-
-  // finally something to render
+	mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
+	//lightNode->setPosition(0, 0, 1000);
 
 
- mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
-  addInputListener(mMolino_);
+	Light* luzA = mSM->createLight("LuzA");
+	luzA->setType(Ogre::Light::LT_DIRECTIONAL);
+	luzA->setDiffuseColour(0.75, 0.75, 0.75);
 
-  Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
-  node->setScale(0.5, 0.5, 0.5);
-  node->setPosition(400, 200, 100);
-  mDron_ = new Dron(node, 8, 8, 1);
-  addInputListener(mDron_);
- 
-  
-  //---------------------------------------------
+	Ogre::SceneNode* luzB = mSM->getRootSceneNode()->createChildSceneNode("nLuzB");
+	//mLightNode = mCamNode->createChildSceneNode("nLuz");
+	luzB->attachObject(luzA);
 
-  mCamMgr = new OgreBites::CameraMan(mCamNode);
-  addInputListener(mCamMgr);
-  mCamMgr->setStyle(OgreBites::CS_ORBIT);  
-  
-  //mCamMgr->setTarget(mSinbadNode);  
-  //mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
+	luzB->setDirection(Ogre::Vector3(1, -1, 1));  //vec3.normalise();
+	//lightNode->setPosition(0, 0, 1000);
 
-  //------------------------------------------------------------------------
+	//------------------------------------------------------------------------
+
+	// finally something to render
+
+	if (E1) { // ENTREGA_1
+
+		if (E1RELOJ) createClock();
+
+		mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
+		addInputListener(mMolino_);
+
+		Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
+		node->setScale(0.5, 0.5, 0.5);
+		node->setPosition(400, 200, 100);
+		mDron_ = new Dron(node, 8, 8, 1);
+		addInputListener(mDron_);
+	}
+	else { // ENTREGA_2
+		
+	}
+
+
+	//---------------------------------------------
+
+	mCamMgr = new OgreBites::CameraMan(mCamNode);
+	addInputListener(mCamMgr);
+	mCamMgr->setStyle(OgreBites::CS_ORBIT);
+
+	//mCamMgr->setTarget(mSinbadNode);  
+	//mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
+
+	//------------------------------------------------------------------------
 
 }
-

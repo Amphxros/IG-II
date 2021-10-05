@@ -5,7 +5,7 @@ class RotorDron :
     public Obj
 {
 public:
-    RotorDron(Ogre::SceneNode* mNode,double rd, int numAspas, int largoAspas);
+    RotorDron(Ogre::SceneNode* mNode,double rd, int numAspas, int largoAspas, int grueso);
     virtual ~RotorDron();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);

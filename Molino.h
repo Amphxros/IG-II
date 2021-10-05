@@ -15,6 +15,6 @@ protected:
 	Ogre::SceneNode* container;
 	Ogre::SceneNode* mAspasNode;
 	float altura_;
-	
+	bool molinoTruco_;
 };
 

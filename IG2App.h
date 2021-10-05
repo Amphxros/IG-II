@@ -23,8 +23,8 @@ protected:
 
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
   
-  Molino* mMolino_;
-  Dron* mDron_;
+  Molino* mMolino_ = nullptr;
+  Dron* mDron_ = nullptr;
   Ogre::SceneManager* mSM = nullptr;
   OgreBites::TrayManager* mTrayMgr = nullptr;    
   Ogre::SceneNode* mLightNode = nullptr;
@@ -39,7 +39,6 @@ protected:
   Ogre::SceneNode* mNeedles[3];
 
   void createClock();
- 
 };
 
 #endif

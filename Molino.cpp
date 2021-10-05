@@ -1,7 +1,8 @@
 #include "Molino.h"
 #include <SDL.h>
 
-Molino::Molino(Ogre::SceneNode* mNode, int numAspas, int altura, int largoAspas): Obj(mNode), mAspas_(nullptr), altura_(altura)
+Molino::Molino(Ogre::SceneNode* mNode, int numAspas, int altura, int largoAspas)
+	: Obj(mNode), mAspas_(nullptr), altura_(altura), molinoTruco_(1)
 {
 	mAspasNode = mNode_->createChildSceneNode();
 	mAspasNode->setPosition(0, 2* altura, 0);
@@ -33,16 +34,16 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	switch (evt.keysym.sym) {
 	case SDLK_h:
-		if (false) {
-			// nodo adicional
-			mAspasNode->yaw(Ogre::Degree(5.0));
-		}
-		else
-		{
+		if (molinoTruco_) {
 			// el truco del almendruco
 			container->translate(0, 0, -1.5 * altura_, Ogre::Node::TransformSpace::TS_LOCAL);
 			container->yaw(Ogre::Degree(5.0));
 			container->translate(0, 0, 1.5 * altura_, Ogre::Node::TransformSpace::TS_LOCAL);
+		}
+		else
+		{
+			// nodo adicional
+			mAspasNode->yaw(Ogre::Degree(5.0));
 		}
 		break;
 	}

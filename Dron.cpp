@@ -16,7 +16,7 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): Obj(mNo
 		Ogre::SceneNode* n = mContainer_->createChildSceneNode();
 		n->yaw(Ogre::Degree(angle));
 
-		BrazoDron* b = new BrazoDron(n, 10, 1, numAspas_);
+		BrazoDron* b = new BrazoDron(n, 10, 1, numAspas_, i == 0);
 		mBrazos_.push_back(b);
 		if (i % 2 == 0) {
 			mBrazos_[i]->setOrientacion(-1);

@@ -1,6 +1,6 @@
 #include "BrazoDron.h"
 
-BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas): Obj(mNode)
+BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): Obj(mNode)
 {
 	mCilinder = mNode_->createChildSceneNode();
 	mCilinder->setPosition(0, 0, 0);
@@ -13,7 +13,7 @@ BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas): O
 	mMotor_ = mNode_->createChildSceneNode();
 
 	mMotor_->setPosition(0,0, 2.5* (largo +rd)* (largo + rd));
-	mRotor_ = new RotorDron(mMotor_, largo/20, numAspas, largo);
+	mRotor_ = new RotorDron(mMotor_, largo/20, numAspas, largo, grueso);
 }
 
 BrazoDron::~BrazoDron()
