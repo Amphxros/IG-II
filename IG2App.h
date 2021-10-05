@@ -10,35 +10,38 @@
 #include "Molino.h"
 #include "Dron.h"
 
-class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
+class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener
 {
 public:
-  explicit IG2App() : IG2ApplicationContext("IG2App") { };  // new -> setup()  
-  virtual ~IG2App() { };   // delete -> shutdown()  
- 
+	explicit IG2App() : IG2ApplicationContext("IG2App") { };  // new -> setup()  
+	virtual ~IG2App() { };   // delete -> shutdown()  
+
 protected:
-  virtual void setup();
-  virtual void shutdown();
-  virtual void setupScene();
+	virtual void setup();
+	virtual void shutdown();
+	virtual void setupScene();
 
-  virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
-  
-  Molino* mMolino_ = nullptr;
-  Dron* mDron_ = nullptr;
-  Ogre::SceneManager* mSM = nullptr;
-  OgreBites::TrayManager* mTrayMgr = nullptr;    
-  Ogre::SceneNode* mLightNode = nullptr;
-  Ogre::SceneNode* mCamNode = nullptr;
-  Ogre::SceneNode* mSinbadNode = nullptr;
-  OgreBites::CameraMan* mCamMgr = nullptr;
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
 
+	Molino* mMolino_ = nullptr;
+	Dron* mDron_ = nullptr;
+	Ogre::SceneManager* mSM = nullptr;
+	OgreBites::TrayManager* mTrayMgr = nullptr;
+	Ogre::SceneNode* mLightNode = nullptr;
+	Ogre::SceneNode* mCamNode = nullptr;
+	Ogre::SceneNode* mSinbadNode = nullptr;
+	OgreBites::CameraMan* mCamMgr = nullptr;
 
-  // reloj
-  Ogre::SceneNode* mClockNode = nullptr;
-  Ogre::SceneNode* mHourNode[12];
-  Ogre::SceneNode* mNeedles[3];
+	// reloj
+	Ogre::SceneNode* mClockNode = nullptr;
+	Ogre::SceneNode* mHourNode[12];
+	Ogre::SceneNode* mNeedles[3];
 
-  void createClock();
+	// E2
+	Ogre::SceneNode* planetaNode = nullptr;
+	Ogre::SceneNode* ficticioDronNode = nullptr;
+
+	void createClock();
 };
 
 #endif

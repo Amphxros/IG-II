@@ -9,6 +9,7 @@ using namespace Ogre;
 
 const bool E1 = 0;
 const bool E1RELOJ = 0;
+const float E2ALTURADRON = 550;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -24,6 +25,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_h:
 		// rotacion esferas reloj
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
+		// exploracion del dron en E2 (dron-truco)
+		if (ficticioDronNode) {
+			ficticioDronNode->translate(0, -E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+			ficticioDronNode->pitch(Ogre::Degree(5.0));
+			ficticioDronNode->translate(0, E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+		}
+		break;
+	case SDLK_j:
+		// direccion del dron en E2
+		if (ficticioDronNode) ficticioDronNode->yaw(Ogre::Degree(5.0));
 		break;
 	}
 
@@ -163,12 +174,12 @@ void IG2App::setupScene(void)
 	// finally something to render
 
 	if (E1) { // ENTREGA_1
-
+		// reloj
 		if (E1RELOJ) createClock();
-
+		// molino
 		mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
 		addInputListener(mMolino_);
-
+		// dron
 		Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
 		node->setScale(0.5, 0.5, 0.5);
 		node->setPosition(400, 200, 100);
@@ -176,9 +187,18 @@ void IG2App::setupScene(void)
 		addInputListener(mDron_);
 	}
 	else { // ENTREGA_2
-		
+		// planeta
+		planetaNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planetaNode->scale(5, 5, 5);
+		Entity* planeta = mSM->createEntity("sphere.mesh");
+		planetaNode->attachObject(planeta);
+		// dron explorador
+		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
+		ficticioDronNode->translate(0, E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+		ficticioDronNode->scale(0.25, 0.25, 0.25);
+		mDron_ = new Dron(ficticioDronNode, 8, 8, 1);
+		addInputListener(mDron_);
 	}
-
 
 	//---------------------------------------------
 
@@ -190,5 +210,4 @@ void IG2App::setupScene(void)
 	//mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 
 	//------------------------------------------------------------------------
-
 }

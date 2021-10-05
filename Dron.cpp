@@ -11,7 +11,7 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): Obj(mNo
 	mCenter->attachObject(e);
 	mBrazos_.reserve(numBrazos);
 	// brazos
-	float angle = 90.0f;
+	float angle = 00.0f; // 90.0f
 	for (int i = 0; i < numBrazos_; i++) {
 		Ogre::SceneNode* n = mContainer_->createChildSceneNode();
 		n->yaw(Ogre::Degree(angle));
