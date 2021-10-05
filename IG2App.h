@@ -40,6 +40,7 @@ protected:
 	// E2
 	Ogre::SceneNode* planetaNode = nullptr;
 	Ogre::SceneNode* ficticioDronNode = nullptr;
+	Ogre::SceneNode* medioNode = nullptr;
 
 	void createClock();
 };

@@ -8,8 +8,9 @@
 using namespace Ogre;
 
 const bool E1 = 0;
-const bool E1RELOJ = 0;
-const float E2ALTURADRON = 550;
+const bool E1_RELOJ = 0;
+const bool E2_TRUCO_DRON = 1;
+const float E2_ALTURA_DRON = 550;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -25,16 +26,32 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_h:
 		// rotacion esferas reloj
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
-		// exploracion del dron en E2 (dron-truco)
+		// exploracion del dron en E2
 		if (ficticioDronNode) {
-			ficticioDronNode->translate(0, -E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
-			ficticioDronNode->pitch(Ogre::Degree(5.0));
-			ficticioDronNode->translate(0, E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+			// (dron-truco)
+			if (E2_TRUCO_DRON) {
+				ficticioDronNode->translate(0, -E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+				ficticioDronNode->pitch(Ogre::Degree(5.0));
+				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+			// (nodo)
+			else {
+				ficticioDronNode->pitch(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL);
+			}
 		}
 		break;
 	case SDLK_j:
 		// direccion del dron en E2
-		if (ficticioDronNode) ficticioDronNode->yaw(Ogre::Degree(5.0));
+		if (ficticioDronNode) {
+			// (dron-truco)
+			if (E2_TRUCO_DRON) {
+				ficticioDronNode->yaw(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL);
+			}
+			// (nodo)
+			else {
+				ficticioDronNode->yaw(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+		}
 		break;
 	}
 
@@ -175,7 +192,7 @@ void IG2App::setupScene(void)
 
 	if (E1) { // ENTREGA_1
 		// reloj
-		if (E1RELOJ) createClock();
+		if (E1_RELOJ) createClock();
 		// molino
 		mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
 		addInputListener(mMolino_);
@@ -194,10 +211,19 @@ void IG2App::setupScene(void)
 		planetaNode->attachObject(planeta);
 		// dron explorador
 		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
-		ficticioDronNode->translate(0, E2ALTURADRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
-		ficticioDronNode->scale(0.25, 0.25, 0.25);
-		mDron_ = new Dron(ficticioDronNode, 8, 8, 1);
-		addInputListener(mDron_);
+		if (E2_TRUCO_DRON) {
+			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+			ficticioDronNode->scale(0.25, 0.25, 0.25);
+			mDron_ = new Dron(ficticioDronNode, 8, 8, 1);
+			addInputListener(mDron_);
+		}
+		else {
+			medioNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
+			medioNode->translate(0, E2_ALTURA_DRON, 0);
+			medioNode->scale(0.25, 0.25, 0.25);
+			mDron_ = new Dron(medioNode, 8, 8, 1);
+			addInputListener(mDron_);
+		}
 	}
 
 	//---------------------------------------------
