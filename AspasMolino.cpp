@@ -41,12 +41,12 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 			}
 		break;
 	case SDLK_c:
-		if (mCenter->getPosition().z < 0) {
+		//if (mCenter->getPosition().z < 0) {
 			mCenter->setPosition(mCenter->getPosition().x, mCenter->getPosition().y, mCenter->getPosition().z - 5);
-		}
-		else if(mCenter->getPosition().z> 30 ) {
-			mCenter->setPosition(mCenter->getPosition().x, mCenter->getPosition().y, mCenter->getPosition().z + 5);
-		}
+		//}
+		//else if(mCenter->getPosition().z> 30) {
+		//	mCenter->setPosition(mCenter->getPosition().x, mCenter->getPosition().y, mCenter->getPosition().z + 5);
+		//}
 		
 		break;
 	}

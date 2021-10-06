@@ -214,7 +214,7 @@ void IG2App::setupScene(void)
 		if (E2_TRUCO_DRON) {
 			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
 			ficticioDronNode->scale(0.25, 0.25, 0.25);
-			mDron_ = new Dron(ficticioDronNode, 8, 8, 1);
+			mDron_ = new Dron(ficticioDronNode, 5, 8, 1);
 			addInputListener(mDron_);
 		}
 		else {
