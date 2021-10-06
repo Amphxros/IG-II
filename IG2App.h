@@ -9,6 +9,7 @@
 #include "AspasMolino.h"
 #include "Molino.h"
 #include "Dron.h"
+#include "Avion.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener
 {
@@ -25,6 +26,7 @@ protected:
 
 	Molino* mMolino_ = nullptr;
 	Dron* mDron_ = nullptr;
+	Avion* mAvion_ = nullptr;
 	Ogre::SceneManager* mSM = nullptr;
 	OgreBites::TrayManager* mTrayMgr = nullptr;
 	Ogre::SceneNode* mLightNode = nullptr;
@@ -41,6 +43,8 @@ protected:
 	Ogre::SceneNode* planetaNode = nullptr;
 	Ogre::SceneNode* ficticioDronNode = nullptr;
 	Ogre::SceneNode* medioNode = nullptr;
+	//
+	Ogre::SceneNode* avionNode = nullptr;
 
 	void createClock();
 };

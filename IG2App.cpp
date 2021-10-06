@@ -59,6 +59,8 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mMolino_) mMolino_->keyPressed(evt);
 	// evento pasa al dron
 	if (mDron_) mDron_->keyPressed(evt);
+	// evento pasa al avion
+	if (mAvion_) mAvion_->keyPressed(evt);
 
 	return true;
 }
@@ -224,6 +226,11 @@ void IG2App::setupScene(void)
 			mDron_ = new Dron(medioNode, 8, 8, 1);
 			addInputListener(mDron_);
 		}
+		// avion ninja
+		avionNode = mSM->getRootSceneNode()->createChildSceneNode();
+		avionNode->setPosition(0, 700, 0);
+		mAvion_ = new Avion(avionNode, 1, 1, 5);
+		addInputListener(mAvion_);
 	}
 
 	//---------------------------------------------

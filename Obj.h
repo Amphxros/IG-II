@@ -4,6 +4,7 @@
 
 #include <OgreSceneNode.h>
 #include <OgreSceneManager.h>
+
 class Obj: public OgreBites::InputListener
 {
 public:

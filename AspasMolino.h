@@ -2,7 +2,6 @@
 #include "Obj.h"
 #include "Aspa.h"
 
-
 class AspasMolino : public Obj
 {
 public:

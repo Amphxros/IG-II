@@ -1,7 +1,6 @@
 #pragma once
 #include "Obj.h"
-class Aspa :
-	public Obj
+class Aspa : public Obj
 {
 public: 
 	Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn);
@@ -13,4 +12,3 @@ protected:
 	Ogre::SceneNode* adornoNode;
 	Ogre::SceneNode* tabNode;
 };
-
