@@ -1,0 +1,15 @@
+﻿  Dron.cpp
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,45): warning C4251: 'Ogre::HardwareBuffer::mShadowBuffer': class 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::HardwareBuffer'
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message : vea la declaración de 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>'
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\IG2App\Dron.cpp(9,28): warning C4244: 'argumento': conversión de 'int' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\IG2App\Dron.cpp(9,24): warning C4244: 'argumento': conversión de 'int' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\IG2App\Dron.cpp(9,20): warning C4244: 'argumento': conversión de 'int' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\IG2App\Dron.cpp(32,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\IG2App\Dron.cpp(39,20): warning C4018: '<': no coinciden signed/unsigned
+  Generando código
+  2 of 764 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+SDL2main.lib(SDL_windows_main.obj) : warning LNK4099: no se encontró PDB 'SDL2main.pdb' con 'SDL2main.lib(SDL_windows_main.obj)' o en 'C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\bin\SDL2main.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  IG2App.vcxproj -> C:\Users\ampac\Downloads\Practica1\ProyectosOGREvc15x86\bin\IG2AppRelease.exe
