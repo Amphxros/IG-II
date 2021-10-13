@@ -11,28 +11,37 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	cuerpoNode_->attachObject(body);
 
 	pilotoNode_ = mNode_->createChildSceneNode();
-	pilotoNode_->setPosition(0, rd, 0);
+	pilotoNode_->setScale(0.5, 0.5, 0.5);
+	pilotoNode_->setPosition(0, 50, 0);
 	Ogre::Entity* pilot = mSM->createEntity("ninja.mesh");
+	pilotoNode_->attachObject(pilot);
+	
+	frenteNode_ = mNode_->createChildSceneNode();
+	frenteNode_->setPosition(0, 0, 80 * rd);
+	frenteNode_->setScale(15, 10, 15);
+	frenteNode_->pitch(Ogre::Degree(90));
+	Ogre::Entity* front = mSM->createEntity("Barrel.mesh");
+	frenteNode_->attachObject(front);
 
 	alaINode_ = mNode_->createChildSceneNode();
-	alaINode_->setPosition(40*-rd, 0, 0);
+	alaINode_->setPosition(40 * -rd, 0, 0);
 	alaINode_->setScale(3 * largo, largo / 4, largo / 4);
 	Ogre::Entity* alaA = mSM->createEntity("cube.mesh");
 	alaINode_->attachObject(alaA);
 
 	alaDNode_ = mNode_->createChildSceneNode();
-	alaDNode_->setPosition(40*rd, 0, 0);
+	alaDNode_->setPosition(40 * rd, 0, 0);
 	alaDNode_->setScale(3 * largo, largo / 4, largo / 4);
 	Ogre::Entity* alaB = mSM->createEntity("cube.mesh");
 	alaDNode_->attachObject(alaB);
 
 	heliceINode_ = mNode_->createChildSceneNode();
-	heliceINode_->setPosition(40* -rd - 120 , 0, 0);
+	heliceINode_->setPosition(40 * -rd - 120 , 0, 8*rd);
 	heliceINode_->setScale(0.5, 0.5, 0.5);
 	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, false, 1);
 
 	heliceDNode_ = mNode_->createChildSceneNode();
-	heliceDNode_->setPosition(40* rd + 120, 0, 0);
+	heliceDNode_->setPosition(40 * rd + 120, 0, 8* rd);
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
 	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, false, 1);
 }

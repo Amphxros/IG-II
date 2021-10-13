@@ -24,6 +24,7 @@
     <ClInclude Include="Avion.h" />
     <ClInclude Include="BrazoDron.h" />
     <ClInclude Include="Dron.h" />
+    <ClInclude Include="EntidadIG.h" />
     <ClInclude Include="IG2App.h" />
     <ClInclude Include="IG2ApplicationContext.h" />
     <ClInclude Include="Molino.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="Avion.cpp" />
     <ClCompile Include="BrazoDron.cpp" />
     <ClCompile Include="Dron.cpp" />
+    <ClCompile Include="EntidadIG.cpp" />
     <ClCompile Include="IG2App.cpp" />
     <ClCompile Include="IG2ApplicationContext.cpp" />
     <ClCompile Include="IG2Main.cpp" />

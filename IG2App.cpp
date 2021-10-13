@@ -231,6 +231,13 @@ void IG2App::setupScene(void)
 		avionNode->setPosition(0, 700, 0);
 		mAvion_ = new Avion(avionNode, 1, 1, 5);
 		addInputListener(mAvion_);
+
+		// plano
+		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planoNode->setPosition(1000, -100, 1000);
+		createPlane(); // para mPlane1080x800
+		Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
+		planoNode->attachObject(plane);
 	}
 
 	//---------------------------------------------
@@ -243,4 +250,13 @@ void IG2App::setupScene(void)
 	//mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 
 	//------------------------------------------------------------------------
+}
+
+void IG2App::createPlane()
+{
+	// definir mPlane1080x800
+	MeshManager::getSingleton().createPlane("mPlane1080x800", 
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, 
+		Plane(Vector3::UNIT_Y, 0), 
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 }
