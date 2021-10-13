@@ -1,5 +1,7 @@
 #pragma once
+//#include "EntidadIG.h"
 #include "Obj.h"
+using namespace Ogre;
 class Aspa : public Obj
 {
 public: 

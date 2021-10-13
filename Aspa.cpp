@@ -7,8 +7,9 @@ Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool
 	tabNode = mNode_->createChildSceneNode();
 	tabNode->setScale(largo_ / 2, ancho/2, prof/2);
 	tabNode->setPosition(largo_ / 2, 0, 0);
-	Ogre::Entity* e = mSM->createEntity("cube.mesh");
-	tabNode->attachObject(e);
+	Ogre::Entity* obj = mSM->createEntity("cube.mesh");
+	//Ogre::MovableObject* obj = mSM->createMovableObject("cube.mesh");
+	tabNode->attachObject(obj);
 
 	// adorno
 	adornoNode = mNode_->createChildSceneNode();
@@ -18,7 +19,7 @@ Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool
 
 	if (orn)
 	{
-		Ogre::Entity* en = mSM->createEntity("Barrel.mesh");
-		adornoNode->attachObject(en);
+		Ogre::MovableObject* adorno = mSM->createMovableObject("cube.mesh");
+		adornoNode->attachObject(adorno);
 	}
 }

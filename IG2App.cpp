@@ -5,6 +5,8 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 
+#include "EntidadIG.h"
+
 using namespace Ogre;
 
 const bool E1 = 0;
@@ -195,15 +197,17 @@ void IG2App::setupScene(void)
 	if (E1) { // ENTREGA_1
 		// reloj
 		if (E1_RELOJ) createClock();
+
 		// molino
 		mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
-		addInputListener(mMolino_);
+		//Obj::addListener(mMolino_); ////addInputListener(mMolino_);
+
 		// dron
 		Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
 		node->setScale(0.5, 0.5, 0.5);
 		node->setPosition(400, 200, 100);
 		mDron_ = new Dron(node, 8, 8, 1);
-		addInputListener(mDron_);
+		//Obj::addListener(mDron_); ////addInputListener(mDron_);
 	}
 	else { // ENTREGA_2
 		// planeta
@@ -217,20 +221,20 @@ void IG2App::setupScene(void)
 			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
 			ficticioDronNode->scale(0.25, 0.25, 0.25);
 			mDron_ = new Dron(ficticioDronNode, 5, 8, 1);
-			addInputListener(mDron_);
+			Obj::addListener(mDron_); ////addInputListener(mDron_);
 		}
 		else {
 			medioNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
 			medioNode->translate(0, E2_ALTURA_DRON, 0);
 			medioNode->scale(0.25, 0.25, 0.25);
 			mDron_ = new Dron(medioNode, 8, 8, 1);
-			addInputListener(mDron_);
+			Obj::addListener(mDron_); ////addInputListener(mDron_);
 		}
 		// avion ninja
 		avionNode = mSM->getRootSceneNode()->createChildSceneNode();
 		avionNode->setPosition(0, 700, 0);
 		mAvion_ = new Avion(avionNode, 1, 1, 5);
-		addInputListener(mAvion_);
+		//EntidadIG::addListener(mAvion_); ////addInputListener(mAvion_);
 
 		// plano
 		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
