@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "Aspa.h"
 
-class AspasMolino : public Obj
+class AspasMolino : public OgreEntity
 {
 public:
 	AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, bool orn, int ori);

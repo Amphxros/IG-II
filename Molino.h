@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "AspasMolino.h"
 class Molino :
-	public Obj
+	public OgreEntity
 {
 public:
 	Molino(Ogre::SceneNode* mNode, int numAspas, int altura, int largoAspas);

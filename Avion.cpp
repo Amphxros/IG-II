@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
-	Obj(mNode),numAspas_(nAspas)
+	OgreEntity(mNode),numAspas_(nAspas)
 {
 	//esfera
 	cuerpoNode_ = mNode_->createChildSceneNode();

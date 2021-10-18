@@ -6,6 +6,7 @@
 #include <OgreMeshManager.h>
 
 #include "EntidadIG.h"
+#include "Plano.h"
 
 using namespace Ogre;
 
@@ -221,14 +222,14 @@ void IG2App::setupScene(void)
 			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
 			ficticioDronNode->scale(0.25, 0.25, 0.25);
 			mDron_ = new Dron(ficticioDronNode, 5, 8, 1);
-			Obj::addListener(mDron_); ////addInputListener(mDron_);
+			OgreEntity::addListener(mDron_); ////addInputListener(mDron_);
 		}
 		else {
 			medioNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
 			medioNode->translate(0, E2_ALTURA_DRON, 0);
 			medioNode->scale(0.25, 0.25, 0.25);
 			mDron_ = new Dron(medioNode, 8, 8, 1);
-			Obj::addListener(mDron_); ////addInputListener(mDron_);
+			OgreEntity::addListener(mDron_); ////addInputListener(mDron_);
 		}
 		// avion ninja
 		avionNode = mSM->getRootSceneNode()->createChildSceneNode();
@@ -236,12 +237,9 @@ void IG2App::setupScene(void)
 		mAvion_ = new Avion(avionNode, 1, 1, 5);
 		//EntidadIG::addListener(mAvion_); ////addInputListener(mAvion_);
 
-		// plano
-		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
-		planoNode->setPosition(1000, -100, 1000);
-		createPlane(); // para mPlane1080x800
-		Ogre::Entity* plane = mSM->createEntity("mPlane1080x800");
-		planoNode->attachObject(plane);
+		Ogre::SceneNode* plano= mSM->getRootSceneNode()->createChildSceneNode();
+		plano->setPosition(1000, 0, 1000);
+		Plano* p = new Plano(plano);
 	}
 
 	//---------------------------------------------

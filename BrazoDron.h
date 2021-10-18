@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "RotorDron.h"
 class BrazoDron :
-    public Obj
+    public OgreEntity
 {
 public:
     BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso);

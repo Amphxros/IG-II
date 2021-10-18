@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 Molino::Molino(Ogre::SceneNode* mNode, int numAspas, int altura, int largoAspas)
-	: Obj(mNode), mAspas_(nullptr), altura_(altura), molinoTruco_(1)
+	: OgreEntity(mNode), mAspas_(nullptr), altura_(altura), molinoTruco_(1)
 {
 	mAspasNode = mNode_->createChildSceneNode();
 	mAspasNode->setPosition(0, 2* altura, 0);

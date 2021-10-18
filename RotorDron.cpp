@@ -1,6 +1,6 @@
 #include "RotorDron.h"
 
-RotorDron::RotorDron(Ogre::SceneNode* mNode, double rd, int numAspas, int largoAspas, int grueso): Obj(mNode)
+RotorDron::RotorDron(Ogre::SceneNode* mNode, double rd, int numAspas, int largoAspas, int grueso): OgreEntity(mNode)
 {
 	Ogre::SceneNode* container = mNode_->createChildSceneNode();
 	

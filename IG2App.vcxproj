@@ -29,6 +29,7 @@
     <ClInclude Include="IG2ApplicationContext.h" />
     <ClInclude Include="Molino.h" />
     <ClInclude Include="Obj.h" />
+    <ClInclude Include="Plano.h" />
     <ClInclude Include="RotorDron.h" />
   </ItemGroup>
   <ItemGroup>
@@ -43,6 +44,7 @@
     <ClCompile Include="IG2Main.cpp" />
     <ClCompile Include="Molino.cpp" />
     <ClCompile Include="Obj.cpp" />
+    <ClCompile Include="Plano.cpp" />
     <ClCompile Include="RotorDron.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

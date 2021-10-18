@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "AspasMolino.h"
 
-class Avion : public Obj
+class Avion : public OgreEntity
 {
 public:
     Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas);

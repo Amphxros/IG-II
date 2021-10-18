@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "AspasMolino.h"
 class RotorDron :
-    public Obj
+    public OgreEntity
 {
 public:
     RotorDron(Ogre::SceneNode* mNode,double rd, int numAspas, int largoAspas, int grueso);

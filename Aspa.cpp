@@ -1,7 +1,7 @@
 #include "Aspa.h"
 
 Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn):
-	Obj(mNode), largo_(largo), ancho_(ancho), prof_(prof)
+	OgreEntity(mNode), largo_(largo), ancho_(ancho), prof_(prof)
 {
 	// tablero
 	tabNode = mNode_->createChildSceneNode();

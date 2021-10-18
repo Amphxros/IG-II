@@ -1,6 +1,6 @@
 #include "BrazoDron.h"
 
-BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): Obj(mNode)
+BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): OgreEntity(mNode)
 {
 	mCilinder = mNode_->createChildSceneNode();
 	mCilinder->setPosition(0, 0, 2 * largo + largo * largo);

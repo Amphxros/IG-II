@@ -1,6 +1,6 @@
 #include "Dron.h"
 
-Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): Obj(mNode), numAspas_(numAspas), numBrazos_(numBrazos)
+Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): OgreEntity(mNode), numAspas_(numAspas), numBrazos_(numBrazos)
 {
 	mContainer_ = mNode_->createChildSceneNode();
 	
@@ -24,6 +24,8 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): Obj(mNo
 
 		angle += 360.0f / numBrazos_;
 	}
+	mTimer = new Ogre::Timer();
+	mTimer->reset();
 }
 
 Dron::~Dron()
@@ -31,6 +33,19 @@ Dron::~Dron()
 	for (int i = 0; i < mBrazos_.size(); i++) {
 		delete mBrazos_[i];
 	}
+	delete mTimer;
+}
+
+void Dron::frameRendered(const Ogre::FrameEvent& evt)
+{
+
+	if (mTimer->getMilliseconds() >= 2000) {
+		float angle = rand() % 360;
+		mNode_->pitch(Ogre::Degree(angle));
+		mTimer->reset();
+	}
+
+
 }
 
 bool Dron::keyPressed(const OgreBites::KeyboardEvent& evt)
