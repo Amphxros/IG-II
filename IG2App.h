@@ -23,6 +23,7 @@ protected:
 	virtual void setupScene();
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
+	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
 	Molino* mMolino_ = nullptr;
 	Dron* mDron_ = nullptr;

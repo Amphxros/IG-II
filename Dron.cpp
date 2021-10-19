@@ -54,9 +54,10 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 		if (!cw) { // revisar sentido correcto
 			angle *= -1;
 		}
-		mNode_->pitch(Ogre::Degree(angle));
-
+		mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
 		mTimer_->reset();
+
+
 	}
 }
 /*

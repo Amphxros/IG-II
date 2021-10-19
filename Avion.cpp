@@ -65,3 +65,7 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	this->sendEvent(this);
 	return true;
 }
+
+void Avion::frameRendered(const Ogre::FrameEvent& evt)
+{
+}

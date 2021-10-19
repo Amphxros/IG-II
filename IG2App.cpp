@@ -29,19 +29,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_h:
 		// rotacion esferas reloj
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
-		// exploracion del dron en E2
-		if (ficticioDronNode) {
-			// (dron-truco)
-			if (E2_TRUCO_DRON) {
-				ficticioDronNode->translate(0, -E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
-				ficticioDronNode->pitch(Ogre::Degree(5.0));
-				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
-			}
-			// (nodo)
-			else {
-				ficticioDronNode->pitch(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL);
-			}
-		}
+	
 		break;
 	case SDLK_j:
 		// direccion del dron en E2
@@ -56,6 +44,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			}
 		}
 		break;
+
+	case SDLK_r:
+		break;
 	}
 
 	// evento pasa al molino
@@ -66,6 +57,27 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mAvion_) mAvion_->keyPressed(evt);
 
 	return true;
+}
+
+void IG2App::frameRendered(const Ogre::FrameEvent& evt)
+{
+	// exploracion del dron en E2
+	if (ficticioDronNode) {
+		// (dron-truco)
+		if (E2_TRUCO_DRON) {
+			ficticioDronNode->translate(0, -E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+			ficticioDronNode->pitch(Ogre::Degree(0.5));
+			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+		}
+		// (nodo)
+		else {
+			ficticioDronNode->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL);
+		}
+	 mDron_->frameRendered(evt);
+	}
+	// evento pasa al dron
+	// evento pasa al avion
+	if (mAvion_) mAvion_->frameRendered(evt);
 }
 
 void IG2App::createClock()

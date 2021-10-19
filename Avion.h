@@ -9,6 +9,7 @@ public:
     virtual ~Avion();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+    virtual void frameRendered(const Ogre::FrameEvent& evt);
 private:
     Ogre::SceneNode* cuerpoNode_; // esfera de la nave
     Ogre::SceneNode* frenteNode_; // cilindro de la parte delantera
