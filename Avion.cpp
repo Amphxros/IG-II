@@ -10,7 +10,7 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	cuerpoNode_->attachObject(body);
 
 	pilotoNode_ = mNode_->createChildSceneNode();
-	pilotoNode_->setScale(0.5, 0.5, 0.5);
+	pilotoNode_->setScale(-0.5, 0.5, -0.5);
 	pilotoNode_->setPosition(0, 50, 0);
 	Ogre::Entity* pilot = mSM->createEntity("ninja.mesh");
 	pilotoNode_->attachObject(pilot);

@@ -24,11 +24,10 @@ BrazoDron::~BrazoDron()
 
 bool BrazoDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	//return mRotor_->keyPressed(evt);
+	this->sendEvent(this);
 	return true;
 }
 
 void BrazoDron::receiveEvent(OgreEntity* entidad)
 {
-	this->sendEvent(entidad);
 }

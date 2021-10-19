@@ -15,6 +15,7 @@ RotorDron::RotorDron(Ogre::SceneNode* mNode, double rd, int numAspas, int largoA
 	mAspasNode_->pitch(Ogre::Degree(-90));
 	mAspasNode_->setPosition(0,50,0);
 	mAspas_ = new AspasMolino(mAspasNode_, numAspas, largoAspas, false, 1);
+	addListener(mAspas_);
 }
 
 RotorDron::~RotorDron()
@@ -24,12 +25,12 @@ RotorDron::~RotorDron()
 
 bool RotorDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	//return mAspas_->keyPressed(evt);
+
+	this->sendEvent(this);
 	return true;
 
 }
 
 void RotorDron::receiveEvent(OgreEntity* entidad)
 {
-	this->sendEvent(entidad);
 }
