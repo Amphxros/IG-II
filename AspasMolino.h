@@ -10,6 +10,7 @@ public:
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 	void setOrientacion(int ori){ orientacion_ = ori ; };
+	virtual void receiveEvent(OgreEntity* entidad);
 public:
 	Ogre::SceneNode* mContainer;
 	Ogre::SceneNode* mCenter;

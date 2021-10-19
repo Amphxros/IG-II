@@ -4,7 +4,6 @@
 Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	OgreEntity(mNode),numAspas_(nAspas)
 {
-	//esfera
 	cuerpoNode_ = mNode_->createChildSceneNode();
 	cuerpoNode_->setScale(rd, rd, rd); // rd/40
 	Ogre::Entity* body = mSM->createEntity("sphere.mesh");
@@ -28,7 +27,7 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	alaINode_->setScale(3 * largo, largo / 4, largo / 4);
 	Ogre::Entity* alaA = mSM->createEntity("cube.mesh");
 	alaINode_->attachObject(alaA);
-
+	
 	alaDNode_ = mNode_->createChildSceneNode();
 	alaDNode_->setPosition(40 * rd, 0, 0);
 	alaDNode_->setScale(3 * largo, largo / 4, largo / 4);
@@ -39,11 +38,21 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	heliceINode_->setPosition(40 * -rd - 120 , 0, 8*rd);
 	heliceINode_->setScale(0.5, 0.5, 0.5);
 	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, false, 1);
+	addListener(aspasI);
 
 	heliceDNode_ = mNode_->createChildSceneNode();
 	heliceDNode_->setPosition(40 * rd + 120, 0, 8* rd);
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
 	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, false, 1);
+	addListener(aspasD);
+	
+	Light* luz = mSM->createLight();
+	luz->setType(Ogre::Light::LT_SPOTLIGHT);
+	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	luz->setDirection(0, -1, 0);
+	luzNode_ = mNode_->createChildSceneNode();
+	luzNode_->translate(0, -40*rd, 0);
+	luzNode_->attachObject(luz);
 }
 
 Avion::~Avion()
@@ -53,8 +62,6 @@ Avion::~Avion()
 
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	aspasI->keyPressed(evt);
-	aspasD->keyPressed(evt);
-
+	this->sendEvent(this);
 	return true;
 }

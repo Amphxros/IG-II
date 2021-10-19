@@ -24,5 +24,12 @@ RotorDron::~RotorDron()
 
 bool RotorDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	return mAspas_->keyPressed(evt);
+	//return mAspas_->keyPressed(evt);
+	return true;
+
+}
+
+void RotorDron::receiveEvent(OgreEntity* entidad)
+{
+	this->sendEvent(entidad);
 }

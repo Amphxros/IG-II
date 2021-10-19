@@ -12,11 +12,14 @@ public:
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
-private:
-    Ogre::Timer* mTimer;
 
+private:
     Ogre::SceneNode* mContainer_;
+    Ogre::SceneNode* mLuzNode_; // foco
     std::vector<BrazoDron*> mBrazos_;
+
+    Ogre::Timer* mTimer_; // temporizador
+    const int DELTA = 2000;
 
     int numBrazos_;
     int numAspas_;

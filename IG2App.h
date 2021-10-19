@@ -21,7 +21,7 @@ protected:
 	virtual void setup();
 	virtual void shutdown();
 	virtual void setupScene();
-	void createPlane();
+
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
 
 	Molino* mMolino_ = nullptr;

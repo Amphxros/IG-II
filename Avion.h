@@ -17,6 +17,7 @@ private:
     Ogre::SceneNode* alaDNode_; // ala derecha (cubo escalado)
     Ogre::SceneNode* heliceINode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
+    Ogre::SceneNode* luzNode_; // foco
 
     int numAspas_;
 

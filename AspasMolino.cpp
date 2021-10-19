@@ -34,12 +34,7 @@ AspasMolino::~AspasMolino()
 bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	switch (evt.keysym.sym) {
-	case SDLK_g:
-		mContainer->roll(Ogre::Degree(orientacion_));
-		for (Aspa* a : mAspas_vec) {
-			a->getAdornoNode()->roll(Ogre::Degree(-orientacion_));
-			}
-		break;
+	
 	case SDLK_c:
 		//if (mCenter->getPosition().z < 0) {
 			mCenter->setPosition(mCenter->getPosition().x, mCenter->getPosition().y, mCenter->getPosition().z - 5);
@@ -51,4 +46,12 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 	}
 	return true;
+}
+
+void AspasMolino::receiveEvent(OgreEntity* entidad)
+{
+	mContainer->roll(Ogre::Degree(orientacion_));
+	for (Aspa* a : mAspas_vec) {
+		a->getAdornoNode()->roll(Ogre::Degree(-orientacion_));
+	}
 }

@@ -14,6 +14,7 @@ BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bo
 
 	mMotor_->setPosition(0,0, 2.5* (largo +rd)* (largo + rd));
 	mRotor_ = new RotorDron(mMotor_, largo/20, numAspas, largo, grueso);
+	addListener(mRotor_);
 }
 
 BrazoDron::~BrazoDron()
@@ -23,5 +24,11 @@ BrazoDron::~BrazoDron()
 
 bool BrazoDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	return mRotor_->keyPressed(evt);
+	//return mRotor_->keyPressed(evt);
+	return true;
+}
+
+void BrazoDron::receiveEvent(OgreEntity* entidad)
+{
+	this->sendEvent(entidad);
 }

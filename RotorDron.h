@@ -9,6 +9,7 @@ public:
     virtual ~RotorDron();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+    virtual void receiveEvent(OgreEntity* entidad);
     void setOrientacion(int ori) { mAspas_->setOrientacion(ori); };
 protected:
     Ogre::SceneNode* mAspasNode_;
