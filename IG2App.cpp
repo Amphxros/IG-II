@@ -30,20 +30,12 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		// rotacion esferas reloj
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
 		break;
-	//case SDLK_j:
-	//	// direccion del dron en E2
-	//	if (ficticioDronNode) {
-	//		// (dron-truco)
-	//		if (E2_TRUCO_DRON) {
-	//			ficticioDronNode->yaw(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL);
-	//		}
-	//		// (nodo)
-	//		else {
-	//			ficticioDronNode->yaw(Ogre::Degree(5.0), Ogre::Node::TransformSpace::TS_LOCAL); // !
-	//		}
-	//	}
-	//	break;
+
 	case SDLK_r:
+		if (mAvion_)
+			mAvion_->setRPressed();
+		if (mDron_)
+			mDron_->setRPressed();
 		break;
 	}
 

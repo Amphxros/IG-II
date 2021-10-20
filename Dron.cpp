@@ -51,43 +51,50 @@ Dron::~Dron()
 
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
 {
+	this->sendEvent(this);
 	//std::cout << mTimer_->getMilliseconds() << " ";
-
-	if (estadoDeParada) // ver si toca moverse
-	{
-		if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
-		{
-			estadoDeParada = false;
-			mTimerParada_->reset();
-			mTimerDespl_->reset();//
-		}
+	if (r_pressed) {
+		mTimerDespl_->reset();
+		mTimerParada_->reset();
 	}
-	else // ver si toca pararse
-	{
-		// toca pararse?
-		if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
-			estadoDeParada = true;
-			mTimerDespl_->reset();
-			mTimerParada_->reset();//
-
-			// cambio órbita
-			bool cw = rand() % 2;
-			float angle = rand() % 180;
-			if (!cw) { // revisar sentido correcto
-				angle *= -1;
+	else {
+		
+		if (estadoDeParada) // ver si toca moverse
+		{
+			if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
+			{
+				estadoDeParada = false;
+				mTimerParada_->reset();
+				mTimerDespl_->reset();//
 			}
-			mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
 		}
-		else
+		else // ver si toca pararse
 		{
-			// el movimiento debe seguir
-			mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
+			// toca pararse?
+			if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
+				estadoDeParada = true;
+				mTimerDespl_->reset();
+				mTimerParada_->reset();//
+
+				// cambio órbita
+				bool cw = rand() % 2;
+				float angle = rand() % 180;
+				if (!cw) { // revisar sentido correcto
+					angle *= -1;
+				}
+				mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+			else
+			{
+				// el movimiento debe seguir
+				mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
+			}
+		}
+
 		}
 	}
-}
 
 bool Dron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	this->sendEvent(this);
 	return true;
 }

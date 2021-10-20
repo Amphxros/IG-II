@@ -11,6 +11,7 @@ public:
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
     virtual void frameRendered(const Ogre::FrameEvent& evt);
+    void setRPressed() { r_pressed = !r_pressed; }
 private:
     Ogre::SceneNode* cuerpoNode_; // esfera de la nave
     Ogre::SceneNode* frenteNode_; // cilindro de la parte delantera
@@ -20,8 +21,8 @@ private:
     Ogre::SceneNode* heliceINode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* luzNode_; // foco
-
-
+    Ogre::Entity* body;
+    bool r_pressed = false;
     int numAspas_;
 
 

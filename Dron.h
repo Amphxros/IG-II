@@ -12,6 +12,7 @@ public:
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+    void setRPressed() { r_pressed = !r_pressed; }
 
 private:
     Ogre::SceneNode* mContainer_;
@@ -23,6 +24,8 @@ private:
     const int DELTA_DESPL = 2000;
     const int DELTA_PARADA = 500;
     bool estadoDeParada = false;
+
+    bool r_pressed = false;
 
     int numBrazos_;
     int numAspas_;

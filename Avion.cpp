@@ -13,9 +13,8 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	cuerpoNode_ = mNode_->createChildSceneNode();
 	cuerpoNode_->setScale(rd, rd, rd); // rd/40
 
-	Ogre::Entity* body = mSM->createEntity("sphere.mesh");
+	body = mSM->createEntity("sphere.mesh");
 	cuerpoNode_->attachObject(body);
-	body->setMaterialName("CuerpoAvion");
 
 	pilotoNode_ = mNode_->createChildSceneNode();
 	pilotoNode_->setScale(-0.5, 0.5, -0.5);
@@ -87,38 +86,46 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
-
-	if (estadoDeParada) // ver si toca moverse
-	{
-		if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
-		{
-			estadoDeParada = false;
-			mTimerParada_->reset();
-			mTimerDespl_->reset();//
-		}
+	if (r_pressed) {
+		this->sendEvent(this);
+		body->setMaterialName("CuerpoAvion");
+		mTimerDespl_->reset();
+		mTimerParada_->reset();
 	}
-	else // ver si toca pararse
-	{
-		// toca pararse?
-		if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
-			estadoDeParada = true;
-			mTimerDespl_->reset();
-			mTimerParada_->reset();//
-
-			// cambio órbita
-			bool cw = rand() % 2;
-			float angle = rand() % 180;
-			if (!cw) { // revisar sentido correcto
-				angle *= -1;
-			}
-			mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
-		}
-		else
+	else {
+		body->setMaterialName("");
+		if (estadoDeParada) // ver si toca moverse
 		{
+			if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
+			{
+				estadoDeParada = false;
+				mTimerParada_->reset();
+				mTimerDespl_->reset();//
+			}
+		}
+		else // ver si toca pararse
+		{
+			// toca pararse?
+			if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
+				estadoDeParada = true;
+				mTimerDespl_->reset();
+				mTimerParada_->reset();//
 
-			this->sendEvent(this);
-			// el movimiento debe seguir
-			mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
+				// cambio órbita
+				bool cw = rand() % 2;
+				float angle = rand() % 180;
+				if (!cw) { // revisar sentido correcto
+					angle *= -1;
+				}
+				mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+			else
+			{
+
+				this->sendEvent(this);
+				// el movimiento debe seguir
+				mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
+			}
 		}
 	}
 }
