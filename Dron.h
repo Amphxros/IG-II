@@ -18,8 +18,11 @@ private:
     Ogre::SceneNode* mLuzNode_; // foco
     std::vector<BrazoDron*> mBrazos_;
 
-    Ogre::Timer* mTimer_; // temporizador
-    const int DELTA = 2000;
+    Ogre::Timer* mTimerDespl_; // temporizador 1
+    Ogre::Timer* mTimerParada_; // temporizador 2
+    const int DELTA_DESPL = 2000;
+    const int DELTA_PARADA = 500;
+    bool estadoDeParada = false;
 
     int numBrazos_;
     int numAspas_;

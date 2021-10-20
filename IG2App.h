@@ -46,7 +46,7 @@ protected:
 	Ogre::SceneNode* medioNode = nullptr;
 	//
 	Ogre::SceneNode* avionNode = nullptr;
-
+	Ogre::SceneNode* ficticioAvionNode;
 	Ogre::SceneNode* planoNode = nullptr;;
 
 	void createClock();

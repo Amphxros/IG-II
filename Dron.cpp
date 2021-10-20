@@ -1,4 +1,5 @@
 #include "Dron.h"
+#include <iostream>
 
 Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): OgreEntity(mNode), numAspas_(numAspas), numBrazos_(numBrazos)
 {
@@ -25,8 +26,10 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd): OgreEnt
 
 		angle += 360.0f / numBrazos_;
 	}
-	mTimer_ = new Ogre::Timer();
-	mTimer_->reset();
+	mTimerParada_ = new Ogre::Timer();
+	mTimerParada_->reset();
+	mTimerDespl_ = new Ogre::Timer();
+	mTimerParada_->reset();
 
 	Light* luz = mSM->createLight();
 	luz->setType(Ogre::Light::LT_SPOTLIGHT);
@@ -42,28 +45,46 @@ Dron::~Dron()
 	for (int i = 0; i < mBrazos_.size(); i++) {
 		delete mBrazos_[i];
 	}
-	delete mTimer_;
+	delete mTimerParada_;
+	delete mTimerDespl_;
 }
 
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (mTimer_->getMilliseconds() >= DELTA) {
-		bool cw = rand() % 2;
+	//std::cout << mTimer_->getMilliseconds() << " ";
 
-		float angle = rand() % 360;
-		if (!cw) { // revisar sentido correcto
-			angle *= -1;
+	if (estadoDeParada) // ver si toca moverse
+	{
+		if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
+		{
+			estadoDeParada = false;
+			mTimerParada_->reset();
+			mTimerDespl_->reset();//
 		}
-		mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
-		mTimer_->reset();
+	}
+	else // ver si toca pararse
+	{
+		// toca pararse?
+		if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
+			estadoDeParada = true;
+			mTimerDespl_->reset();
+			mTimerParada_->reset();//
 
-
+			// cambio órbita
+			bool cw = rand() % 2;
+			float angle = rand() % 180;
+			if (!cw) { // revisar sentido correcto
+				angle *= -1;
+			}
+			mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
+		}
+		else
+		{
+			// el movimiento debe seguir
+			mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
+		}
 	}
 }
-/*
-Cada 2 segundos:
-	dron se para un lapso breve < 2 segundos y gira sobre sí mismo, para cambiar de dirección
-*/
 
 bool Dron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {

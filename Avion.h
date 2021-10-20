@@ -1,6 +1,7 @@
 #pragma once
 #include "Obj.h"
 #include "AspasMolino.h"
+#include <OgreTimer.h>
 
 class Avion : public OgreEntity
 {
@@ -20,7 +21,16 @@ private:
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* luzNode_; // foco
 
+
     int numAspas_;
+
+
+    Ogre::Timer* mTimerDespl_; // temporizador
+    Ogre::Timer* mTimerParada_; // temporizador
+    const int DELTA_DESPL = 1000 * 5;
+    const int DELTA_PARADA = 500 * 1;
+    bool estadoDeParada = false;
+
 
     AspasMolino* aspasI = nullptr;
     AspasMolino* aspasD = nullptr;
