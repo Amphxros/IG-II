@@ -26,7 +26,9 @@ protected:
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
 	Molino* mMolino_ = nullptr;
-	Dron* mDron_ = nullptr;
+	Dron* mDron_A = nullptr;
+	Dron* mDron_B = nullptr;
+
 	Avion* mAvion_ = nullptr;
 	Ogre::SceneManager* mSM = nullptr;
 	OgreBites::TrayManager* mTrayMgr = nullptr;
@@ -44,11 +46,15 @@ protected:
 	Ogre::SceneNode* planetaNode = nullptr;
 	Ogre::SceneNode* ficticioDronNode = nullptr;
 	Ogre::SceneNode* medioNode = nullptr;
+	Ogre::SceneNode* medioNodemini = nullptr;
 	//
 	Ogre::SceneNode* avionNode = nullptr;
 	Ogre::SceneNode* ficticioAvionNode;
-	Ogre::SceneNode* planoNode = nullptr;;
+	Ogre::SceneNode* planoNode = nullptr;
 
+	Ogre::Entity* planeta;
+	
+	
 	void createClock();
 };
 

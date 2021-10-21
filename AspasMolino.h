@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "Aspa.h"
 
-class AspasMolino : public OgreEntity
+class AspasMolino : public EntidadIG
 {
 public:
 	AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, bool orn, int ori);
@@ -10,7 +10,7 @@ public:
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 	void setOrientacion(int ori){ orientacion_ = ori ; };
-	virtual void receiveEvent(OgreEntity* entidad);
+	virtual void receiveEvent(EntidadIG* entidad);
 public:
 	Ogre::SceneNode* mContainer;
 	Ogre::SceneNode* mCenter;

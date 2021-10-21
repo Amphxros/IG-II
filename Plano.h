@@ -3,7 +3,7 @@
 
 #include <OgreMeshManager.h>
 class Plano :
-    public OgreEntity
+    public EntidadIG
 {
 public:
     Plano(Ogre::SceneNode* mNode);

@@ -1,16 +1,16 @@
 #include "Obj.h"
 
 // Inicialización del vector de listeners
-std::vector<OgreEntity*> OgreEntity::appListeners = std::vector<OgreEntity*>(0, nullptr);
+std::vector<EntidadIG*> EntidadIG::appListeners = std::vector<EntidadIG*>(0, nullptr);
 
-OgreEntity::OgreEntity(Ogre::SceneNode * mNode): mNode_(mNode) {
+EntidadIG::EntidadIG(Ogre::SceneNode * mNode): mNode_(mNode) {
 	mSM = mNode_->getCreator();
 }
 
-OgreEntity::~OgreEntity() {
+EntidadIG::~EntidadIG() {
 }
 
-void OgreEntity::sendEvent(OgreEntity* entidad) {
-	for (OgreEntity* e : appListeners)
+void EntidadIG::sendEvent(EntidadIG* entidad) {
+	for (EntidadIG* e : appListeners)
 		e->receiveEvent(this);
 }

@@ -2,7 +2,7 @@
 //#include "EntidadIG.h"
 #include "Obj.h"
 using namespace Ogre;
-class Aspa : public OgreEntity
+class Aspa : public EntidadIG
 {
 public: 
 	Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn);

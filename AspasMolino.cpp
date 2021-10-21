@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, bool orn, int ori)
-: OgreEntity(mNode), numAspas_(numAspas), orientacion_(ori)
+: EntidadIG(mNode), numAspas_(numAspas), orientacion_(ori)
 {
 	mContainer = mNode_->createChildSceneNode();
 	mCenter = mNode_->createChildSceneNode();
@@ -13,7 +13,7 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, boo
 		a->getNode()->roll(Ogre::Degree(angle));
 		a->getAdornoNode()->roll(Ogre::Degree(90 - angle));
 		mAspas_vec.push_back(a);
-		OgreEntity::addListener(a);
+		EntidadIG::addListener(a);
 		angle += 360.0f / numAspas_;
 	}
 
@@ -48,7 +48,7 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 	return true;
 }
 
-void AspasMolino::receiveEvent(OgreEntity* entidad)
+void AspasMolino::receiveEvent(EntidadIG* entidad)
 {
 	mContainer->roll(Ogre::Degree(orientacion_));
 	for (Aspa* a : mAspas_vec) {

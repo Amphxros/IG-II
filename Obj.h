@@ -6,19 +6,19 @@
 #include <OgreSceneManager.h>
 #include <vector>
 
-class OgreEntity: public OgreBites::InputListener {
+class EntidadIG: public OgreBites::InputListener {
 public:
 	//Constructora y destructora
-	OgreEntity(Ogre::SceneNode* mNode);
-	virtual ~OgreEntity();
+	EntidadIG(Ogre::SceneNode* mNode);
+	virtual ~EntidadIG();
 
 	Ogre::SceneNode* getNode() { return mNode_; };
 
 	// Vector estático de listeners
-	static std::vector<OgreEntity*> appListeners;
+	static std::vector<EntidadIG*> appListeners;
 
 	// Añadir entidad como listener al vector con push_back()
-	static void addListener(OgreEntity* entidad) { appListeners.push_back(entidad); };
+	static void addListener(EntidadIG* entidad) { appListeners.push_back(entidad); };
 
 	// Métodos de InputListener que pueden redefinirse
 	virtual void frameRendered(const Ogre::FrameEvent& evt) {  }; // implementar en clases que lo requieran
@@ -38,8 +38,8 @@ public:
 		////mNode->translate(distance, 0, distance, Ogre::Node::TS_LOCAL);
 
 	// mensajes
-	void sendEvent(OgreEntity* entidad);
-	virtual void receiveEvent(OgreEntity* entidad) {};
+	void sendEvent(EntidadIG* entidad);
+	virtual void receiveEvent(EntidadIG* entidad) {};
 
 protected:
 	Ogre::SceneNode* mNode_;

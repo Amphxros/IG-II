@@ -1,6 +1,6 @@
 #include "BrazoDron.h"
 
-BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): OgreEntity(mNode)
+BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): EntidadIG(mNode)
 {
 	mCilinder = mNode_->createChildSceneNode();
 	mCilinder->setPosition(0, 0, 2 * largo + largo * largo);
@@ -8,6 +8,7 @@ BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bo
 	
 	mCilinder->setScale(largo/2, 5 * largo, largo/2);
 	Ogre::Entity* e = mSM->createEntity("Barrel.mesh");
+	e->setMaterialName("Brazo");
 	mCilinder->attachObject(e);
 
 	mMotor_ = mNode_->createChildSceneNode();
@@ -28,6 +29,6 @@ bool BrazoDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 	return true;
 }
 
-void BrazoDron::receiveEvent(OgreEntity* entidad)
+void BrazoDron::receiveEvent(EntidadIG* entidad)
 {
 }

@@ -2,7 +2,7 @@
 #include <SDL.h>
 
 Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
-	OgreEntity(mNode),numAspas_(nAspas)
+	EntidadIG(mNode),numAspas_(nAspas)
 {
 
 	mTimerParada_ = new Ogre::Timer();
@@ -33,26 +33,26 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 
 	alaINode_ = mNode_->createChildSceneNode();
 	alaINode_->setPosition(40 * -rd, 0, 0);
-	alaINode_->setScale(3 * largo, largo / 4, largo / 4);
-	Ogre::Entity* alaA = mSM->createEntity("cube.mesh");
-	alaINode_->attachObject(alaA);
+	alaINode_->setScale(3 * largo, largo / 4,largo);
+	alaA = mSM->createEntity("cube.mesh");
 	alaA->setMaterialName("AlaAvion");
+	alaINode_->attachObject(alaA);
 	
 	alaDNode_ = mNode_->createChildSceneNode();
 	alaDNode_->setPosition(40 * rd, 0, 0);
-	alaDNode_->setScale(3 * largo, largo / 4, largo / 4);
-	Ogre::Entity* alaB = mSM->createEntity("cube.mesh");
-	alaDNode_->attachObject(alaB);
+	alaDNode_->setScale(3 * largo, largo / 4, largo);
+	alaB = mSM->createEntity("cube.mesh");
 	alaB->setMaterialName("AlaAvion");
+	alaDNode_->attachObject(alaB);
 
 	heliceINode_ = mNode_->createChildSceneNode();
-	heliceINode_->setPosition(40 * -rd - 120 , 0, 8*rd);
+	heliceINode_->setPosition(60 * -rd - 120 , 0, 50*rd);
 	heliceINode_->setScale(0.5, 0.5, 0.5);
 	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, false, 1);
 	addListener(aspasI);
 
 	heliceDNode_ = mNode_->createChildSceneNode();
-	heliceDNode_->setPosition(40 * rd + 120, 0, 8* rd);
+	heliceDNode_->setPosition(60 * rd + 120, 0, 50* rd);
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
 	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, false, 1);
 	addListener(aspasD);
@@ -88,12 +88,18 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (r_pressed) {
 		this->sendEvent(this);
-		body->setMaterialName("CuerpoAvion");
+		body->setMaterialName("CuerpoAvionR");
+		alaA->setMaterialName("AlaAvionRed");
+		alaB->setMaterialName("AlaAvionRed");
 		mTimerDespl_->reset();
 		mTimerParada_->reset();
 	}
 	else {
-		body->setMaterialName("");
+
+		body->setMaterialName("CuerpoAvion");
+
+		alaA->setMaterialName("AlaAvion");
+		alaB->setMaterialName("AlaAvion");
 		if (estadoDeParada) // ver si toca moverse
 		{
 			if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?

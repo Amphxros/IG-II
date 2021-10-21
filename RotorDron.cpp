@@ -1,12 +1,13 @@
 #include "RotorDron.h"
 
-RotorDron::RotorDron(Ogre::SceneNode* mNode, double rd, int numAspas, int largoAspas, int grueso): OgreEntity(mNode)
+RotorDron::RotorDron(Ogre::SceneNode* mNode, double rd, int numAspas, int largoAspas, int grueso): EntidadIG(mNode)
 {
 	Ogre::SceneNode* container = mNode_->createChildSceneNode();
 	
 	container->setPosition(0, -rd, 0);
 	
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
+	e->setMaterialName("HeliceAvion");
 	if (grueso) container->setScale(0.65, 0.65, 0.65);
 	else container->setScale(0.5, 0.5, 0.5);
 	container->attachObject(e);
@@ -31,6 +32,6 @@ bool RotorDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 }
 
-void RotorDron::receiveEvent(OgreEntity* entidad)
+void RotorDron::receiveEvent(EntidadIG* entidad)
 {
 }

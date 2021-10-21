@@ -4,10 +4,10 @@
 #include <vector>
 #include <OgreTimer.h>
 
-class Dron : public OgreEntity
+class Dron : public EntidadIG
 {
 public:
-    Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd);
+    Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool mini);
     virtual ~Dron();
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);

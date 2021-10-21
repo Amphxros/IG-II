@@ -1,11 +1,12 @@
 #include "Plano.h"
 
 Plano::Plano(Ogre::SceneNode* mNode): 
-	OgreEntity(mNode)
+	EntidadIG(mNode)
 {
 	createMesh();
 	Ogre::Entity* mPlano = mSM->createEntity("mPlane1080x800");
 	mNode_->attachObject(mPlano);
+	mPlano->setMaterialName("Plano");
 
 }
 

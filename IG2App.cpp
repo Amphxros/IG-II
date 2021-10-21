@@ -34,15 +34,20 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_r:
 		if (mAvion_)
 			mAvion_->setRPressed();
-		if (mDron_)
-			mDron_->setRPressed();
+		if (mDron_A)
+			mDron_A->setRPressed();
+		if (mDron_B)
+			mDron_B->setRPressed();
 		break;
 	}
 
 	// evento pasa al molino
 	if (mMolino_) mMolino_->keyPressed(evt);
 	// evento pasa al dron
-	if (mDron_) mDron_->keyPressed(evt);
+	if (mDron_A) mDron_A->keyPressed(evt);
+	
+	if (mDron_B) mDron_B->keyPressed(evt);
+	
 	// evento pasa al avion
 	if (mAvion_) mAvion_->keyPressed(evt);
 
@@ -66,7 +71,8 @@ void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 		//
 
 		// evento pasa al dron
-		mDron_->frameRendered(evt);
+		mDron_A->frameRendered(evt);
+		mDron_B->frameRendered(evt);
 	}
 	if (ficticioAvionNode) {
 		// evento pasa al avion
@@ -213,14 +219,15 @@ void IG2App::setupScene(void)
 		Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
 		node->setScale(0.5, 0.5, 0.5);
 		node->setPosition(400, 200, 100);
-		mDron_ = new Dron(node, 8, 8, 1);
+		mDron_A = new Dron(node, 8, 8, 1,false);
 		//Obj::addListener(mDron_); ////addInputListener(mDron_);
 	}
 	else { // ENTREGA_2
 		// planeta
 		planetaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		planetaNode->scale(5, 5, 5);
-		Entity* planeta = mSM->createEntity("sphere.mesh");
+		planeta = mSM->createEntity("sphere.mesh");
+		planeta->setMaterialName("Planeta");
 		planetaNode->attachObject(planeta);
 		// dron explorador
 		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
@@ -229,8 +236,8 @@ void IG2App::setupScene(void)
 
 			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
 			ficticioDronNode->scale(0.25, 0.25, 0.25);
-			mDron_ = new Dron(ficticioDronNode, 5, 3, 1);
-			OgreEntity::addListener(mDron_); ////addInputListener(mDron_);
+			mDron_A = new Dron(ficticioDronNode, 5, 3, 1,false);
+			EntidadIG::addListener(mDron_A); ////addInputListener(mDron_);
 
 			// avion ninja
 			avionNode = mSM->getRootSceneNode()->createChildSceneNode();
@@ -241,8 +248,14 @@ void IG2App::setupScene(void)
 			medioNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
 			medioNode->translate(0, E2_ALTURA_DRON, 0);
 			medioNode->scale(0.25, 0.25, 0.25);
-			mDron_ = new Dron(medioNode, 5, 3, 1);
-			OgreEntity::addListener(mDron_); ////addInputListener(mDron_);
+			medioNodemini = ficticioDronNode->createChildSceneNode();
+			medioNodemini->translate(0, -E2_ALTURA_DRON, 0);
+			medioNodemini->pitch(Ogre::Degree(180.0), Ogre::Node::TransformSpace::TS_LOCAL);
+			medioNodemini->scale(0.15, 0.15, 0.15);
+			mDron_A = new Dron(medioNode, 5, 3, 1,false);
+			mDron_B = new Dron(medioNodemini, 5, 3, 1,true);
+
+			EntidadIG::addListener(mDron_A); ////addInputListener(mDron_);
 
 			// avion ninja
 			avionNode = ficticioAvionNode->createChildSceneNode();

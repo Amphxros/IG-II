@@ -3,7 +3,7 @@
 #include "AspasMolino.h"
 #include <OgreTimer.h>
 
-class Avion : public OgreEntity
+class Avion : public EntidadIG
 {
 public:
     Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas);
@@ -21,7 +21,12 @@ private:
     Ogre::SceneNode* heliceINode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* luzNode_; // foco
-    Ogre::Entity* body;
+    
+    
+    Ogre::Entity* alaA;     //entidad del  ala izq
+    Ogre::Entity* alaB;     //entidad del ala der
+    Ogre::Entity* body;     //entidad de la esfera central
+
     bool r_pressed = false;
     int numAspas_;
 

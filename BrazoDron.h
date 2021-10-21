@@ -2,7 +2,7 @@
 #include "Obj.h"
 #include "RotorDron.h"
 class BrazoDron :
-    public OgreEntity
+    public EntidadIG
 {
 public:
     BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso);
@@ -10,7 +10,7 @@ public:
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
     void setOrientacion(int ori) { mRotor_->setOrientacion(ori); };
-    virtual void receiveEvent(OgreEntity* entidad);
+    virtual void receiveEvent(EntidadIG* entidad);
 private:
     Ogre::SceneNode* mCilinder;
     Ogre::SceneNode* mMotor_;
