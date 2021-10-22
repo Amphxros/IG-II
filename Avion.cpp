@@ -89,14 +89,14 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 	if (r_pressed) {
 		this->sendEvent(this);
 		body->setMaterialName("CuerpoAvionR");
-		alaA->setMaterialName("AlaAvionRed");
-		alaB->setMaterialName("AlaAvionRed");
+		alaA->setMaterialName("AlaAvionR");
+		alaB->setMaterialName("AlaAvionR");
 		mTimerDespl_->reset();
 		mTimerParada_->reset();
 	}
 	else {
-
-		body->setMaterialName("CuerpoAvion");
+		//if (OBAMA_SPH) body->setMaterialName("ObamaSphere");
+		/*else*/ body->setMaterialName("CuerpoAvion");
 
 		alaA->setMaterialName("AlaAvion");
 		alaB->setMaterialName("AlaAvion");

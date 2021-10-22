@@ -1,15 +1,10 @@
 #pragma once
 #include "Obj.h"
-class Sinbad :
-    public EntidadIG
+class Sinbad : public EntidadIG
 {
 public:
     Sinbad(Ogre::SceneNode* mNode);
-    virtual ~Sinbad();
+    virtual ~Sinbad() {};
 
 protected:
-    
-   
-
 };
-

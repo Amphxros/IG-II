@@ -13,7 +13,7 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool min
 		e->setMaterialName("CuerpoAvionR");
 	}
 	else {
-		e->setMaterialName("BillBoard");
+		e->setMaterialName("SmilySphere");
 	}
 	
 	mCenter->attachObject(e);
@@ -34,10 +34,8 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool min
 
 		angle += 360.0f / numBrazos_;
 	}
-	mTimerParada_ = new Ogre::Timer();
-	mTimerParada_->reset();
-	mTimerDespl_ = new Ogre::Timer();
-	mTimerParada_->reset();
+	mTimer_ = new Ogre::Timer();
+	mTimer_->reset();
 
 	Light* luz = mSM->createLight();
 	luz->setType(Ogre::Light::LT_SPOTLIGHT);
@@ -53,8 +51,7 @@ Dron::~Dron()
 	for (int i = 0; i < mBrazos_.size(); i++) {
 		delete mBrazos_[i];
 	}
-	delete mTimerParada_;
-	delete mTimerDespl_;
+	delete mTimer_;
 }
 
 void Dron::frameRendered(const Ogre::FrameEvent& evt)
@@ -62,27 +59,23 @@ void Dron::frameRendered(const Ogre::FrameEvent& evt)
 	this->sendEvent(this);
 	//std::cout << mTimer_->getMilliseconds() << " ";
 	if (r_pressed) {
-		mTimerDespl_->reset();
-		mTimerParada_->reset();
+		mTimer_->reset();
 	}
 	else {
-		
 		if (estadoDeParada) // ver si toca moverse
 		{
-			if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
+			if (mTimer_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
 			{
 				estadoDeParada = false;
-				mTimerParada_->reset();
-				mTimerDespl_->reset();//
+				mTimer_->reset();
 			}
 		}
 		else // ver si toca pararse
 		{
 			// toca pararse?
-			if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
+			if (mTimer_->getMilliseconds() >= DELTA_DESPL) {
 				estadoDeParada = true;
-				mTimerDespl_->reset();
-				mTimerParada_->reset();//
+				mTimer_->reset();
 
 				// cambio órbita
 				bool cw = rand() % 2;

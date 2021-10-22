@@ -3,6 +3,8 @@
 #include "AspasMolino.h"
 #include <OgreTimer.h>
 
+//const bool OBAMA_SPH = 0;
+
 class Avion : public EntidadIG
 {
 public:
