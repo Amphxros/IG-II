@@ -252,8 +252,8 @@ void IG2App::setupScene(void)
 			medioNodemini->translate(0, -E2_ALTURA_DRON, 0);
 			medioNodemini->pitch(Ogre::Degree(180.0), Ogre::Node::TransformSpace::TS_LOCAL);
 			medioNodemini->scale(0.15, 0.15, 0.15);
-			mDron_A = new Dron(medioNode, 5, 3, 1,false);
-			mDron_B = new Dron(medioNodemini, 5, 3, 1,true);
+			mDron_A = new Dron(medioNode, 5, 3, 1, false);
+			mDron_B = new Dron(medioNodemini, 5, 3, 1, true);
 
 			EntidadIG::addListener(mDron_A); ////addInputListener(mDron_);
 

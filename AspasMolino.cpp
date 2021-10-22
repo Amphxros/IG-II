@@ -21,6 +21,7 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, boo
 	mCenter->pitch(Ogre::Degree(90.0));
 	mCenter->setPosition(0, 0, 0);
 	mCenter->setScale(largo/2, largo/2, largo/2);
+	centro->setMaterialName("TopeHeliceAvion");
 	mCenter->attachObject(centro);
 }
 

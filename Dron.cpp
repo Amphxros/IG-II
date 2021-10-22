@@ -1,7 +1,8 @@
 #include "Dron.h"
 #include <iostream>
 
-Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool mini): EntidadIG(mNode), numAspas_(numAspas), numBrazos_(numBrazos)
+Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool mini)
+	: EntidadIG(mNode), numAspas_(numAspas), numBrazos_(numBrazos)
 {
 	mContainer_ = mNode_->createChildSceneNode();
 	
@@ -10,10 +11,10 @@ Dron::Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool min
 	mCenter->setScale(rd, rd, rd);
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
 	if (mini) {
-		e->setMaterialName("CuerpoAvionR");
+		e->setMaterialName("SmilySphere");
 	}
 	else {
-		e->setMaterialName("SmilySphere");
+		e->setMaterialName("CuerpoAvionR");
 	}
 	
 	mCenter->attachObject(e);

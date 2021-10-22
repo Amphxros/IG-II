@@ -48,13 +48,13 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	heliceINode_ = mNode_->createChildSceneNode();
 	heliceINode_->setPosition(60 * -rd - 120 , 0, 50*rd);
 	heliceINode_->setScale(0.5, 0.5, 0.5);
-	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, false, 1);
+	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, true, 1);
 	addListener(aspasI);
 
 	heliceDNode_ = mNode_->createChildSceneNode();
 	heliceDNode_->setPosition(60 * rd + 120, 0, 50* rd);
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
-	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, false, 1);
+	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, true, 1);
 	addListener(aspasD);
 
 	
