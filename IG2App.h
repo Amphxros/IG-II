@@ -10,6 +10,7 @@
 #include "Molino.h"
 #include "Dron.h"
 #include "Avion.h"
+#include "Sinbad.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener
 {
@@ -34,7 +35,7 @@ protected:
 	OgreBites::TrayManager* mTrayMgr = nullptr;
 	Ogre::SceneNode* mLightNode = nullptr;
 	Ogre::SceneNode* mCamNode = nullptr;
-	Ogre::SceneNode* mSinbadNode = nullptr;
+	Ogre::SceneNode* mSinbadNode = nullptr; //E3
 	OgreBites::CameraMan* mCamMgr = nullptr;
 
 	// reloj
@@ -51,8 +52,11 @@ protected:
 	Ogre::SceneNode* avionNode = nullptr;
 	Ogre::SceneNode* ficticioAvionNode;
 	Ogre::SceneNode* planoNode = nullptr;
-
+	//
 	Ogre::Entity* planeta;
+
+	//E3
+	Sinbad* sinbadEntidad = nullptr;
 	
 	
 	void createClock();

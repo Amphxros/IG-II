@@ -21,7 +21,7 @@ public:
 	static void addListener(EntidadIG* entidad) { appListeners.push_back(entidad); };
 
 	// Métodos de InputListener que pueden redefinirse
-	virtual void frameRendered(const Ogre::FrameEvent& evt) {  }; // implementar en clases que lo requieran
+	virtual void frameRendered(const Ogre::FrameEvent& evt) { }; // implementar en clases que lo requieran
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt) { return false; };
 	virtual bool keyReleased(const OgreBites::KeyboardEvent& evt) { return false; };
 	virtual bool mousePressed(const OgreBites::MouseButtonEvent& evt) { return false; };
