@@ -10,5 +10,6 @@ public:
     virtual void frameRendered(const Ogre::FrameEvent& evt);
 protected:
     Ogre::Entity* entity;
-    Ogre::AnimationState* animationState;
+    Ogre::AnimationState* animationStateBottom;
+    Ogre::AnimationState* animationStateTop;
 };
