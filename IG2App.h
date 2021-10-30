@@ -8,6 +8,7 @@
 #include <OgreCameraMan.h>
 #include "AspasMolino.h"
 #include "Molino.h"
+#include "Plano.h"
 #include "Dron.h"
 #include "Avion.h"
 #include "Sinbad.h"
@@ -26,11 +27,6 @@ protected:
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 
-	Molino* mMolino_ = nullptr;
-	Dron* mDron_A = nullptr;
-	Dron* mDron_B = nullptr;
-
-	Avion* mAvion_ = nullptr;
 	Ogre::SceneManager* mSM = nullptr;
 	OgreBites::TrayManager* mTrayMgr = nullptr;
 	Ogre::SceneNode* mLightNode = nullptr;
@@ -38,28 +34,39 @@ protected:
 	Ogre::SceneNode* mSinbadNode = nullptr; //E3
 	OgreBites::CameraMan* mCamMgr = nullptr;
 
+	// molino
+	Molino* mMolino_ = nullptr;
+
 	// reloj
 	Ogre::SceneNode* mClockNode = nullptr;
 	Ogre::SceneNode* mHourNode[12];
 	Ogre::SceneNode* mNeedles[3];
 
+	void createClock();
+
+
 	// E2
+	Ogre::Entity* planeta = nullptr;
 	Ogre::SceneNode* planetaNode = nullptr;
-	Ogre::SceneNode* ficticioDronNode = nullptr;
-	Ogre::SceneNode* medioNode = nullptr;
-	Ogre::SceneNode* medioNodemini = nullptr;
 	//
-	Ogre::SceneNode* avionNode = nullptr;
-	Ogre::SceneNode* ficticioAvionNode;
+	Plano* plano = nullptr;
 	Ogre::SceneNode* planoNode = nullptr;
 	//
-	Ogre::Entity* planeta;
+	Dron* mDronA_ = nullptr;
+	Ogre::SceneNode* ficticioDronNode = nullptr;
+	Ogre::SceneNode* medioDronNode = nullptr;
+	//
+	Dron* mDronB_ = nullptr;
+	Ogre::SceneNode* ficticioDronNodeMini = nullptr;
+	Ogre::SceneNode* medioDronNodeMini = nullptr;
+	//
+	Avion* mAvion_ = nullptr;
+	Ogre::SceneNode* ficticioAvionNode;
+	Ogre::SceneNode* medioAvionNode = nullptr;
+
 
 	//E3
-	Sinbad* sinbadEntidad = nullptr;
-	
-	
-	void createClock();
+	Sinbad* mSinbad = nullptr;
 };
 
 #endif

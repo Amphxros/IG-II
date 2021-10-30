@@ -5,9 +5,8 @@ Plano::Plano(Ogre::SceneNode* mNode):
 {
 	createMesh();
 	Ogre::Entity* mPlano = mSM->createEntity("mPlane1080x800");
-	mNode_->attachObject(mPlano);
 	mPlano->setMaterialName("Plano");
-
+	mNode_->attachObject(mPlano);
 }
 
 void Plano::createMesh()
@@ -18,4 +17,3 @@ void Plano::createMesh()
 		Ogre::Plane(Ogre::Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Ogre::Vector3::UNIT_Z);
 }
-

@@ -12,7 +12,7 @@ public:
     void setOrientacion(int ori) { mRotor_->setOrientacion(ori); };
     virtual void receiveEvent(EntidadIG* entidad);
 private:
-    Ogre::SceneNode* mCilinder;
+    Ogre::SceneNode* mCilinder_;
     Ogre::SceneNode* mMotor_;
 
     RotorDron* mRotor_;

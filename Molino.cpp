@@ -40,13 +40,12 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 			container->yaw(Ogre::Degree(5.0));
 			container->translate(0, 0, 1.5 * altura_, Ogre::Node::TransformSpace::TS_LOCAL);
 		}
-		else
-		{
+		else {
 			// nodo adicional
 			mAspasNode->yaw(Ogre::Degree(5.0));
 		}
 		break;
 	}
-
+	// evento pasa a las aspas del molino
 	return mAspas_->keyPressed(evt);
 }

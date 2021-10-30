@@ -11,10 +11,14 @@
 using namespace Ogre;
 
 const bool E1 = 0;
-const bool E1_RELOJ = 0;
-const bool E2_TRUCO_DRON = 0;
+const bool E1_RELOJ = 1;
+//
+const bool E2_TRUCO = 1;
 const float E2_ALTURA_DRON = 550;
-const bool E3_SINBAD = 1;
+const float E2_ALTURA_AVION = 700;
+//
+const bool E3 = 0;
+const bool E3_TRUCO = 0;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -30,25 +34,32 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	case SDLK_h:
 		// rotacion esferas reloj
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
+		//---
+		// exploracion del dron en E2
+		if (!E1 && ficticioDronNode) {
+			// (dron-truco)
+			if (E2_TRUCO) {
+				ficticioDronNode->translate(0, -E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+				ficticioDronNode->pitch(Ogre::Degree(5.0)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+			// (nodo)
+			else ficticioDronNode->pitch(Ogre::Degree(5.0)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+		}
 		break;
-
-	case SDLK_r:
-		if (mAvion_)
-			mAvion_->setRPressed();
-		if (mDron_A)
-			mDron_A->setRPressed();
-		if (mDron_B)
-			mDron_B->setRPressed();
+	case SDLK_j:
+		// direccion del dron en E2
+		if (!E1 && ficticioDronNode) {
+			ficticioDronNode->yaw(Ogre::Degree(5.0)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+		}
 		break;
 	}
 
 	// evento pasa al molino
 	if (mMolino_) mMolino_->keyPressed(evt);
-	// evento pasa al dron
-	if (mDron_A) mDron_A->keyPressed(evt);
-	
-	if (mDron_B) mDron_B->keyPressed(evt);
-	
+	// evento pasa a los drones
+	if (mDronA_) mDronA_->keyPressed(evt);
+	if (mDronB_) mDronB_->keyPressed(evt);
 	// evento pasa al avion
 	if (mAvion_) mAvion_->keyPressed(evt);
 
@@ -57,10 +68,13 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (ficticioDronNode) {
+	if (!E1 && ficticioDronNode) {
 		// evento pasa al dron
-		mDron_A->frameRendered(evt);
-		mDron_B->frameRendered(evt);
+		mDronA_->frameRendered(evt);
+	}
+	if (ficticioDronNodeMini) {
+		// evento pasa al dron mini
+		mDronB_->frameRendered(evt);
 	}
 	if (ficticioAvionNode) {
 		// evento pasa al avion
@@ -68,7 +82,7 @@ void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 	}
 	if (mSinbadNode) {
 		// evento pasa a Sinbad
-		sinbadEntidad->frameRendered(evt);
+		mSinbad->frameRendered(evt);
 	}
 }
 
@@ -205,14 +219,12 @@ void IG2App::setupScene(void)
 
 		// molino
 		mMolino_ = new Molino(mSM->getRootSceneNode()->createChildSceneNode(), 6, 100, 30);
-		//Obj::addListener(mMolino_); ////addInputListener(mMolino_);
 
 		// dron
-		Ogre::SceneNode* node = mSM->getRootSceneNode()->createChildSceneNode();
-		node->setScale(0.5, 0.5, 0.5);
-		node->setPosition(400, 200, 100);
-		mDron_A = new Dron(node, 8, 8, 1,false);
-		//Obj::addListener(mDron_); ////addInputListener(mDron_);
+		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
+		ficticioDronNode->setPosition(400, 200, 100);
+		ficticioDronNode->setScale(0.5, 0.5, 0.5);
+		mDronA_ = new Dron(ficticioDronNode, 8, 8, 1, false);
 	}
 	else { // ENTREGA_2
 		// planeta
@@ -221,62 +233,77 @@ void IG2App::setupScene(void)
 		planeta = mSM->createEntity("sphere.mesh");
 		planeta->setMaterialName("Planeta");
 		planetaNode->attachObject(planeta);
-		if (E3_SINBAD) {
+
+		// plano
+		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planoNode->setPosition(0, 0, -1000);
+		planoNode->pitch(Ogre::Degree(90));
+		planoNode->setScale(3, 3, 3);
+		plano = new Plano(planoNode);
+
+		if (E3) { // ENTREGA_3
+
 			mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
+
 			mSinbadNode->translate(0, E2_ALTURA_DRON + 50, 0);
 			mSinbadNode->scale(20, 20, 20);
-			sinbadEntidad = new Sinbad(mSinbadNode);
+			mSinbad = new Sinbad(mSinbadNode);
+
+			//if (E3_TRUCO) {
+
+			//}
+			//else {
+
+			//}
 		}
-		else {
+		else { // ENTREGA_2
 			// dron explorador
 			ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
+			// dron perturbador
+			ficticioDronNodeMini = mSM->getRootSceneNode()->createChildSceneNode();
 			// avion ninja
 			ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
 
-			if (E2_TRUCO_DRON) {
+			if (E2_TRUCO) {
 				// dron explorador
-				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL);
+				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0);
 				ficticioDronNode->scale(0.25, 0.25, 0.25);
-				mDron_A = new Dron(ficticioDronNode, 5, 3, 1, false);
-				EntidadIG::addListener(mDron_A); ////addInputListener(mDron_);
+				mDronA_ = new Dron(ficticioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
+				EntidadIG::addListener(mDronA_);
+
+				// dron perturbador
+				ficticioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
+				ficticioDronNodeMini->pitch(Ogre::Degree(180.0));
+				ficticioDronNodeMini->scale(0.15, 0.15, 0.15);
+				mDronB_ = new Dron(ficticioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
 
 				// avion ninja
-				avionNode = mSM->getRootSceneNode()->createChildSceneNode();
-				avionNode->setPosition(0, 700, 0);
-				mAvion_ = new Avion(avionNode, 1, 1, 5);
+				ficticioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
+				mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+				EntidadIG::addListener(mAvion_);
 			}
 			else {
-				// dron explorador y dron perturbador
-				medioNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
-				medioNode->translate(0, E2_ALTURA_DRON, 0);
-				medioNode->scale(0.25, 0.25, 0.25);
-				medioNodemini = ficticioDronNode->createChildSceneNode();
-				medioNodemini->translate(0, -E2_ALTURA_DRON, 0);
-				medioNodemini->pitch(Ogre::Degree(180.0), Ogre::Node::TransformSpace::TS_LOCAL);
-				medioNodemini->scale(0.15, 0.15, 0.15);
-				mDron_A = new Dron(medioNode, 5, 3, 1, false);
-				mDron_B = new Dron(medioNodemini, 5, 3, 1, true);
+				// dron explorador
+				medioDronNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
+				medioDronNode->translate(0, E2_ALTURA_DRON, 0);
+				medioDronNode->scale(0.25, 0.25, 0.25);
+				mDronA_ = new Dron(medioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
+				EntidadIG::addListener(mDronA_);
 
-				EntidadIG::addListener(mDron_A); ////addInputListener(mDron_);
+				// dron perturbador
+				medioDronNodeMini = ficticioDronNodeMini->createChildSceneNode(); // para el (no-truco)
+				medioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
+				medioDronNodeMini->pitch(Ogre::Degree(180.0));
+				medioDronNodeMini->scale(0.15, 0.15, 0.15);
+				mDronB_ = new Dron(medioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
 
 				// avion ninja
-				avionNode = ficticioAvionNode->createChildSceneNode();
-				avionNode->setPosition(0, 700, 0);
-				mAvion_ = new Avion(avionNode, 1, 1, 5);
+				medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
+				medioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
+				mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+				EntidadIG::addListener(mAvion_);
 			}
-			// avion ninja
-			//avionNode = mSM->getRootSceneNode()->createChildSceneNode();
-			//avionNode->setPosition(0, 700, 0);
-			//mAvion_ = new Avion(avionNode, 1, 1, 5);
-			//EntidadIG::addListener(mAvion_); ////addInputListener(mAvion_);
 		}
-
-		Ogre::SceneNode* plano= mSM->getRootSceneNode()->createChildSceneNode();
-		
-		plano->setPosition(0, 0, -1000);
-		plano->pitch(Ogre::Degree(90));
-		plano->setScale(3, 3, 3);
-		Plano* p = new Plano(plano);
 	}
 
 	//---------------------------------------------

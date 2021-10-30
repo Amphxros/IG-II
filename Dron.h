@@ -7,12 +7,15 @@
 class Dron : public EntidadIG
 {
 public:
-    Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool mini);
+    // E2 mov. autónomo
+    Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool perturbador, bool Truco, int Altura);
+    // normal
+    Dron(Ogre::SceneNode* mNode, int numBrazos, int numAspas, int rd, bool perturbador);
     virtual ~Dron();
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
-    void setRPressed() { r_pressed = !r_pressed; }
+    void setRPressed();
 
 private:
     Ogre::SceneNode* mContainer_;
@@ -28,4 +31,14 @@ private:
 
     int numBrazos_;
     int numAspas_;
+    int rd_;
+    bool perturbador_;
+
+    Ogre::Entity* cuerpoDron_ = nullptr;
+
+    void generaDron();
+
+    // E2 mov. autónomo
+    const bool TRUCO = -1;
+    const int ALTURA = -1;
 };

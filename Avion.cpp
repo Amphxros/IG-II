@@ -1,20 +1,19 @@
 #include "Avion.h"
 #include <SDL.h>
 
-Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
-	EntidadIG(mNode),numAspas_(nAspas)
+Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura)
+	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura)
 {
-
-	mTimerParada_ = new Ogre::Timer();
-	mTimerParada_->reset();
-	mTimerDespl_ = new Ogre::Timer();
-	mTimerParada_->reset();
+	mTimer_ = new Ogre::Timer();
+	mTimer_->reset();
 
 	cuerpoNode_ = mNode_->createChildSceneNode();
 	cuerpoNode_->setScale(rd, rd, rd); // rd/40
 
 	body = mSM->createEntity("sphere.mesh");
 	cuerpoNode_->attachObject(body);
+	if (OBAMA_SPH) body->setMaterialName("ObamaSphere");
+	else body->setMaterialName("CuerpoAvion");
 
 	pilotoNode_ = mNode_->createChildSceneNode();
 	pilotoNode_->setScale(-0.5, 0.5, -0.5);
@@ -46,30 +45,77 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas):
 	alaDNode_->attachObject(alaB);
 
 	heliceINode_ = mNode_->createChildSceneNode();
-	heliceINode_->setPosition(60 * -rd - 120 , 0, 50*rd);
+	heliceINode_->setPosition(60 * -rd - 120 , 0, 50 * rd);
 	heliceINode_->setScale(0.5, 0.5, 0.5);
 	aspasI = new AspasMolino(heliceINode_,numAspas_, 10, true, 1);
 	addListener(aspasI);
 
 	heliceDNode_ = mNode_->createChildSceneNode();
-	heliceDNode_->setPosition(60 * rd + 120, 0, 50* rd);
+	heliceDNode_->setPosition(60 * rd + 120, 0, 50 * rd);
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
 	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, true, 1);
 	addListener(aspasD);
 
-	
 	Light* luz = mSM->createLight();
 	luz->setType(Ogre::Light::LT_SPOTLIGHT);
 	luz->setDiffuseColour(0.75, 0.75, 0.75);
 	luz->setDirection(0, -1, 0);
 	luzNode_ = mNode_->createChildSceneNode();
-	luzNode_->translate(0, -40*rd, 0);
+	luzNode_->translate(0, -40 * rd, 0);
 	luzNode_->attachObject(luz);
-	
 }
 
 Avion::~Avion()
 {
+}
+
+void Avion::frameRendered(const Ogre::FrameEvent& evt)
+{
+	/// INFO: conforme a E2 ('sendEvent' en lugar de cadena tradicional de 'keyPressed')
+	this->sendEvent(this); // redundante: ya se hace en el dron
+
+	if (r_pressed) {
+		mTimer_->reset();
+		return;
+	}
+
+	//---
+
+	// movimiento autónomo por el planeta //
+
+	if (TRUCO == -1 || ALTURA == -1) return;
+
+	if (estadoDeParada) { // ver si toca moverse
+		if (mTimer_->getMilliseconds() >= DELTA_PARADA) { // toca moverse?
+			estadoDeParada = false;
+			mTimer_->reset();
+
+			// cambio de órbita //
+			bool cw = rand() % 2;
+			float angle = rand() % 180;
+			if (!cw) angle *= -1;
+			// (truco)
+			if (TRUCO) mNode_->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+			// (no-truco)
+			else mNode_->getParent()->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+		}
+	}
+	else { // ver si toca pararse
+		if (mTimer_->getMilliseconds() >= DELTA_DESPL) { // toca pararse?
+			estadoDeParada = true;
+			mTimer_->reset();
+		}
+		else {
+			// el movimiento debe seguir
+			if (TRUCO) { // (truco)
+				mNode_->translate(0, -ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+				mNode_->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+				mNode_->translate(0, ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+			}
+			// (no-truco)
+			else mNode_->getParent()->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+		}
+	}
 }
 
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -77,61 +123,26 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	switch (evt.keysym.sym)
 	{
 	case SDLK_g:
+		/// INFO: conforme a E2 ('sendEvent' en lugar de cadena tradicional de 'keyPressed')
 		this->sendEvent(this);
-	default:
+		break;
+	case SDLK_r: ///TODO: Debe hacerse mediante eventos //!!!
+		setRPressed();
 		break;
 	}
 	return true;
 }
 
-void Avion::frameRendered(const Ogre::FrameEvent& evt)
+void Avion::setRPressed()
 {
+	r_pressed = !r_pressed;
+	// las alas del avión se vuelven rojas
 	if (r_pressed) {
-		this->sendEvent(this);
-		body->setMaterialName("CuerpoAvionR");
 		alaA->setMaterialName("AlaAvionR");
 		alaB->setMaterialName("AlaAvionR");
-		mTimerDespl_->reset();
-		mTimerParada_->reset();
 	}
 	else {
-		//if (OBAMA_SPH) body->setMaterialName("ObamaSphere");
-		/*else*/ body->setMaterialName("CuerpoAvion");
-
 		alaA->setMaterialName("AlaAvion");
 		alaB->setMaterialName("AlaAvion");
-		if (estadoDeParada) // ver si toca moverse
-		{
-			if (mTimerParada_->getMilliseconds() >= DELTA_PARADA) // toca moverse?
-			{
-				estadoDeParada = false;
-				mTimerParada_->reset();
-				mTimerDespl_->reset();//
-			}
-		}
-		else // ver si toca pararse
-		{
-			// toca pararse?
-			if (mTimerDespl_->getMilliseconds() >= DELTA_DESPL) {
-				estadoDeParada = true;
-				mTimerDespl_->reset();
-				mTimerParada_->reset();//
-
-				// cambio órbita
-				bool cw = rand() % 2;
-				float angle = rand() % 180;
-				if (!cw) { // revisar sentido correcto
-					angle *= -1;
-				}
-				mNode_->getParent()->yaw(Ogre::Degree(angle), Ogre::Node::TransformSpace::TS_LOCAL); // !
-			}
-			else
-			{
-
-				this->sendEvent(this);
-				// el movimiento debe seguir
-				mNode_->getParent()->pitch(Ogre::Degree(0.5), Ogre::Node::TransformSpace::TS_LOCAL); // (solo para no-truco)
-			}
-		}
 	}
 }

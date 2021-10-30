@@ -2,14 +2,14 @@
 
 BrazoDron::BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso): EntidadIG(mNode)
 {
-	mCilinder = mNode_->createChildSceneNode();
-	mCilinder->setPosition(0, 0, 2 * largo + largo * largo);
-	mCilinder->pitch(Ogre::Degree(90));
+	mCilinder_ = mNode_->createChildSceneNode();
+	mCilinder_->setPosition(0, 0, 2 * largo + largo * largo);
+	mCilinder_->pitch(Ogre::Degree(90));
 	
-	mCilinder->setScale(largo/2, 5 * largo, largo/2);
+	mCilinder_->setScale(largo/2, 5 * largo, largo/2);
 	Ogre::Entity* e = mSM->createEntity("Barrel.mesh");
 	e->setMaterialName("Brazo");
-	mCilinder->attachObject(e);
+	mCilinder_->attachObject(e);
 
 	mMotor_ = mNode_->createChildSceneNode();
 
@@ -25,8 +25,8 @@ BrazoDron::~BrazoDron()
 
 bool BrazoDron::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	this->sendEvent(this);
-	return true;
+	// evento pasa al rotor
+	return mRotor_->keyPressed(evt);
 }
 
 void BrazoDron::receiveEvent(EntidadIG* entidad)
