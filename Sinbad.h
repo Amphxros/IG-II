@@ -1,5 +1,5 @@
 #pragma once
-#include "Obj.h"
+#include "EntidadIG.h"
 #include <OGRE\OgreAnimationState.h>
 
 class Sinbad : public EntidadIG

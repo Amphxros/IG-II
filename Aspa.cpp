@@ -17,10 +17,8 @@ Aspa::Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool
 	adornoNode->roll(Ogre::Degree(90));
 	adornoNode->setScale(4, 8, 4);
 
-	if (orn)
-	{
+	if (orn) {
 		Ogre::Entity* adorno = mSM->createEntity("Barrel.mesh");
-		///Ogre::MovableObject* adorno = mSM->createMovableObject("cube.mesh"); //QUITAR_WTF
 		adorno->setMaterialName("AdornoHeliceAvion");
 		adornoNode->attachObject(adorno);
 	}

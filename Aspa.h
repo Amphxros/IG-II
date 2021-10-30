@@ -1,7 +1,9 @@
 #pragma once
 //#include "EntidadIG.h"
-#include "Obj.h"
+#include "EntidadIG.h"
+
 using namespace Ogre;
+
 class Aspa : public EntidadIG
 {
 public: 

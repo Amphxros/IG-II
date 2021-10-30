@@ -1,5 +1,5 @@
 #pragma once
-#include "Obj.h"
+#include "EntidadIG.h"
 #include "AspasMolino.h"
 class RotorDron :
     public EntidadIG

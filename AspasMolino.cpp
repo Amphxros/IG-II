@@ -13,7 +13,6 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, boo
 		a->getNode()->roll(Ogre::Degree(angle));
 		a->getAdornoNode()->roll(Ogre::Degree(90 - angle));
 		mAspas_vec.push_back(a);
-		EntidadIG::addListener(a);
 		angle += 360.0f / numAspas_;
 	}
 

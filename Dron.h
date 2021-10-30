@@ -1,5 +1,5 @@
 #pragma once
-#include "Obj.h"
+#include "EntidadIG.h"
 #include "BrazoDron.h"
 #include <vector>
 #include <OgreTimer.h>

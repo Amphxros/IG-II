@@ -130,6 +130,8 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 		setRPressed();
 		break;
 	}
+	// el evento keyPressed (evento a la antigua) no pasa más allá en este método, ...
+	// ...por ello el desplazamiento del cilindro de las AspasMolino del Avion no ocurre
 	return true;
 }
 
