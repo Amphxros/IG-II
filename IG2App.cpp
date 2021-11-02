@@ -17,7 +17,7 @@ const bool E2_TRUCO = 1;
 const float E2_ALTURA_DRON = 550;
 const float E2_ALTURA_AVION = 700;
 //
-const bool E3 = 0;
+const bool E3 = 1;
 const bool E3_TRUCO = 0;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -62,6 +62,8 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mDronB_) mDronB_->keyPressed(evt);
 	// evento pasa al avion
 	if (mAvion_) mAvion_->keyPressed(evt);
+	// evento pasa a Sinbad
+	if (mSinbad) mSinbad->keyPressed(evt);
 
 	return true;
 }
