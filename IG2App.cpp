@@ -10,6 +10,12 @@
 
 using namespace Ogre;
 
+////enum Entregas {		///TODO: esto sustituirá a los booleanos 'Ei'
+////	E1, E2, E3
+////};
+////
+////const Entregas ENTREGA_ACTUAL = Entregas::E3;
+
 const bool E1 = 0;
 const bool E1_RELOJ = 1;
 //
@@ -18,7 +24,8 @@ const float E2_ALTURA_DRON = 550;
 const float E2_ALTURA_AVION = 700;
 //
 const bool E3 = 1;
-const bool E3_TRUCO = 0;
+const bool E3_TRUCO = 1;
+const float E3_ALTURA_SINBAD = 600;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -244,19 +251,19 @@ void IG2App::setupScene(void)
 		plano = new Plano(planoNode);
 
 		if (E3) { // ENTREGA_3
-
+			// Sinbad el ogro marino
 			mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-
-			mSinbadNode->translate(0, E2_ALTURA_DRON + 50, 0);
-			mSinbadNode->scale(20, 20, 20);
-			mSinbad = new Sinbad(mSinbadNode);
-
-			//if (E3_TRUCO) {
-
-			//}
-			//else {
-
-			//}
+			if (E3_TRUCO) { // Sinbad usa el gran truco del famoso indio del libro
+				mSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
+				mSinbadNode->scale(20, 20, 20);
+				mSinbad = new Sinbad(mSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
+			}
+			else { // Sinbad usa un nodo intermedio
+				mTrucoSinbadNode = mSinbadNode->createChildSceneNode(); // para el (no-truco)
+				mTrucoSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
+				mTrucoSinbadNode->scale(20, 20, 20);
+				mSinbad = new Sinbad(mTrucoSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
+			}
 		}
 		else { // ENTREGA_2
 			// dron explorador

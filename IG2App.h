@@ -31,7 +31,6 @@ protected:
 	OgreBites::TrayManager* mTrayMgr = nullptr;
 	Ogre::SceneNode* mLightNode = nullptr;
 	Ogre::SceneNode* mCamNode = nullptr;
-	Ogre::SceneNode* mSinbadNode = nullptr; //E3
 	OgreBites::CameraMan* mCamMgr = nullptr;
 
 	// molino
@@ -67,6 +66,8 @@ protected:
 
 	//E3
 	Sinbad* mSinbad = nullptr;
+	Ogre::SceneNode* mSinbadNode = nullptr;
+	Ogre::SceneNode* mTrucoSinbadNode = nullptr;
 };
 
 #endif

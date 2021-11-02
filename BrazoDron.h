@@ -1,8 +1,7 @@
 #pragma once
 #include "EntidadIG.h"
 #include "RotorDron.h"
-class BrazoDron :
-    public EntidadIG
+class BrazoDron : public EntidadIG
 {
 public:
     BrazoDron(Ogre::SceneNode* mNode, int largo, int rd, int numAspas, bool grueso);
