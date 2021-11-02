@@ -52,18 +52,75 @@ void Sinbad::generaSinbad()
 	animationStateDancing = entity->getAnimationState("Dance");
 	animationStateDancing->setEnabled(false);
 	animationStateDancing->setLoop(true);
+
+	// espadas uwu
+	rightSword = mSM->createEntity("Sword.mesh");
+	leftSword = mSM->createEntity("Sword.mesh");
+	leftHandOccupied = false;
+	rightHandOccupied = false;
+	//
+	///arma(true);
+	///arma(false);
+	///cambiaEspada();
+	arma();
 }
 
 void Sinbad::arma()
 {
+	if (!rightHandOccupied) {
+		entity->attachObjectToBone("Handle.R", rightSword);
+		rightHandOccupied = true;
+	}
+	if (!leftHandOccupied) {
+		entity->attachObjectToBone("Handle.L", leftSword);
+		leftHandOccupied = true;
+	}
 }
 
 void Sinbad::arma(bool rH)
 {
+	if (rH) { // arma va a mano derecha
+		if (leftHandOccupied) {
+			entity->detachObjectFromBone(leftSword);
+			leftHandOccupied = false;
+		}
+		if (!rightHandOccupied) {
+			entity->attachObjectToBone("Handle.R", rightSword);
+			rightHandOccupied = true;
+		}
+	}
+	else { // arma va a mano izquierda
+		if (rightHandOccupied) {
+			entity->detachObjectFromBone(rightSword);
+			rightHandOccupied = false;
+		}
+		if (!leftHandOccupied) {
+			entity->attachObjectToBone("Handle.L", leftSword);
+			leftHandOccupied = true;
+		}
+	}
 }
 
 void Sinbad::cambiaEspada()
 {
+	if (leftHandOccupied) {
+		if (!rightHandOccupied) {
+			// pase de i. a d.
+			entity->detachObjectFromBone(leftSword);
+			leftHandOccupied = false;
+			entity->attachObjectToBone("Handle.R", rightSword);
+			rightHandOccupied = true;
+		}
+	}
+	else if (rightHandOccupied) {
+		if (!leftHandOccupied) {
+			// pase de d. a i.
+			entity->detachObjectFromBone(rightSword);
+			rightHandOccupied = false;
+			entity->attachObjectToBone("Handle.L", leftSword);
+			leftHandOccupied = true;
+		}
+	}
 }
 
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)

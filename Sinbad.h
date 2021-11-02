@@ -16,6 +16,8 @@ public:
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 protected:
     Ogre::Entity* entity;
+    Ogre::Entity* rightSword;
+    Ogre::Entity* leftSword;
     Ogre::AnimationState* animationStateBottom;
     Ogre::AnimationState* animationStateTop;
     Ogre::AnimationState* animationStateDancing;
@@ -30,6 +32,8 @@ protected:
     void arma();
     void arma(bool rH);
     void cambiaEspada();
+    bool rightHandOccupied;
+    bool leftHandOccupied;
 
     void cPressed();
     bool c_pressed;

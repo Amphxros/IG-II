@@ -10,20 +10,18 @@
 
 using namespace Ogre;
 
-////enum Entregas {		///TODO: esto sustituirá a los booleanos 'Ei'
-////	E1, E2, E3
-////};
-////
-////const Entregas ENTREGA_ACTUAL = Entregas::E3;
+enum Entregas {
+	Ent1, Ent2, Ent3_1, Ent3_2
+};
 
-const bool E1 = 0;
+const Entregas ENTREGA_ACTUAL = Entregas::Ent3_1;
+//
 const bool E1_RELOJ = 1;
 //
 const bool E2_TRUCO = 1;
 const float E2_ALTURA_DRON = 550;
 const float E2_ALTURA_AVION = 700;
 //
-const bool E3 = 1;
 const bool E3_TRUCO = 1;
 const float E3_ALTURA_SINBAD = 600;
 
@@ -43,7 +41,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		if (mClockNode) mSM->getSceneNode("esferas")->roll(Ogre::Degree(5));
 		//---
 		// exploracion del dron en E2
-		if (!E1 && ficticioDronNode) {
+		if (ENTREGA_ACTUAL == Entregas::Ent2 && ficticioDronNode) {
 			// (dron-truco)
 			if (E2_TRUCO) {
 				ficticioDronNode->translate(0, -E2_ALTURA_DRON, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
@@ -56,7 +54,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 	case SDLK_j:
 		// direccion del dron en E2
-		if (!E1 && ficticioDronNode) {
+		if (ENTREGA_ACTUAL == Entregas::Ent2 && ficticioDronNode) {
 			ficticioDronNode->yaw(Ogre::Degree(5.0)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
 		}
 		break;
@@ -77,7 +75,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (!E1 && ficticioDronNode) {
+	if (ENTREGA_ACTUAL == Entregas::Ent2 && ficticioDronNode) {
 		// evento pasa al dron
 		mDronA_->frameRendered(evt);
 	}
@@ -222,7 +220,7 @@ void IG2App::setupScene(void)
 
 	// finally something to render
 
-	if (E1) { // ENTREGA_1
+	if (ENTREGA_ACTUAL == Entregas::Ent1) { // ENTREGA_1
 		// reloj
 		if (E1_RELOJ) createClock();
 
@@ -235,7 +233,7 @@ void IG2App::setupScene(void)
 		ficticioDronNode->setScale(0.5, 0.5, 0.5);
 		mDronA_ = new Dron(ficticioDronNode, 8, 8, 1, false);
 	}
-	else { // ENTREGA_2
+	else if (ENTREGA_ACTUAL == Entregas::Ent2) { // ENTREGA_2
 		// planeta
 		planetaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		planetaNode->scale(5, 5, 5);
@@ -250,69 +248,84 @@ void IG2App::setupScene(void)
 		planoNode->setScale(3, 3, 3);
 		plano = new Plano(planoNode);
 
-		if (E3) { // ENTREGA_3
-			// Sinbad el ogro marino
-			mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-			if (E3_TRUCO) { // Sinbad usa el gran truco del famoso indio del libro
-				mSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
-				mSinbadNode->scale(20, 20, 20);
-				mSinbad = new Sinbad(mSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
-			}
-			else { // Sinbad usa un nodo intermedio
-				mTrucoSinbadNode = mSinbadNode->createChildSceneNode(); // para el (no-truco)
-				mTrucoSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
-				mTrucoSinbadNode->scale(20, 20, 20);
-				mSinbad = new Sinbad(mTrucoSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
-			}
-		}
-		else { // ENTREGA_2
+		// dron explorador
+		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
+		// dron perturbador
+		ficticioDronNodeMini = mSM->getRootSceneNode()->createChildSceneNode();
+		// avion ninja
+		ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
+
+		if (E2_TRUCO) {
 			// dron explorador
-			ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
+			ficticioDronNode->translate(0, E2_ALTURA_DRON, 0);
+			ficticioDronNode->scale(0.25, 0.25, 0.25);
+			mDronA_ = new Dron(ficticioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
+			EntidadIG::addListener(mDronA_);
+
 			// dron perturbador
-			ficticioDronNodeMini = mSM->getRootSceneNode()->createChildSceneNode();
+			ficticioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
+			ficticioDronNodeMini->pitch(Ogre::Degree(180.0));
+			ficticioDronNodeMini->scale(0.15, 0.15, 0.15);
+			mDronB_ = new Dron(ficticioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
+
 			// avion ninja
-			ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
-
-			if (E2_TRUCO) {
-				// dron explorador
-				ficticioDronNode->translate(0, E2_ALTURA_DRON, 0);
-				ficticioDronNode->scale(0.25, 0.25, 0.25);
-				mDronA_ = new Dron(ficticioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
-				EntidadIG::addListener(mDronA_);
-
-				// dron perturbador
-				ficticioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
-				ficticioDronNodeMini->pitch(Ogre::Degree(180.0));
-				ficticioDronNodeMini->scale(0.15, 0.15, 0.15);
-				mDronB_ = new Dron(ficticioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
-
-				// avion ninja
-				ficticioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-				mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
-				EntidadIG::addListener(mAvion_);
-			}
-			else {
-				// dron explorador
-				medioDronNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
-				medioDronNode->translate(0, E2_ALTURA_DRON, 0);
-				medioDronNode->scale(0.25, 0.25, 0.25);
-				mDronA_ = new Dron(medioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
-				EntidadIG::addListener(mDronA_);
-
-				// dron perturbador
-				medioDronNodeMini = ficticioDronNodeMini->createChildSceneNode(); // para el (no-truco)
-				medioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
-				medioDronNodeMini->pitch(Ogre::Degree(180.0));
-				medioDronNodeMini->scale(0.15, 0.15, 0.15);
-				mDronB_ = new Dron(medioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
-
-				// avion ninja
-				medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
-				medioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-				mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
-				EntidadIG::addListener(mAvion_);
-			}
+			ficticioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+			EntidadIG::addListener(mAvion_);
 		}
+		else {
+			// dron explorador
+			medioDronNode = ficticioDronNode->createChildSceneNode(); // para el (no-truco)
+			medioDronNode->translate(0, E2_ALTURA_DRON, 0);
+			medioDronNode->scale(0.25, 0.25, 0.25);
+			mDronA_ = new Dron(medioDronNode, 5, 3, 1, false, E2_TRUCO, E2_ALTURA_DRON);
+			EntidadIG::addListener(mDronA_);
+
+			// dron perturbador
+			medioDronNodeMini = ficticioDronNodeMini->createChildSceneNode(); // para el (no-truco)
+			medioDronNodeMini->translate(0, -E2_ALTURA_DRON, 0);
+			medioDronNodeMini->pitch(Ogre::Degree(180.0));
+			medioDronNodeMini->scale(0.15, 0.15, 0.15);
+			mDronB_ = new Dron(medioDronNodeMini, 5, 3, 1, true, E2_TRUCO, E2_ALTURA_DRON);
+
+			// avion ninja
+			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
+			medioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+			EntidadIG::addListener(mAvion_);
+		}
+	}
+	else if (ENTREGA_ACTUAL == Entregas::Ent3_1) { // ENTREGA_3 - Sinbad en planeta
+		// planeta
+		planetaNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planetaNode->scale(5, 5, 5);
+		planeta = mSM->createEntity("sphere.mesh");
+		planeta->setMaterialName("Planeta");
+		planetaNode->attachObject(planeta);
+
+		// plano
+		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planoNode->setPosition(0, 0, -1000);
+		planoNode->pitch(Ogre::Degree(90));
+		planoNode->setScale(3, 3, 3);
+		plano = new Plano(planoNode);
+
+		// Sinbad el ogro marino
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
+		if (E3_TRUCO) { // Sinbad usa el gran truco del famoso indio del libro
+			mSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
+			mSinbadNode->scale(20, 20, 20);
+			mSinbad = new Sinbad(mSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
+		}
+		else { // Sinbad usa un nodo intermedio
+			mTrucoSinbadNode = mSinbadNode->createChildSceneNode(); // para el (no-truco)
+			mTrucoSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
+			mTrucoSinbadNode->scale(20, 20, 20);
+			mSinbad = new Sinbad(mTrucoSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
+		}
+	}
+	else /*if (ENTREGA_ACTUAL == Entregas::Ent3_2)*/ { // ENTREGA_3 - Sinbad en atentado
+
 	}
 
 	//---------------------------------------------
