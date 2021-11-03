@@ -22,6 +22,7 @@
     <ClInclude Include="Aspa.h" />
     <ClInclude Include="AspasMolino.h" />
     <ClInclude Include="Avion.h" />
+    <ClInclude Include="Bomba.h" />
     <ClInclude Include="BrazoDron.h" />
     <ClInclude Include="Dron.h" />
     <ClInclude Include="IG2App.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="Aspa.cpp" />
     <ClCompile Include="AspasMolino.cpp" />
     <ClCompile Include="Avion.cpp" />
+    <ClCompile Include="Bomba.cpp" />
     <ClCompile Include="BrazoDron.cpp" />
     <ClCompile Include="Dron.cpp" />
     <ClCompile Include="IG2App.cpp" />

@@ -14,7 +14,7 @@ enum Entregas {
 	Ent1, Ent2, Ent3_1, Ent3_2
 };
 
-const Entregas ENTREGA_ACTUAL = Entregas::Ent3_1;
+const Entregas ENTREGA_ACTUAL = Entregas::Ent3_2;
 //
 const bool E1_RELOJ = 1;
 //
@@ -202,7 +202,7 @@ void IG2App::setupScene(void)
 	mLightNode->attachObject(luz);
 
 	mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
-	//lightNode->setPosition(0, 0, 1000);
+	mLightNode->setPosition(0, 100, 1000);
 
 
 	Light* luzA = mSM->createLight("LuzA");
@@ -246,7 +246,7 @@ void IG2App::setupScene(void)
 		planoNode->setPosition(0, 0, -1000);
 		planoNode->pitch(Ogre::Degree(90));
 		planoNode->setScale(3, 3, 3);
-		plano = new Plano(planoNode);
+		plano = new Plano(planoNode, "Plano");
 
 		// dron explorador
 		ficticioDronNode = mSM->getRootSceneNode()->createChildSceneNode();
@@ -308,7 +308,7 @@ void IG2App::setupScene(void)
 		planoNode->setPosition(0, 0, -1000);
 		planoNode->pitch(Ogre::Degree(90));
 		planoNode->setScale(3, 3, 3);
-		plano = new Plano(planoNode);
+		plano = new Plano(planoNode, "Plano");
 
 		// Sinbad el ogro marino
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
@@ -318,13 +318,42 @@ void IG2App::setupScene(void)
 			mSinbad = new Sinbad(mSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
 		}
 		else { // Sinbad usa un nodo intermedio
-			mTrucoSinbadNode = mSinbadNode->createChildSceneNode(); // para el (no-truco)
-			mTrucoSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
-			mTrucoSinbadNode->scale(20, 20, 20);
-			mSinbad = new Sinbad(mTrucoSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
+			mNoTrucoSinbadNode = mSinbadNode->createChildSceneNode(); // para el (no-truco)
+			mNoTrucoSinbadNode->translate(0, E3_ALTURA_SINBAD, 0);
+			mNoTrucoSinbadNode->scale(20, 20, 20);
+			mSinbad = new Sinbad(mNoTrucoSinbadNode, E3_TRUCO, E3_ALTURA_SINBAD);
 		}
 	}
-	else /*if (ENTREGA_ACTUAL == Entregas::Ent3_2)*/ { // ENTREGA_3 - Sinbad en atentado
+	else if (ENTREGA_ACTUAL == Entregas::Ent3_2) { // ENTREGA_3 - Sinbad en atentado 
+		// río -> plano con textura 
+		planoNode= mSM->getRootSceneNode()->createChildSceneNode();
+		planoNode->setScale(3, 3, 3);
+		planoNode->setPosition(0, 0, 0);
+		plano = new Plano(planoNode, "RioAgua"); // RioPiedras
+
+		// plataforma amarilla
+		Ogre::SceneNode* platAmarilla= mSM->getRootSceneNode()->createChildSceneNode();
+		platAmarilla->setPosition(-1000, 5, 1000);
+		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
+
+		// plataforma roja
+		Ogre::SceneNode* platRoja= mSM->getRootSceneNode()->createChildSceneNode();
+		platRoja->setPosition(1000, 5, -1000);
+		Plano* pRoja = new Plano(platRoja, "PlataformaRoja");
+
+		// bomba
+		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
+		bombaNode->setScale(30, 30, 30);
+		bombaNode->setPosition(0, 10, 0);
+		bomba = new Bomba(bombaNode, "Bomba");
+
+		// Sinbad el ogro marino
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
+		mSinbadNode->translate(100, 100, 100);
+		mSinbadNode->scale(20, 20, 20);
+		mSinbad = new Sinbad(mSinbadNode);
+	}
+	else { // ENTREGA_???
 
 	}
 

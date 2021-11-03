@@ -12,6 +12,7 @@
 #include "Dron.h"
 #include "Avion.h"
 #include "Sinbad.h"
+#include "Bomba.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener
 {
@@ -63,11 +64,13 @@ protected:
 	Ogre::SceneNode* ficticioAvionNode;
 	Ogre::SceneNode* medioAvionNode = nullptr;
 
-
 	//E3
 	Sinbad* mSinbad = nullptr;
 	Ogre::SceneNode* mSinbadNode = nullptr;
-	Ogre::SceneNode* mTrucoSinbadNode = nullptr;
+	Ogre::SceneNode* mNoTrucoSinbadNode = nullptr;
+	//
+	Bomba* bomba = nullptr;
+	Ogre::SceneNode* bombaNode = nullptr;
 };
 
 #endif

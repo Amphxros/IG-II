@@ -217,7 +217,6 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 	default:
 		break;
 	}
-
 	return true;
 }
 
