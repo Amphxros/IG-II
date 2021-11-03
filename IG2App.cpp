@@ -91,6 +91,10 @@ void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 		// evento pasa a Sinbad
 		mSinbad->frameRendered(evt);
 	}
+	if (bombaNode) { ///TODO: preguntar al profe si esto se hace así // !!!
+		// evento pasa a la bomba
+		bomba->frameRendered(evt);
+	}
 }
 
 void IG2App::createClock()
