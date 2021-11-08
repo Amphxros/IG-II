@@ -58,8 +58,19 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			ficticioDronNode->yaw(Ogre::Degree(5.0)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
 		}
 		break;
-	}
 
+	case SDLK_t:
+		if (ENTREGA_ACTUAL == Entregas::Ent3_2 && planoNode) {
+			
+			if (bombaNode) {
+				bomba->sendEvent(bomba);
+				plano->sendEvent(bomba);
+				
+			}
+		}
+
+		break;
+	}
 	// evento pasa al molino
 	if (mMolino_) mMolino_->keyPressed(evt);
 	// evento pasa a los drones
@@ -69,7 +80,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mAvion_) mAvion_->keyPressed(evt);
 	// evento pasa a Sinbad
 	if (mSinbad) mSinbad->keyPressed(evt);
-
+	
 	return true;
 }
 

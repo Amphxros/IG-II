@@ -13,10 +13,12 @@ public:
     virtual ~Bomba() {};
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);
-
+    virtual void receiveEvent(EntidadIG* entidad);
 protected:
     Ogre::Animation* animation;
     Ogre::NodeAnimationTrack* track;
     Ogre::Real animDuration = 6;
     Ogre::AnimationState* animationState;
+    bool hasExploted = false;
+    inline void explode() { hasExploted = true;  } //proximamente habra que cambiar esto por un generador y explotar de verdad
 };

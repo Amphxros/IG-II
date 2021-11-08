@@ -3,7 +3,7 @@
 #include <SDL_keycode.h>
 #include <iostream>
 #include <OgreTimer.h>
-
+#include "Bomba.h"
 Sinbad::Sinbad(Ogre::SceneNode* mNode, bool Truco, int Altura)
 	: EntidadIG(mNode), TRUCO(Truco), ALTURA(Altura)
 {
@@ -24,7 +24,7 @@ void Sinbad::generaSinbad()
 
 	entity = mSM->createEntity("Sinbad.mesh");
 	mNode_->attachObject(entity);
-
+	this->addListener(this);
 	/// Mostrar estados de animación
 	if (SHOW_ANIMS) {
 		Ogre::AnimationStateSet* aux = entity->getAllAnimationStates();
@@ -218,6 +218,11 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 	}
 	return true;
+}
+
+void Sinbad::receiveEvent(EntidadIG* entidad)
+{
+	
 }
 
 void Sinbad::cPressed()
