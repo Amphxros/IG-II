@@ -10,6 +10,7 @@ Plano::Plano(Ogre::SceneNode* mNode, std::string mat):
 	mPlano->setMaterialName(material);
 	mNode_->attachObject(mPlano);
 
+	mTimer = new Ogre::Timer();
 }
 
 void Plano::createMesh()
@@ -23,15 +24,15 @@ void Plano::createMesh()
 
 void Plano::receiveEvent(EntidadIG* entidad)
 {
-	if (static_cast<Bomba*>(entidad) != nullptr) {
+	if (dynamic_cast<Bomba*>(entidad) != nullptr) {
 		changingMat = true;
-		mTimer = new Ogre::Timer();
+		mTimer->reset();
 	}
 }
 
 void Plano::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (changingMat && mTimer->getMilliseconds()>=5000 && material=="RioAgua") {
+	if (changingMat && mTimer->getMilliseconds()>=DELTA && material=="RioAgua") {
 		mPlano->setMaterialName("RioPiedras");
 	}
 }

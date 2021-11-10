@@ -23,5 +23,6 @@ protected:
     std::string material;
     Ogre::Timer* mTimer;
     bool changingMat = false;
+    const float DELTA = 5000;
 };
 

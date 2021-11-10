@@ -80,7 +80,6 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mAvion_) mAvion_->keyPressed(evt);
 	// evento pasa a Sinbad
 	if (mSinbad) mSinbad->keyPressed(evt);
-	
 	return true;
 }
 
@@ -106,6 +105,7 @@ void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 		// evento pasa a la bomba
 		bomba->frameRendered(evt);
 	}
+	if (planoNode) plano->frameRendered(evt);
 }
 
 void IG2App::createClock()
