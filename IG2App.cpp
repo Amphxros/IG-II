@@ -60,12 +60,10 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 
 	case SDLK_t:
-		if (ENTREGA_ACTUAL == Entregas::Ent3_2 && planoNode) {
-			
+		// explosión bomba en E3
+		if (ENTREGA_ACTUAL == Entregas::Ent3_2) {
 			if (bombaNode) {
 				bomba->sendEvent(bomba);
-				plano->sendEvent(bomba);
-				
 			}
 		}
 
@@ -344,7 +342,8 @@ void IG2App::setupScene(void)
 		planoNode= mSM->getRootSceneNode()->createChildSceneNode();
 		planoNode->setScale(3, 3, 3);
 		planoNode->setPosition(0, 0, 0);
-		plano = new Plano(planoNode, "RioAgua"); // RioPiedras
+		plano = new Plano(planoNode, "RioAgua");
+		EntidadIG::addListener(plano);
 
 		// plataforma amarilla
 		Ogre::SceneNode* platAmarilla= mSM->getRootSceneNode()->createChildSceneNode();
@@ -361,12 +360,14 @@ void IG2App::setupScene(void)
 		bombaNode->setScale(30, 30, 30);
 		bombaNode->setPosition(0, 10, 0);
 		bomba = new Bomba(bombaNode, "Bomba");
+		EntidadIG::addListener(bomba);
 
 		// Sinbad el ogro marino
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
 		mSinbadNode->translate(100, 100, 100);
 		mSinbadNode->scale(20, 20, 20);
 		mSinbad = new Sinbad(mSinbadNode);
+		EntidadIG::addListener(mSinbad);
 	}
 	else { // ENTREGA_???
 

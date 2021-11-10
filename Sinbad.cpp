@@ -24,7 +24,6 @@ void Sinbad::generaSinbad()
 
 	entity = mSM->createEntity("Sinbad.mesh");
 	mNode_->attachObject(entity);
-	this->addListener(this);
 	/// Mostrar estados de animación
 	if (SHOW_ANIMS) {
 		Ogre::AnimationStateSet* aux = entity->getAllAnimationStates();
@@ -38,6 +37,7 @@ void Sinbad::generaSinbad()
 	}
 
 	c_pressed = false;
+	dead = false;
 
 	// al principio Sinbad camina (no baila)
 
@@ -50,6 +50,10 @@ void Sinbad::generaSinbad()
 	animationStateTop->setLoop(true);
 
 	animationStateDancing = entity->getAnimationState("Dance");
+	animationStateDancing->setEnabled(false);
+	animationStateDancing->setLoop(true);
+
+	animationStateDead = entity->getAnimationState("HandsRelaxed");
 	animationStateDancing->setEnabled(false);
 	animationStateDancing->setLoop(true);
 
@@ -125,6 +129,11 @@ void Sinbad::cambiaEspada()
 
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
+	if (dead) {
+		animationStateDead->addTime(evt.timeSinceLastFrame);
+		return;
+	}
+
 	if (c_pressed) {
 		// actualización de animaciones esqueletales: bailar
 		animationStateDancing->addTime(evt.timeSinceLastFrame);
@@ -222,7 +231,22 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Sinbad::receiveEvent(EntidadIG* entidad)
 {
-	
+	if (dynamic_cast<Bomba*>(entidad) != nullptr){
+		die();
+	}
+}
+
+void Sinbad::die()
+{
+	if (!dead) {
+		// cambio de animaciones esqueletales: Sinbad ha de morirse
+		animationStateBottom->setEnabled(false);
+		animationStateTop->setEnabled(false);
+		animationStateDancing->setEnabled(false);
+		animationStateDead->setEnabled(true);
+		dead = true;
+		///TODO: temporizador para que no sea al instante
+	}
 }
 
 void Sinbad::cPressed()

@@ -1,7 +1,6 @@
 #include "Bomba.h"
 
 Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
-    addListener(this);
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
     mNode_->setScale(20,20,20);
     ent->setMaterialName(mat);
@@ -61,7 +60,7 @@ void Bomba::frameRendered(const Ogre::FrameEvent& evt)
 
 void Bomba::receiveEvent(EntidadIG* entidad)
 {
-    if (static_cast<Bomba*>(entidad) != nullptr) {
+    if (dynamic_cast<Bomba*>(entidad) != nullptr) {
         mNode_->setPosition(Ogre::Vector3(0, 0, 0)); //para resetearla a su posicion de origen
         explode();
     }

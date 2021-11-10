@@ -4,7 +4,6 @@
 Plano::Plano(Ogre::SceneNode* mNode, std::string mat): 
 	EntidadIG(mNode), material(mat)
 {
-	this->addListener(this);
 	createMesh();
 	mPlano = mSM->createEntity("mPlane1080x800" + material);
 	mPlano->setMaterialName(material);
@@ -32,7 +31,7 @@ void Plano::receiveEvent(EntidadIG* entidad)
 
 void Plano::frameRendered(const Ogre::FrameEvent& evt)
 {
-	if (changingMat && mTimer->getMilliseconds()>=DELTA && material=="RioAgua") {
+	if (changingMat && mTimer->getMilliseconds()>=DELTA) {
 		mPlano->setMaterialName("RioPiedras");
 		changingMat = false;
 	}

@@ -22,6 +22,7 @@ protected:
     Ogre::AnimationState* animationStateBottom;
     Ogre::AnimationState* animationStateTop;
     Ogre::AnimationState* animationStateDancing;
+    Ogre::AnimationState* animationStateDead;
 
     Ogre::Timer* mTimer_; // temporizador
     const int DELTA_DESPL = 5000;
@@ -35,6 +36,9 @@ protected:
     void cambiaEspada();
     bool rightHandOccupied;
     bool leftHandOccupied;
+
+    void die();
+    bool dead;
 
     void cPressed();
     bool c_pressed;
