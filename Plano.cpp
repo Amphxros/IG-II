@@ -34,5 +34,6 @@ void Plano::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (changingMat && mTimer->getMilliseconds()>=DELTA && material=="RioAgua") {
 		mPlano->setMaterialName("RioPiedras");
+		changingMat = false;
 	}
 }

@@ -14,21 +14,37 @@ Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
     Ogre::Real durPaso = animDuration / 4.0; // 4 pasos intermedios de la misma duración
     
     //animaciones
+    Ogre::Vector3 eje(0, 1, 0);
+    float angulo = 0;
     Ogre::TransformKeyFrame* kf; // 5 keyFrames: origen(0), arriba, origen, abajo, origen(4)
+    // Origen
     kf = track->createNodeKeyFrame(durPaso * 0);
-    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0)); // Origen
+    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
+    kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
     kf->setScale({ 30, 30, 30 });
+    // Arriba
     kf = track->createNodeKeyFrame(durPaso * 1);
-    kf->setTranslate(Ogre::Vector3(-100.0, 10.0, 100.0)); // Arriba
+    kf->setTranslate(Ogre::Vector3(-100.0, 100.0, 100.0));
+    angulo += (45/2);
+    kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
     kf->setScale({ 30, 30, 30 });
+    // Origen
     kf = track->createNodeKeyFrame(durPaso * 2);
-    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0)); // Origen
+    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
+    angulo -= (45 / 2);
+    kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
     kf->setScale({ 30, 30, 30 });
+    // Abajo
     kf = track->createNodeKeyFrame(durPaso * 3);
-    kf->setTranslate(Ogre::Vector3(-100.0, -10.0, 100.0)); // Abajo
+    kf->setTranslate(Ogre::Vector3(-100.0, -100.0, 100.0));
+    angulo -= (45 / 2);
+    kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
     kf->setScale({ 30, 30, 30 });
+    // Origen
     kf = track->createNodeKeyFrame(durPaso * 4);
-    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0)); // Origen
+    kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
+    angulo += (45 / 2);
+    kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
     kf->setScale({ 30, 30, 30 });
 
     animationState = mSM->createAnimationState("BombaFlota");
