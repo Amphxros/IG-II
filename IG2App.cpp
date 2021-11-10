@@ -357,10 +357,18 @@ void IG2App::setupScene(void)
 
 		// bomba
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
-		bombaNode->setScale(30, 30, 30);
 		bombaNode->setPosition(0, 10, 0);
+		bombaNode->setScale(30, 30, 30);
 		bomba = new Bomba(bombaNode, "Bomba");
 		EntidadIG::addListener(bomba);
+
+		// cara perturbadora
+		Ogre::SceneNode* faceNode = mSM->getRootSceneNode()->createChildSceneNode();
+		faceNode->setPosition(1000, 100, -1000);
+		faceNode->scale(0.5, 0.5, 0.5);
+		Entity* face = mSM->createEntity("sphere.mesh");
+		face->setMaterialName("ObamaSphere"); //SmilySphere
+		faceNode->attachObject(face);
 
 		// Sinbad el ogro marino
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
