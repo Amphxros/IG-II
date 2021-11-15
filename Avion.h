@@ -8,7 +8,7 @@ const bool OBAMA_SPH = 1;
 class Avion : public EntidadIG
 {
 public:
-    Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura);
+    Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate);
     virtual ~Avion();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
@@ -42,4 +42,7 @@ private:
     // E2 mov. autónomo
     const bool TRUCO = -1;
     const int ALTURA = -1;
+
+    // E3 mov. en torno a bomba
+    bool atentado;
 };

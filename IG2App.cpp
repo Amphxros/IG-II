@@ -24,6 +24,8 @@ const float E2_ALTURA_AVION = 700;
 //
 const bool E3_TRUCO = 1;
 const float E3_ALTURA_SINBAD = 600;
+const float E3_DISTANCIA_AVION = 400;
+const float E3_ALTITUD_AVION = 500;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -283,7 +285,7 @@ void IG2App::setupScene(void)
 
 			// avion ninja
 			ficticioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false);
 			EntidadIG::addListener(mAvion_);
 		}
 		else {
@@ -304,7 +306,7 @@ void IG2App::setupScene(void)
 			// avion ninja
 			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
 			medioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false);
 			EntidadIG::addListener(mAvion_);
 		}
 	}
@@ -367,15 +369,27 @@ void IG2App::setupScene(void)
 		faceNode->setPosition(1000, 100, -1000);
 		faceNode->scale(0.5, 0.5, 0.5);
 		Entity* face = mSM->createEntity("sphere.mesh");
-		face->setMaterialName("ObamaSphere"); //SmilySphere
+		face->setMaterialName("SmilySphere"); //ObamaSphere
 		faceNode->attachObject(face);
 
 		// Sinbad el ogro marino
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
 		mSinbadNode->translate(-1000, 100, 1000);
 		mSinbadNode->scale(20, 20, 20);
-		mSinbad = new Sinbad(mSinbadNode, false);
+		mSinbad = new Sinbad(mSinbadNode, true);
 		EntidadIG::addListener(mSinbad);
+
+		// avión
+		ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
+		if (E3_TRUCO) {
+			ficticioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
+		}
+		else {
+			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
+			medioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
+		}
 	}
 	else { // ENTREGA_???
 

@@ -1,8 +1,8 @@
 #include "Avion.h"
 #include <SDL.h>
 
-Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura)
-	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura)
+Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate)
+	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura), atentado(ate)
 {
 	mTimer_ = new Ogre::Timer();
 	mTimer_->reset();
@@ -81,39 +81,51 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 
 	//---
 
-	// movimiento autónomo por el planeta //
-
-	if (TRUCO == -1 || ALTURA == -1) return;
-
-	if (estadoDeParada) { // ver si toca moverse
-		if (mTimer_->getMilliseconds() >= DELTA_PARADA) { // toca moverse?
-			estadoDeParada = false;
-			mTimer_->reset();
-
-			// cambio de órbita //
-			bool cw = rand() % 2;
-			float angle = rand() % 180;
-			if (!cw) angle *= -1;
-			// (truco)
-			if (TRUCO) mNode_->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
-			// (no-truco)
-			else mNode_->getParent()->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+	if (atentado) {
+		// movimiento en torno a la bomba del río //
+		if (TRUCO) { // (truco)
+			mNode_->translate(-ALTURA, 0, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+			mNode_->yaw(Ogre::Degree(-0.5));
+			mNode_->translate(ALTURA, 0, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
 		}
+		// (no-truco)
+		else mNode_->getParent()->yaw(Ogre::Degree(-0.5));
 	}
-	else { // ver si toca pararse
-		if (mTimer_->getMilliseconds() >= DELTA_DESPL) { // toca pararse?
-			estadoDeParada = true;
-			mTimer_->reset();
-		}
-		else {
-			// el movimiento debe seguir
-			if (TRUCO) { // (truco)
-				mNode_->translate(0, -ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
-				mNode_->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
-				mNode_->translate(0, ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+	else {
+		// movimiento autónomo por el planeta //
+
+		if (TRUCO == -1 || ALTURA == -1) return;
+
+		if (estadoDeParada) { // ver si toca moverse
+			if (mTimer_->getMilliseconds() >= DELTA_PARADA) { // toca moverse?
+				estadoDeParada = false;
+				mTimer_->reset();
+
+				// cambio de órbita //
+				bool cw = rand() % 2;
+				float angle = rand() % 180;
+				if (!cw) angle *= -1;
+				// (truco)
+				if (TRUCO) mNode_->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+				// (no-truco)
+				else mNode_->getParent()->yaw(Ogre::Degree(angle)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
 			}
-			// (no-truco)
-			else mNode_->getParent()->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+		}
+		else { // ver si toca pararse
+			if (mTimer_->getMilliseconds() >= DELTA_DESPL) { // toca pararse?
+				estadoDeParada = true;
+				mTimer_->reset();
+			}
+			else {
+				// el movimiento debe seguir
+				if (TRUCO) { // (truco)
+					mNode_->translate(0, -ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+					mNode_->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+					mNode_->translate(0, ALTURA, 0, Ogre::Node::TransformSpace::TS_LOCAL); // !
+				}
+				// (no-truco)
+				else mNode_->getParent()->pitch(Ogre::Degree(0.5)/*, Ogre::Node::TransformSpace::TS_LOCAL*/);
+			}
 		}
 	}
 }
