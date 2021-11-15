@@ -8,8 +8,9 @@ const bool DANCE_AT_REST = 1;
 class Sinbad : public EntidadIG
 {
 public:
+    Sinbad(Ogre::SceneNode* mNode, bool cam); // camina
     Sinbad(Ogre::SceneNode* mNode, bool Truco, int Altura); // orbita
-    Sinbad(Ogre::SceneNode* mNode); // no orbita
+    Sinbad(Ogre::SceneNode* mNode); // no orbita ni camina
     virtual ~Sinbad() {};
     
     virtual void frameRendered(const Ogre::FrameEvent& evt);
@@ -23,6 +24,14 @@ protected:
     Ogre::AnimationState* animationStateTop;
     Ogre::AnimationState* animationStateDancing;
     Ogre::AnimationState* animationStateDead;
+
+    // carrera en el río
+    Ogre::Animation* mvAnimation;
+    Ogre::NodeAnimationTrack* mvTrack;
+    Ogre::Real mvAnimDuration = 12;
+    Ogre::AnimationState* mvAnimationState;
+    void configMvAnim();
+    bool caminante;
 
     Ogre::Timer* mTimer_; // temporizador
     const int DELTA_DESPL = 5000;

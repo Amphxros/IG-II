@@ -4,16 +4,77 @@
 #include <iostream>
 #include <OgreTimer.h>
 #include "Bomba.h"
+
+Sinbad::Sinbad(Ogre::SceneNode* mNode, bool cam)
+	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminante(cam) {
+	generaSinbad();
+}
 Sinbad::Sinbad(Ogre::SceneNode* mNode, bool Truco, int Altura)
-	: EntidadIG(mNode), TRUCO(Truco), ALTURA(Altura)
-{
+	: EntidadIG(mNode), TRUCO(Truco), ALTURA(Altura), caminante(false) {
+	generaSinbad();
+}
+Sinbad::Sinbad(Ogre::SceneNode* mNode)
+	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminante(false) {
 	generaSinbad();
 }
 
-Sinbad::Sinbad(Ogre::SceneNode* mNode)
-	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1)
-{
-	generaSinbad();
+void Sinbad::configMvAnim() {
+	mvAnimation = mSM->createAnimation("CarreraRio", mvAnimDuration);
+	mvTrack = mvAnimation->createNodeTrack(0);
+	mvTrack->setAssociatedNode(mNode_);
+	Ogre::Real durPaso = mvAnimDuration / 5.0; // 5 pasos intermedios de la misma duración
+	//
+	// fotogramas
+	Ogre::Vector3 destinoRojo(1000, 100, -1000);
+	Ogre::Vector3 destinoAmarillo(-1000, 100, 1000);
+	Ogre::Vector3 ejeRot(0, 1, 0);
+	float anguloRot = 0;
+	Ogre::TransformKeyFrame* kf;
+	/* 6 keyFrames:
+	origen
+	giroRojo
+	pasoRojo
+	giroAmarillo
+	pasoAmarillo
+	giroOrigen */
+	/**/
+	// Origen (estoy en amarillo)
+	kf = mvTrack->createNodeKeyFrame(durPaso * 0);
+	kf->setTranslate(destinoAmarillo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	// GiroRojo (sigo en amarillo)
+	kf = mvTrack->createNodeKeyFrame(durPaso * 1);
+	anguloRot += 135;
+	kf->setTranslate(destinoAmarillo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	// PasoRojo (ya no estoy en amarillo)
+	kf = mvTrack->createNodeKeyFrame(durPaso * 2);
+	kf->setTranslate(destinoRojo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	// GiroAmarillo
+	kf = mvTrack->createNodeKeyFrame(durPaso * 3);
+	anguloRot -= 180;
+	kf->setTranslate(destinoRojo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	// PasoAmarillo
+	kf = mvTrack->createNodeKeyFrame(durPaso * 4);
+	kf->setTranslate(destinoAmarillo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	// GiroOrigen
+	kf = mvTrack->createNodeKeyFrame(durPaso * 5);
+	anguloRot += 45;
+	kf->setTranslate(destinoAmarillo);
+	kf->setRotation(Ogre::Quaternion(Ogre::Degree(anguloRot), ejeRot));
+	kf->setScale({ 20, 20, 20 });
+	//
+	mvAnimationState = mSM->createAnimationState("CarreraRio");
+	mvAnimationState->setLoop(true);
+	mvAnimationState->setEnabled(true);
 }
 
 void Sinbad::generaSinbad()
@@ -56,6 +117,10 @@ void Sinbad::generaSinbad()
 	animationStateDead = entity->getAnimationState("HandsRelaxed");
 	animationStateDancing->setEnabled(false);
 	animationStateDancing->setLoop(true);
+
+	// animación: carrera en el río
+	// (solo para la parte 2 de la E3 (de la práctica 1))
+	if (caminante) configMvAnim();
 
 	// espadas uwu
 	rightSword = mSM->createEntity("Sword.mesh");
@@ -130,8 +195,13 @@ void Sinbad::cambiaEspada()
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (dead) {
+		// animación esqueletal de moribundo
 		animationStateDead->addTime(evt.timeSinceLastFrame);
 		return;
+	}
+	else {
+		if (caminante) // carrera en el río (animación de nodo)
+			mvAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 
 	if (c_pressed) {
@@ -245,12 +315,15 @@ void Sinbad::die()
 		animationStateDancing->setEnabled(false);
 		animationStateDead->setEnabled(true);
 		dead = true;
+		////mvAnimationState->setEnabled(false);
 		///TODO: temporizador para que no sea al instante
 	}
 }
 
 void Sinbad::cPressed()
 {
+	if (dead) return;
+
 	c_pressed = !c_pressed; // palanca
 	if (c_pressed) {
 		// cambio de animaciones esqueletales: Sinbad ha de bailar

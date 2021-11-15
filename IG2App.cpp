@@ -372,9 +372,9 @@ void IG2App::setupScene(void)
 
 		// Sinbad el ogro marino
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
-		mSinbadNode->translate(100, 100, 100);
+		mSinbadNode->translate(-1000, 100, 1000);
 		mSinbadNode->scale(20, 20, 20);
-		mSinbad = new Sinbad(mSinbadNode);
+		mSinbad = new Sinbad(mSinbadNode, false);
 		EntidadIG::addListener(mSinbad);
 	}
 	else { // ENTREGA_???

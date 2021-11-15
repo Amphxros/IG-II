@@ -12,7 +12,7 @@ Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
     track->setAssociatedNode(mNode_);
     Ogre::Real durPaso = animDuration / 4.0; // 4 pasos intermedios de la misma duración
     
-    //animaciones
+    // fotogramas
     Ogre::Vector3 eje(0, 1, 0);
     float angulo = 0;
     Ogre::TransformKeyFrame* kf; // 5 keyFrames: origen(0), arriba, origen, abajo, origen(4)
