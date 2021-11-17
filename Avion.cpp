@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "Plano.h"
 #include <OGRE/OgreParticleSystem.h>
+#include <OGRE/OgreBillboardSet.h>
+#include <OGRE/OgreBillboard.h>
 Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate)
 	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura), atentado(ate)
 {
@@ -58,15 +60,22 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Tru
 	addListener(aspasD);
 
 	pointsNode_ = mNode_->createChildSceneNode();
-	pointsNode_->setPosition(0, 0, -100);
-	pointsNode_->pitch(Ogre::Degree(90));
-	Plano* plano= new Plano(pointsNode_,"PointsBillboard");
+	pointsNode_->setPosition(0, 30, -150);
+	pointsNode_->pitch(Ogre::Degree(-90));
 	
-	//particleNode_ = mNode_->createChildSceneNode();
-	//particleNode_->setPosition(0, -50, -100);
-	//particleSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
-	//particleSys_->setEmitting(true);
-	//particleNode_->attachObject(particleSys_);
+	BillboardSet* points = mSM->createBillboardSet("b", 1);
+	Billboard* bb = points->createBillboard(Vector3(0, 0, 0));
+	points->setDefaultDimensions(50, 50);
+	points->setMaterialName("PointsBillboard");
+	pointsNode_->attachObject(points);
+
+
+
+	particleNode_ = mNode_->createChildSceneNode();
+	particleNode_->setPosition(0, -50, -100);
+	particleSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
+	particleSys_->setEmitting(true);
+	particleNode_->attachObject(particleSys_);
 
 
 	Light* luz = mSM->createLight();
