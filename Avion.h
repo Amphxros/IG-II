@@ -3,7 +3,7 @@
 #include "AspasMolino.h"
 #include <OgreTimer.h>
 
-const bool OBAMA_SPH = 1;
+const bool OBAMA_SPH = 0;
 
 class Avion : public EntidadIG
 {
@@ -23,10 +23,14 @@ private:
     Ogre::SceneNode* heliceINode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* luzNode_; // foco
-    
+    Ogre::SceneNode* pointsNode_;
+    Ogre::SceneNode* particleNode_;
+
     Ogre::Entity* alaA;     //entidad del  ala izq
     Ogre::Entity* alaB;     //entidad del ala der
     Ogre::Entity* body;     //entidad de la esfera central
+
+    Ogre::ParticleSystem* particleSys_;
 
     bool r_pressed = false;
     int numAspas_;

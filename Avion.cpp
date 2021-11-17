@@ -1,6 +1,7 @@
 #include "Avion.h"
 #include <SDL.h>
-
+#include "Plano.h"
+#include <OGRE/OgreParticleSystem.h>
 Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate)
 	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura), atentado(ate)
 {
@@ -55,6 +56,18 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Tru
 	heliceDNode_->setScale(0.5, 0.5, 0.5);
 	aspasD = new AspasMolino(heliceDNode_, numAspas_, 10, true, 1);
 	addListener(aspasD);
+
+	pointsNode_ = mNode_->createChildSceneNode();
+	pointsNode_->setPosition(0, 0, -100);
+	pointsNode_->pitch(Ogre::Degree(90));
+	Plano* plano= new Plano(pointsNode_,"PointsBillboard");
+	
+	//particleNode_ = mNode_->createChildSceneNode();
+	//particleNode_->setPosition(0, -50, -100);
+	//particleSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
+	//particleSys_->setEmitting(true);
+	//particleNode_->attachObject(particleSys_);
+
 
 	Light* luz = mSM->createLight();
 	luz->setType(Ogre::Light::LT_SPOTLIGHT);

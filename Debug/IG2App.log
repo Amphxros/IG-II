@@ -1,0 +1,15 @@
+﻿  Avion.cpp
+U:\UCM_Repos\IG\Practica2\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,45): warning C4251: 'Ogre::HardwareBuffer::mShadowBuffer': class 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::HardwareBuffer'
+U:\UCM_Repos\IG\Practica2\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message : vea la declaración de 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>'
+U:\UCM_Repos\IG\Practica2\OGREsdk\include\OGRE\OgreTimer.h(41,47): warning C4251: 'Ogre::Timer::start': class 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::Timer'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\chrono(701): message : vea la declaración de 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.h(47,22): warning C4305: 'inicializando': truncamiento de 'int' a 'const bool'
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(100,22): warning C4244: 'argumento': conversión de 'const int' a 'Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(102,22): warning C4244: 'argumento': conversión de 'const int' a 'Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(110,17): warning C4806: '==': operación no segura: ningún valor del tipo 'const bool' promovido al tipo 'int' puede igualar la constante proporcionada
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(113,35): warning C4018: '>=': no coinciden signed/unsigned
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(119,17): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(128,35): warning C4018: '>=': no coinciden signed/unsigned
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(135,27): warning C4244: 'argumento': conversión de 'const int' a 'Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\Avion.cpp(137,27): warning C4244: 'argumento': conversión de 'const int' a 'Ogre::Real'; posible pérdida de datos
+  IG2App.vcxproj -> U:\UCM_Repos\IG\Practica2\bin\IG2AppDebug.exe
