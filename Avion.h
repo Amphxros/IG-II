@@ -52,6 +52,6 @@ private:
     const bool TRUCO = -1;
     const int ALTURA = -1;
 
-    // E3 mov. en torno a bomba
+    // E3 mov. en torno a bomba y violación del tratado de Ginebra
     bool atentado;
 };

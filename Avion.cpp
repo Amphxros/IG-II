@@ -158,8 +158,9 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 		this->sendEvent(this);
 		break;
 	case SDLK_r: ///TODO: Debe hacerse mediante eventos //!!!
-		explode();
-		//setRPressed();
+		// si se está en la entrega del río, el avión en lugar de detenerse explota
+		if (atentado) explode();
+		else setRPressed();
 		break;
 	}
 	// el evento keyPressed (evento a la antigua) no pasa más allá en este método, ...
