@@ -7,7 +7,8 @@
 
 #include "EntidadIG.h"
 #include "Plano.h"
-
+#include <OGRE/OgreBillboardSet.h>
+#include <OGRE/OgreBillboard.h>
 using namespace Ogre;
 
 enum Entregas {
@@ -390,6 +391,19 @@ void IG2App::setupScene(void)
 			medioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
 			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
 		}
+		Ogre::SceneNode* fogNode= mSM->getRootSceneNode()->createChildSceneNode();
+		fogNode->setPosition(Vector3(50, 250, -100));
+		Ogre::BillboardSet* fog = mSM->createBillboardSet("fog", 20);
+		fog->setDefaultDimensions(1000, 1000);
+		fog->setMaterialName("Smoke");
+		for (int i = 0; i < 20; i++) {
+			Ogre::Billboard* bb = fog->createBillboard(Vector3(i, i, i));
+			bb->setPosition(Vector3(300 * (i%3), 150+ 100* (i%3), -300 * (i%5)));
+
+		}
+
+		fogNode->attachObject(fog);
+
 	}
 	else { // ENTREGA_???
 
