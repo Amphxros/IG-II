@@ -10,6 +10,7 @@ public:
 	Aspa(Ogre::SceneNode* mNode, double largo, double ancho, double prof, bool orn);
 	virtual ~Aspa() {};
 	Ogre::SceneNode* getAdornoNode() { return adornoNode; }
+	Ogre::SceneNode* getTabNode() { return tabNode; }
 
 protected:
 	double largo_, ancho_, prof_;
