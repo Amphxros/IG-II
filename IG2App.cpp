@@ -399,7 +399,6 @@ void IG2App::setupScene(void)
 		for (int i = 0; i < 20; i++) {
 			Ogre::Billboard* bb = fog->createBillboard(Vector3(i, i, i));
 			bb->setPosition(Vector3(300 * (i%3), 150+ 100* (i%3), -300 * (i%5)));
-
 		}
 
 		fogNode->attachObject(fog);

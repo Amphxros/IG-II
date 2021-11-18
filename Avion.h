@@ -15,6 +15,9 @@ public:
     virtual void frameRendered(const Ogre::FrameEvent& evt);
     void setRPressed();
 private:
+
+    void explode();
+
     Ogre::SceneNode* cuerpoNode_; // esfera de la nave
     Ogre::SceneNode* frenteNode_; // cilindro de la parte delantera
     Ogre::SceneNode* pilotoNode_; // ninja
@@ -24,13 +27,15 @@ private:
     Ogre::SceneNode* heliceDNode_; // helice derecha (AspasMolino)
     Ogre::SceneNode* luzNode_; // foco
     Ogre::SceneNode* pointsNode_;
-    Ogre::SceneNode* particleNode_;
-
+    Ogre::SceneNode* particleTrailNode_;
+    Ogre::SceneNode* explosionNode_;
+    Ogre::SceneNode* particleExplosionNode_;
     Ogre::Entity* alaA;     //entidad del  ala izq
     Ogre::Entity* alaB;     //entidad del ala der
     Ogre::Entity* body;     //entidad de la esfera central
 
-    Ogre::ParticleSystem* particleSys_;
+    Ogre::ParticleSystem* particleTrailSys_;
+    Ogre::ParticleSystem* particleExplosionSys_;
 
     bool r_pressed = false;
     int numAspas_;

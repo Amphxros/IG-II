@@ -71,11 +71,11 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Tru
 
 
 
-	particleNode_ = mNode_->createChildSceneNode();
-	particleNode_->setPosition(0, -50, -100);
-	particleSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
-	particleSys_->setEmitting(true);
-	particleNode_->attachObject(particleSys_);
+	particleTrailNode_ = mNode_->createChildSceneNode();
+	particleTrailNode_->setPosition(0, -50, -100);
+	particleTrailSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
+	particleTrailSys_->setEmitting(true);
+	particleTrailNode_->attachObject(particleTrailSys_);
 
 
 	Light* luz = mSM->createLight();
@@ -161,7 +161,8 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 		this->sendEvent(this);
 		break;
 	case SDLK_r: ///TODO: Debe hacerse mediante eventos //!!!
-		setRPressed();
+		explode();
+		//setRPressed();
 		break;
 	}
 	// el evento keyPressed (evento a la antigua) no pasa más allá en este método, ...
@@ -171,7 +172,6 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Avion::setRPressed()
 {
-	r_pressed = !r_pressed;
 	// las alas del avión se vuelven rojas
 	if (r_pressed) {
 		alaA->setMaterialName("AlaAvionR");
@@ -181,4 +181,29 @@ void Avion::setRPressed()
 		alaA->setMaterialName("AlaAvion");
 		alaB->setMaterialName("AlaAvion");
 	}
+}
+
+void Avion::explode()
+{
+
+	particleExplosionNode_ = mNode_->createChildSceneNode();
+	particleExplosionSys_ = mSM->createParticleSystem("explosion", "IG2App/Explosion");
+	particleExplosionSys_->setEmitting(true);
+	particleExplosionNode_->attachObject(particleExplosionSys_);
+	//ocultamos todo 
+	cuerpoNode_->detachAllObjects();
+	pilotoNode_->detachAllObjects();
+	frenteNode_->detachAllObjects();
+	heliceDNode_->detachAllObjects();
+	heliceINode_->detachAllObjects();
+	alaDNode_->detachAllObjects();
+	alaINode_->detachAllObjects();
+	pointsNode_->detachAllObjects();
+	aspasD->eraseAll();
+	aspasI->eraseAll();
+	
+	
+	r_pressed = true;
+	// explota
+	
 }

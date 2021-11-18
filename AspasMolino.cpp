@@ -6,13 +6,16 @@ AspasMolino::AspasMolino(Ogre::SceneNode* mNode, int numAspas, double largo, boo
 {
 	mContainer = mNode_->createChildSceneNode();
 	mCenter = mNode_->createChildSceneNode();
-
+	vec.reserve(numAspas_);
+	mAspas_vec.reserve(numAspas_);
 	float angle = 90.0f;
 	for (int i = 0; i < numAspas_; i++) {
-		Aspa* a = new Aspa(mContainer->createChildSceneNode(), largo/30, largo/3 , 0.1, orn);
-		a->getNode()->roll(Ogre::Degree(angle));
+
+		vec[i] = mContainer->createChildSceneNode();
+		Aspa* a = new Aspa(vec[i], largo/30, largo/3 , 0.1, orn);
+		vec[i]->roll(Ogre::Degree(angle));
 		a->getAdornoNode()->roll(Ogre::Degree(90 - angle));
-		mAspas_vec.push_back(a);
+		mAspas_vec[i] = a;
 		angle += 360.0f / numAspas_;
 	}
 
