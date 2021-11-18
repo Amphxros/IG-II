@@ -71,6 +71,9 @@ protected:
 	//
 	Bomba* bomba = nullptr;
 	Ogre::SceneNode* bombaNode = nullptr;
+	//
+	Ogre::BillboardSet* nieblaSet = nullptr;
+	Ogre::SceneNode* nieblaNode = nullptr;
 };
 
 #endif

@@ -391,19 +391,23 @@ void IG2App::setupScene(void)
 			medioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
 			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
 		}
-		Ogre::SceneNode* fogNode= mSM->getRootSceneNode()->createChildSceneNode();
-		fogNode->setPosition(Vector3(50, 250, -100));
-		Ogre::BillboardSet* fog = mSM->createBillboardSet("fog", 20);
-		fog->setDefaultDimensions(1000, 1000);
-		fog->setMaterialName("Smoke");
-		for (int i = 0; i < 20; i++) {
-			Ogre::Billboard* bb = fog->createBillboard(Vector3(i, i, i));
-			bb->setPosition(Vector3(300 * (i%3), 150+ 100* (i%3), -300 * (i%5)));
 
+		// niebla
+		nieblaNode = mSM->getRootSceneNode()->createChildSceneNode();
+		nieblaNode->setPosition(Vector3(50, 250, -100));
+		nieblaSet = mSM->createBillboardSet("fogBbSet", 15);
+		nieblaSet->setDefaultDimensions(1000, 1000);
+		nieblaSet->setMaterialName("Smoke");
+		Vector3 startpos(1300, 0, -900);
+		int capas = 5;
+		int escalones = 3;
+		for (int i = 0; i < capas; i++) { // cada uno: repartido a lo ancho en capas
+			for (int j = 0; j < escalones; j++) { // cada uno: echado hacia atrás y con alturas como escalones
+				Vector3 offset(100 * (j % escalones), 300 * (j % escalones), 500 * (i % capas));
+				Ogre::Billboard* nieblaBillboard = nieblaSet->createBillboard(startpos + offset);
+			}
 		}
-
-		fogNode->attachObject(fog);
-
+		nieblaNode->attachObject(nieblaSet);
 	}
 	else { // ENTREGA_???
 

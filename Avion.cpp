@@ -62,21 +62,18 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Tru
 	pointsNode_ = mNode_->createChildSceneNode();
 	pointsNode_->setPosition(0, 30, -150);
 	pointsNode_->pitch(Ogre::Degree(-90));
-	
+	//
 	BillboardSet* points = mSM->createBillboardSet("b", 1);
 	Billboard* bb = points->createBillboard(Vector3(0, 0, 0));
 	points->setDefaultDimensions(50, 50);
 	points->setMaterialName("PointsBillboard");
 	pointsNode_->attachObject(points);
 
-
-
 	particleNode_ = mNode_->createChildSceneNode();
 	particleNode_->setPosition(0, -50, -100);
 	particleSys_ = mSM->createParticleSystem("trail", "IG2App/Smoke");
 	particleSys_->setEmitting(true);
 	particleNode_->attachObject(particleSys_);
-
 
 	Light* luz = mSM->createLight();
 	luz->setType(Ogre::Light::LT_SPOTLIGHT);
