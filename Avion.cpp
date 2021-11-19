@@ -183,12 +183,24 @@ void Avion::setRPressed()
 
 void Avion::explode()
 {
+	// si ya explotó, no pasa nada (salvo la desactivación del humo)
+	if (r_pressed) {
+		particleExplosionSys_->setEmitting(false);
+		return;
+	}
 
+	// desactivar foco
+	luzNode_->detachAllObjects();
+
+	// partículas
+	particleTrailSys_->setEmitting(false);
+	//
 	particleExplosionNode_ = mNode_->createChildSceneNode();
 	particleExplosionSys_ = mSM->createParticleSystem("explosion", "IG2App/Explosion");
 	particleExplosionSys_->setEmitting(true);
 	particleExplosionNode_->attachObject(particleExplosionSys_);
-	//ocultamos todo 
+
+	// ocultamos todo 
 	cuerpoNode_->detachAllObjects();
 	pilotoNode_->detachAllObjects();
 	frenteNode_->detachAllObjects();
@@ -200,8 +212,7 @@ void Avion::explode()
 	aspasD->eraseAll();
 	aspasI->eraseAll();
 	
-	
-	r_pressed = true;
 	// explota
-	
+	// (esto hace que no se trate de ejecutar los moviminetos)
+	r_pressed = true;
 }
