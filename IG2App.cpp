@@ -379,7 +379,7 @@ void IG2App::setupScene(void)
 		mSinbadNode->scale(20, 20, 20);
 		mSinbad = new Sinbad(mSinbadNode, true);
 		EntidadIG::addListener(mSinbad);
-
+		
 		// avión
 		ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
 		if (E3_TRUCO) {

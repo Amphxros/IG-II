@@ -6,15 +6,15 @@
 #include "Bomba.h"
 
 Sinbad::Sinbad(Ogre::SceneNode* mNode, bool cam)
-	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminante(cam) {
+	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminanteRio(cam) {
 	generaSinbad();
 }
-Sinbad::Sinbad(Ogre::SceneNode* mNode, bool Truco, int Altura)
-	: EntidadIG(mNode), TRUCO(Truco), ALTURA(Altura), caminante(false) {
+Sinbad::Sinbad(Ogre::SceneNode* mNode, bool Truco, float Altura)
+	: EntidadIG(mNode), TRUCO(Truco), ALTURA(Altura), caminanteRio(false) {
 	generaSinbad();
 }
 Sinbad::Sinbad(Ogre::SceneNode* mNode)
-	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminante(false) {
+	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminanteRio(false) {
 	generaSinbad();
 }
 
@@ -102,25 +102,29 @@ void Sinbad::generaSinbad()
 
 	// al principio Sinbad camina (no baila)
 
-	animationStateBottom = entity->getAnimationState("RunBase");
-	animationStateBottom->setEnabled(true);
-	animationStateBottom->setLoop(true);
+	animationStateRunBottom = entity->getAnimationState("RunBase");
+	animationStateRunBottom->setEnabled(true);
+	animationStateRunBottom->setLoop(true);
 
-	animationStateTop = entity->getAnimationState("RunTop");
-	animationStateTop->setEnabled(true);
-	animationStateTop->setLoop(true);
+	animationStateRunTop = entity->getAnimationState("RunTop");
+	animationStateRunTop->setEnabled(true);
+	animationStateRunTop->setLoop(true);
 
 	animationStateDancing = entity->getAnimationState("Dance");
 	animationStateDancing->setEnabled(false);
 	animationStateDancing->setLoop(true);
 
-	animationStateDead = entity->getAnimationState("HandsRelaxed");
-	animationStateDancing->setEnabled(false);
-	animationStateDancing->setLoop(true);
+	animationStateDeadBottom = entity->getAnimationState("IdleBase");
+	animationStateDeadBottom->setEnabled(false);
+	animationStateDeadBottom->setLoop(true);
+	
+	animationStateDeadTop = entity->getAnimationState("IdleTop");
+	animationStateDeadTop->setEnabled(false);
+	animationStateDeadTop->setLoop(true);
 
 	// animación: carrera en el río
 	// (solo para la parte 2 de la E3 (de la práctica 1))
-	if (caminante) configMvAnim();
+	if (caminanteRio) configMvAnim();
 
 	// espadas uwu
 	rightSword = mSM->createEntity("Sword.mesh");
@@ -128,10 +132,10 @@ void Sinbad::generaSinbad()
 	leftHandOccupied = false;
 	rightHandOccupied = false;
 	//
-	///arma(true);
+	arma(true);
 	///arma(false);
 	///cambiaEspada();
-	arma();
+	///arma();
 }
 
 void Sinbad::arma()
@@ -192,15 +196,28 @@ void Sinbad::cambiaEspada()
 	}
 }
 
+void Sinbad::desarma()
+{
+	if (leftHandOccupied) {
+		entity->detachObjectFromBone(leftSword);
+		leftHandOccupied = false;
+	}
+	if (rightHandOccupied) {
+		entity->detachObjectFromBone(rightSword);
+		rightHandOccupied = false;
+	}
+}
+
 void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 {
 	if (dead) {
 		// animación esqueletal de moribundo
-		animationStateDead->addTime(evt.timeSinceLastFrame);
+		animationStateDeadBottom->addTime(evt.timeSinceLastFrame);
+		animationStateDeadTop->addTime(evt.timeSinceLastFrame);
 		return;
 	}
 	else {
-		if (caminante) // carrera en el río (animación de nodo)
+		if (caminanteRio) // carrera en el río (animación de nodo)
 			mvAnimationState->addTime(evt.timeSinceLastFrame);
 	}
 
@@ -219,14 +236,14 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 			}
 			else {
 				// actualización de animaciones esqueletales: caminar
-				animationStateBottom->addTime(evt.timeSinceLastFrame);
-				animationStateTop->addTime(evt.timeSinceLastFrame);
+				animationStateRunBottom->addTime(evt.timeSinceLastFrame);
+				animationStateRunTop->addTime(evt.timeSinceLastFrame);
 			}
 		}
 		else {
 			// actualización de animaciones esqueletales: caminar
-			animationStateBottom->addTime(evt.timeSinceLastFrame);
-			animationStateTop->addTime(evt.timeSinceLastFrame);
+			animationStateRunBottom->addTime(evt.timeSinceLastFrame);
+			animationStateRunTop->addTime(evt.timeSinceLastFrame);
 		}
 	}
 
@@ -246,8 +263,8 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 
 			if (DANCE_AT_REST) {
 				// cambio de animaciones esqueletales: Sinbad ha de caminar
-				animationStateBottom->setEnabled(true);
-				animationStateTop->setEnabled(true);
+				animationStateRunBottom->setEnabled(true);
+				animationStateRunTop->setEnabled(true);
 				animationStateDancing->setEnabled(false);
 			}
 
@@ -268,8 +285,8 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 
 			if (DANCE_AT_REST) {
 				// cambio de animaciones esqueletales: Sinbad ha de bailar
-				animationStateBottom->setEnabled(false);
-				animationStateTop->setEnabled(false);
+				animationStateRunBottom->setEnabled(false);
+				animationStateRunTop->setEnabled(false);
 				animationStateDancing->setEnabled(true);
 			}
 		}
@@ -308,14 +325,22 @@ void Sinbad::receiveEvent(EntidadIG* entidad)
 
 void Sinbad::die()
 {
-	if (!dead) {
+	if (!dead && caminanteRio) {
 		// cambio de animaciones esqueletales: Sinbad ha de morirse
-		animationStateBottom->setEnabled(false);
-		animationStateTop->setEnabled(false);
+		animationStateRunBottom->setEnabled(false);
+		animationStateRunTop->setEnabled(false);
 		animationStateDancing->setEnabled(false);
-		animationStateDead->setEnabled(true);
+		animationStateDeadBottom->setEnabled(true);
+		animationStateDeadTop->setEnabled(true);
 		dead = true;
 		////mvAnimationState->setEnabled(false);
+
+		// se le quitan las espadas
+		desarma();
+
+		// rotación del nodo (caída boca arriba) (¡solo hecho en modo "truco"!)
+		///mNode_->pitch(Ogre::Degree(90.0f));///TODO
+
 		///TODO: temporizador para que no sea al instante
 	}
 }
@@ -327,14 +352,14 @@ void Sinbad::cPressed()
 	c_pressed = !c_pressed; // palanca
 	if (c_pressed) {
 		// cambio de animaciones esqueletales: Sinbad ha de bailar
-		animationStateBottom->setEnabled(false);
-		animationStateTop->setEnabled(false);
+		animationStateRunBottom->setEnabled(false);
+		animationStateRunTop->setEnabled(false);
 		animationStateDancing->setEnabled(true);
 	}
 	else {
 		// cambio de animaciones esqueletales: Sinbad ha de caminar
-		animationStateBottom->setEnabled(true);
-		animationStateTop->setEnabled(true);
+		animationStateRunBottom->setEnabled(true);
+		animationStateRunTop->setEnabled(true);
 		animationStateDancing->setEnabled(false);
 	}
 }

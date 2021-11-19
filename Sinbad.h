@@ -8,9 +8,13 @@ const bool DANCE_AT_REST = 1;
 class Sinbad : public EntidadIG
 {
 public:
-    Sinbad(Ogre::SceneNode* mNode, bool cam); // camina
-    Sinbad(Ogre::SceneNode* mNode, bool Truco, int Altura); // orbita
-    Sinbad(Ogre::SceneNode* mNode); // no orbita ni camina
+    // camina en el río
+    Sinbad(Ogre::SceneNode* mNode, bool cam);
+    // orbita
+    Sinbad(Ogre::SceneNode* mNode, bool Truco, float Altura);
+    // no orbita ni camina
+    Sinbad(Ogre::SceneNode* mNode);
+
     virtual ~Sinbad() {};
     
     virtual void frameRendered(const Ogre::FrameEvent& evt);
@@ -20,10 +24,11 @@ protected:
     Ogre::Entity* entity;
     Ogre::Entity* rightSword;
     Ogre::Entity* leftSword;
-    Ogre::AnimationState* animationStateBottom;
-    Ogre::AnimationState* animationStateTop;
+    Ogre::AnimationState* animationStateRunBottom;
+    Ogre::AnimationState* animationStateRunTop;
     Ogre::AnimationState* animationStateDancing;
-    Ogre::AnimationState* animationStateDead;
+    Ogre::AnimationState* animationStateDeadBottom;
+    Ogre::AnimationState* animationStateDeadTop;
 
     // carrera en el río
     Ogre::Animation* mvAnimation;
@@ -31,7 +36,7 @@ protected:
     Ogre::Real mvAnimDuration = 12;
     Ogre::AnimationState* mvAnimationState;
     void configMvAnim();
-    bool caminante;
+    bool caminanteRio;
 
     Ogre::Timer* mTimer_; // temporizador
     const int DELTA_DESPL = 5000;
@@ -45,6 +50,7 @@ protected:
     void cambiaEspada();
     bool rightHandOccupied;
     bool leftHandOccupied;
+    void desarma();
 
     void die();
     bool dead;
@@ -53,5 +59,5 @@ protected:
     bool c_pressed;
 
     const bool TRUCO = -1;
-    const int ALTURA = -1;
+    const float ALTURA = -1;
 };
