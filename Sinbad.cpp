@@ -339,7 +339,7 @@ void Sinbad::die()
 		desarma();
 
 		// rotación del nodo (caída boca arriba) (¡solo hecho en modo "truco"!)
-		///mNode_->pitch(Ogre::Degree(90.0f));///TODO
+		mNode_->pitch(Ogre::Degree(90.0f));///TODO
 
 		///TODO: temporizador para que no sea al instante
 	}

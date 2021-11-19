@@ -1,4 +1,6 @@
 #include "Bomba.h"
+#include <OGRE/OgreParticleSystem.h>
+#include "Avion.h"
 
 Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
     Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
@@ -53,16 +55,37 @@ Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
 
 void Bomba::frameRendered(const Ogre::FrameEvent& evt)
 {
-    if (!hasExploted) {
+    if (!exploted) {
         animationState->addTime(evt.timeSinceLastFrame);
+    }
+    else {
+        // comprobar timer aqui
+        if (!exploted &&hasToExplode && mTimer_->getMilliseconds() >= 5000) {
+            explode();
+            exploted = true;
+        }
     }
 }
 
 void Bomba::receiveEvent(EntidadIG* entidad)
 {
-    if (dynamic_cast<Bomba*>(entidad) != nullptr) {
+    if (dynamic_cast<Avion*>(entidad) != nullptr) {
         mNode_->setPosition(Ogre::Vector3(0, 0, 0)); //para resetearla a su posicion de origen
-        explode();
+        hasToExplode = true;
+        mTimer_ = new Ogre::Timer();
+        mTimer_->reset(); //reseteamos el tiempo para que cuando tenga que explotar sean 5 sec
     }
+}
+
+inline void Bomba::explode()
+{
+    hasToExplode = true;
+    mNode_->detachAllObjects();
+    mNode_->setPosition(0, 150, 0);
+    particleSystemNode_ = mNode_->createChildSceneNode();
+    particleSys_ = mSM->createParticleSystem("explosionBomba", "IG2App/ExplosionBomba");
+    particleSys_->setEmitting(true);
+    particleSystemNode_->attachObject(particleSys_);
+    this->sendEvent(this);
 }
 

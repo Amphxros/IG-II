@@ -91,8 +91,7 @@ Avion::~Avion()
 void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
 	/// INFO: conforme a E2 ('sendEvent' en lugar de cadena tradicional de 'keyPressed')
-	this->sendEvent(this); // redundante: ya se hace en el dron
-
+	
 	if (r_pressed) {
 		mTimer_->reset();
 		return;
@@ -155,7 +154,6 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	{
 	case SDLK_g:
 		/// INFO: conforme a E2 ('sendEvent' en lugar de cadena tradicional de 'keyPressed')
-		this->sendEvent(this);
 		break;
 	case SDLK_r: ///TODO: Debe hacerse mediante eventos //!!!
 		// si se está en la entrega del río, el avión en lugar de detenerse explota
@@ -189,18 +187,20 @@ void Avion::explode()
 		return;
 	}
 
-	// desactivar foco
-	luzNode_->detachAllObjects();
-
-	// partículas
+	//desactivamos el trail
 	particleTrailSys_->setEmitting(false);
-	//
+	// activams explosion
 	particleExplosionNode_ = mNode_->createChildSceneNode();
 	particleExplosionSys_ = mSM->createParticleSystem("explosion", "IG2App/Explosion");
 	particleExplosionSys_->setEmitting(true);
 	particleExplosionNode_->attachObject(particleExplosionSys_);
 
+	// explota
+	
 	// ocultamos todo 
+	// desactivar foco
+	luzNode_->detachAllObjects();
+
 	cuerpoNode_->detachAllObjects();
 	pilotoNode_->detachAllObjects();
 	frenteNode_->detachAllObjects();
@@ -212,7 +212,7 @@ void Avion::explode()
 	aspasD->eraseAll();
 	aspasI->eraseAll();
 	
-	// explota
 	// (esto hace que no se trate de ejecutar los moviminetos)
 	r_pressed = true;
+	this->sendEvent(this);
 }
