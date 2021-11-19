@@ -343,7 +343,7 @@ void Sinbad::die()
 		animationStateDancing->setEnabled(false);
 		animationStateDeadBottom->setEnabled(true);
 		animationStateDeadTop->setEnabled(true);
-		////mvAnimationState->setEnabled(false);
+		mvAnimationState->setEnabled(false);
 
 		dead = true;
 		mBombTimer_->reset();
@@ -352,7 +352,7 @@ void Sinbad::die()
 		desarma();
 
 		// rotación del nodo (caída boca arriba) (¡solo hecho en modo "truco"!)
-		mNode_->pitch(Ogre::Degree(90.0f));///TODO
+		mNode_->pitch(Ogre::Degree(-90.0f));///TODO
 	}
 }
 
