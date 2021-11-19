@@ -69,7 +69,7 @@ protected:
 	Ogre::SceneNode* mSinbadNode = nullptr;
 	Ogre::SceneNode* mNoTrucoSinbadNode = nullptr;
 	//
-	Bomba* bomba = nullptr;
+	Bomba* mBomba_ = nullptr;
 	Ogre::SceneNode* bombaNode = nullptr;
 	//
 	Ogre::BillboardSet* nieblaSet = nullptr;

@@ -1,5 +1,8 @@
 #pragma once
 #include "EntidadIG.h"
+#include <OgreAnimation.h>
+#include <OgreAnimationTrack.h>
+#include <OgreKeyFrame.h>
 #include <OGRE\OgreAnimationState.h>
 
 const bool SHOW_ANIMS = 1;
@@ -38,7 +41,7 @@ protected:
     void configMvAnim();
     bool caminanteRio;
 
-    Ogre::Timer* mTimer_; // temporizador
+    Ogre::Timer* mTimer_; // temporizador de movimiento
     const int DELTA_DESPL = 5000;
     const int DELTA_PARADA = 3000;
     bool estadoDeParada = false;
@@ -52,6 +55,8 @@ protected:
     bool leftHandOccupied;
     void desarma();
 
+    Ogre::Timer* mBombTimer_; // temporizador de activación de bomba del río
+    const int DELTA_BOMB = 5000;
     void die();
     bool dead;
 

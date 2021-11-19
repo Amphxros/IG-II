@@ -3,7 +3,7 @@
 #include <SDL_keycode.h>
 #include <iostream>
 #include <OgreTimer.h>
-#include "Bomba.h"
+#include "Avion.h"
 
 Sinbad::Sinbad(Ogre::SceneNode* mNode, bool cam)
 	: EntidadIG(mNode), TRUCO(-1), ALTURA(-1), caminanteRio(cam) {
@@ -82,6 +82,10 @@ void Sinbad::generaSinbad()
 	mTimer_ = new Ogre::Timer();
 	mTimer_->reset();
 	estadoDeParada = false;
+	
+	mBombTimer_ = new Ogre::Timer();
+	mBombTimer_->reset();
+	dead = false;
 
 	entity = mSM->createEntity("Sinbad.mesh");
 	mNode_->attachObject(entity);
@@ -214,6 +218,11 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 		// animación esqueletal de moribundo
 		animationStateDeadBottom->addTime(evt.timeSinceLastFrame);
 		animationStateDeadTop->addTime(evt.timeSinceLastFrame);
+
+		// Sinbad activa la bomba del río 5 seg. después de morir
+		if (mBombTimer_->getMilliseconds() >= DELTA_BOMB)
+			this->sendEvent(this);
+
 		return;
 	}
 	else {
@@ -226,6 +235,7 @@ void Sinbad::frameRendered(const Ogre::FrameEvent& evt)
 		animationStateDancing->addTime(evt.timeSinceLastFrame);
 
 		mTimer_->reset();
+
 		return;
 	}
 	else {
@@ -318,7 +328,8 @@ bool Sinbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 void Sinbad::receiveEvent(EntidadIG* entidad)
 {
-	if (dynamic_cast<Bomba*>(entidad) != nullptr){
+	// el avión ha explotado en el río (E3)
+	if (dynamic_cast<Avion*>(entidad) != nullptr) {
 		die();
 	}
 }
@@ -332,22 +343,22 @@ void Sinbad::die()
 		animationStateDancing->setEnabled(false);
 		animationStateDeadBottom->setEnabled(true);
 		animationStateDeadTop->setEnabled(true);
-		dead = true;
 		////mvAnimationState->setEnabled(false);
+
+		dead = true;
+		mBombTimer_->reset();
 
 		// se le quitan las espadas
 		desarma();
 
 		// rotación del nodo (caída boca arriba) (¡solo hecho en modo "truco"!)
 		mNode_->pitch(Ogre::Degree(90.0f));///TODO
-
-		///TODO: temporizador para que no sea al instante
 	}
 }
 
 void Sinbad::cPressed()
 {
-	if (dead) return;
+	if (dead || caminanteRio) return;
 
 	c_pressed = !c_pressed; // palanca
 	if (c_pressed) {

@@ -187,9 +187,9 @@ void Avion::explode()
 		return;
 	}
 
-	//desactivamos el trail
+	// desactivamos el trail
 	particleTrailSys_->setEmitting(false);
-	// activams explosion
+	// activamos explosion
 	particleExplosionNode_ = mNode_->createChildSceneNode();
 	particleExplosionSys_ = mSM->createParticleSystem("explosion", "IG2App/Explosion");
 	particleExplosionSys_->setEmitting(true);
@@ -197,10 +197,8 @@ void Avion::explode()
 
 	// explota
 	
-	// ocultamos todo 
-	// desactivar foco
-	luzNode_->detachAllObjects();
-
+	// ocultamos todo
+	luzNode_->detachAllObjects(); // desactivar foco
 	cuerpoNode_->detachAllObjects();
 	pilotoNode_->detachAllObjects();
 	frenteNode_->detachAllObjects();

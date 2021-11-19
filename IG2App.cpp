@@ -63,13 +63,12 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 
 	case SDLK_t:
-		// explosión bomba en E3
-		if (ENTREGA_ACTUAL == Entregas::Ent3_2) {
+		// parada animación bomba en E3
+		/*if (ENTREGA_ACTUAL == Entregas::Ent3_2) { // MAL
 			if (bombaNode) {
 				bomba->sendEvent(bomba);
 			}
-		}
-
+		}*/
 		break;
 	}
 	// evento pasa al molino
@@ -81,6 +80,9 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	if (mAvion_) mAvion_->keyPressed(evt);
 	// evento pasa a Sinbad
 	if (mSinbad) mSinbad->keyPressed(evt);
+	// evento pasa a bomba
+	if (mBomba_) mBomba_->keyPressed(evt);
+
 	return true;
 }
 
@@ -104,7 +106,7 @@ void IG2App::frameRendered(const Ogre::FrameEvent& evt)
 	}
 	if (bombaNode) { ///TODO: preguntar al profe si esto se hace así // !!!
 		// evento pasa a la bomba
-		bomba->frameRendered(evt);
+		mBomba_->frameRendered(evt);
 	}
 	if (planoNode) plano->frameRendered(evt);
 }
@@ -362,8 +364,8 @@ void IG2App::setupScene(void)
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		bombaNode->setPosition(0, 10, 0);
 		bombaNode->setScale(30, 30, 30);
-		bomba = new Bomba(bombaNode, "Bomba");
-		EntidadIG::addListener(bomba);
+		mBomba_ = new Bomba(bombaNode, "Bomba");
+		EntidadIG::addListener(mBomba_);
 
 		// cara perturbadora
 		Ogre::SceneNode* faceNode = mSM->getRootSceneNode()->createChildSceneNode();

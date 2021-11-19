@@ -17,6 +17,7 @@ public:
 
     virtual void frameRendered(const Ogre::FrameEvent& evt);
     virtual void receiveEvent(EntidadIG* entidad);
+    virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 protected:
 
     Ogre::SceneNode* particleSystemNode_;
@@ -28,7 +29,9 @@ protected:
     Ogre::Real animDuration = 6;
     Ogre::AnimationState* animationState;
     
-    bool hasToExplode = false;
+    bool stopped = false;
+    void stop();
+
     bool exploted = false;
     void explode();
 
