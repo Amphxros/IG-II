@@ -209,7 +209,12 @@ void IG2App::setupScene(void)
 
 	// and tell it to render into the main window
 	Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
+	//
+	if (ENTREGA_ACTUAL == Entregas::P2_Ent1)
+		// el puto espacio interestelar
+		vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+	else
+		vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
 
 	//------------------------------------------------------------------------
 
@@ -425,6 +430,28 @@ void IG2App::setupScene(void)
 		nieblaNode->attachObject(nieblaSet);
 	}
 	else if (ENTREGA_ACTUAL == Entregas::P2_Ent1) { // ENTREGA_4
+		// plano celeste
+		mSM->setSkyPlane(
+			/*enable*/
+			true,
+			/*plane*/
+			Plane(Vector3::UNIT_Z, -20),
+			/*materialName*/ // nombre del material
+			"Space",
+			/*scale = 1000*/
+			0.25,
+			/*tiling = 10*/
+			1,
+			/*drawFirst*/ // dibujarse primero
+			true,
+			/*bow = 0*/ // curvatura
+			0.0,
+			/*Xsegments = 1*/
+			100,
+			/*Ysegments = 1*/
+			100
+		);
+
 		// río -> plano con textura 
 		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
 		planoNode->setScale(3, 3, 3);
