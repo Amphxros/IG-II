@@ -8,7 +8,7 @@ const bool OBAMA_SPH = 0;
 class Avion : public EntidadIG
 {
 public:
-    Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate);
+    Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate, bool foc);
     virtual ~Avion();
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
@@ -54,4 +54,7 @@ private:
 
     // E3 mov. en torno a bomba y violación del tratado de Ginebra
     bool atentado;
+
+    // E4
+    bool tieneFoco;
 };

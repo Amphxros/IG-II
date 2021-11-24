@@ -4,8 +4,8 @@
 #include <OGRE/OgreParticleSystem.h>
 #include <OGRE/OgreBillboardSet.h>
 #include <OGRE/OgreBillboard.h>
-Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate)
-	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura), atentado(ate)
+Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Truco, int Altura, bool ate, bool foc)
+	: EntidadIG(mNode), numAspas_(nAspas), TRUCO(Truco), ALTURA(Altura), atentado(ate), tieneFoco(foc)
 {
 	mTimer_ = new Ogre::Timer();
 	mTimer_->reset();
@@ -75,13 +75,15 @@ Avion::Avion(Ogre::SceneNode* mNode, float rd, float largo, int nAspas, bool Tru
 	particleTrailSys_->setEmitting(true);
 	particleTrailNode_->attachObject(particleTrailSys_);
 
-	Light* luz = mSM->createLight();
-	luz->setType(Ogre::Light::LT_SPOTLIGHT);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
-	luz->setDirection(0, -1, 0);
-	luzNode_ = mNode_->createChildSceneNode();
-	luzNode_->translate(0, -40 * rd, 0);
-	luzNode_->attachObject(luz);
+	if (tieneFoco) {
+		Light* luz = mSM->createLight();
+		luz->setType(Ogre::Light::LT_SPOTLIGHT);
+		luz->setDiffuseColour(0.75, 0.75, 0.75);
+		luz->setDirection(0, -1, 0);
+		luzNode_ = mNode_->createChildSceneNode();
+		luzNode_->translate(0, -40 * rd, 0);
+		luzNode_->attachObject(luz);
+	}
 }
 
 Avion::~Avion()
@@ -198,7 +200,7 @@ void Avion::explode()
 	// explota
 	
 	// ocultamos todo
-	luzNode_->detachAllObjects(); // desactivar foco
+	if (tieneFoco) luzNode_->detachAllObjects(); // desactivar foco
 	cuerpoNode_->detachAllObjects();
 	pilotoNode_->detachAllObjects();
 	frenteNode_->detachAllObjects();

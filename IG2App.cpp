@@ -12,10 +12,10 @@
 using namespace Ogre;
 
 enum Entregas {
-	Ent1, Ent2, Ent3_1, Ent3_2
+	Ent1, Ent2, Ent3_1, Ent3_2, P2_Ent1
 };
 
-const Entregas ENTREGA_ACTUAL = Entregas::Ent3_2;
+const Entregas ENTREGA_ACTUAL = Entregas::P2_Ent1;
 //
 const bool E1_RELOJ = 1;
 //
@@ -27,6 +27,10 @@ const bool E3_TRUCO = 1;
 const float E3_ALTURA_SINBAD = 600;
 const float E3_DISTANCIA_AVION = 400;
 const float E3_ALTITUD_AVION = 500;
+// (para P2_Ent1) --v
+const bool E4_TRUCO = 1;
+const float E4_DISTANCIA_AVION = 400;
+const float E4_ALTITUD_AVION = 500;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
@@ -209,30 +213,40 @@ void IG2App::setupScene(void)
 
 	//------------------------------------------------------------------------
 
-	// without light we would just get a black screen 
+	// without light we would just get a black screen
 
-	Light* luz = mSM->createLight("Luz");
-	luz->setType(Ogre::Light::LT_DIRECTIONAL);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	if (ENTREGA_ACTUAL == Entregas::P2_Ent1) {
+		Light* luz = mSM->createLight("Luz");
+		luz->setType(Ogre::Light::LT_DIRECTIONAL);
+		luz->setDiffuseColour(1.0, 1.0, 1.0);
+		luz->setDirection(Ogre::Vector3(0, -1, -1));
 
-	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
-	//mLightNode = mCamNode->createChildSceneNode("nLuz");
-	mLightNode->attachObject(luz);
+		mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz"); //
+		//mLightNode = mCamNode->createChildSceneNode("nLuz");
+		mLightNode->attachObject(luz);
+	}
+	else {
+		Light* luz = mSM->createLight("Luz");
+		luz->setType(Ogre::Light::LT_DIRECTIONAL);
+		luz->setDiffuseColour(0.75, 0.75, 0.75);
+		//luz->setDirection(...);
 
-	mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
-	mLightNode->setPosition(0, 100, 1000);
+		mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz"); //
+		//mLightNode = mCamNode->createChildSceneNode("nLuz");
+		mLightNode->attachObject(luz);
+		mLightNode->setPosition(0, 100, 1000);
+		mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
 
 
-	Light* luzA = mSM->createLight("LuzA");
-	luzA->setType(Ogre::Light::LT_DIRECTIONAL);
-	luzA->setDiffuseColour(0.75, 0.75, 0.75);
+		Light* luz2 = mSM->createLight("Luz2");
+		luz2->setType(Ogre::Light::LT_DIRECTIONAL);
+		luz2->setDiffuseColour(0.75, 0.75, 0.75);
 
-	Ogre::SceneNode* luzB = mSM->getRootSceneNode()->createChildSceneNode("nLuzB");
-	//mLightNode = mCamNode->createChildSceneNode("nLuz");
-	luzB->attachObject(luzA);
-
-	luzB->setDirection(Ogre::Vector3(1, -1, 1));  //vec3.normalise();
-	//lightNode->setPosition(0, 0, 1000);
+		mLightNode2 = mSM->getRootSceneNode()->createChildSceneNode("nLuz2");
+		mLightNode2->attachObject(luz2);
+		mLightNode2->setPosition(0, 100, 1000);
+		mLightNode2->setDirection(Ogre::Vector3(1, -1, 1));  //vec3.normalise();
+	}
 
 	//------------------------------------------------------------------------
 
@@ -288,7 +302,7 @@ void IG2App::setupScene(void)
 
 			// avion ninja
 			ficticioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false, true);
 			EntidadIG::addListener(mAvion_);
 		}
 		else {
@@ -309,7 +323,7 @@ void IG2App::setupScene(void)
 			// avion ninja
 			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
 			medioAvionNode->setPosition(0, E2_ALTURA_AVION, 0);
-			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E2_TRUCO, E2_ALTURA_AVION, false, true);
 			EntidadIG::addListener(mAvion_);
 		}
 	}
@@ -386,12 +400,12 @@ void IG2App::setupScene(void)
 		ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
 		if (E3_TRUCO) {
 			ficticioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
-			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true, true);
 		}
 		else {
 			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
 			medioAvionNode->setPosition(E3_DISTANCIA_AVION, E3_ALTITUD_AVION, 0);
-			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E3_TRUCO, E3_DISTANCIA_AVION, true, true);
 		}
 
 		// niebla
@@ -409,6 +423,53 @@ void IG2App::setupScene(void)
 			}
 		}
 		nieblaNode->attachObject(nieblaSet);
+	}
+	else if (ENTREGA_ACTUAL == Entregas::P2_Ent1) { // ENTREGA_4
+		// río -> plano con textura 
+		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
+		planoNode->setScale(3, 3, 3);
+		planoNode->setPosition(0, 0, 0);
+		plano = new Plano(planoNode, "RioAgua");
+		EntidadIG::addListener(plano);
+
+		// plataforma amarilla
+		Ogre::SceneNode* platAmarilla = mSM->getRootSceneNode()->createChildSceneNode();
+		platAmarilla->setPosition(1000, 5, -1000);
+		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
+
+		// bomba
+		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
+		bombaNode->setPosition(0, 10, 0);
+		bombaNode->setScale(30, 30, 30);
+		mBomba_ = new Bomba(bombaNode, "Bomba");
+		EntidadIG::addListener(mBomba_);
+
+		// cara perturbadora
+		Ogre::SceneNode* faceNode = mSM->getRootSceneNode()->createChildSceneNode();
+		faceNode->setPosition(1000, 100, -1000);
+		faceNode->scale(0.5, 0.5, 0.5);
+		Entity* face = mSM->createEntity("sphere.mesh");
+		face->setMaterialName("SmilySphere"); //ObamaSphere
+		faceNode->attachObject(face);
+
+		// Sinbad el ogro marino
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode();
+		mSinbadNode->translate(-1000, 100, 1000);
+		mSinbadNode->scale(20, 20, 20);
+		mSinbad = new Sinbad(mSinbadNode, true);
+		EntidadIG::addListener(mSinbad);
+
+		// avión
+		ficticioAvionNode = mSM->getRootSceneNode()->createChildSceneNode();
+		if (E4_TRUCO) {
+			ficticioAvionNode->setPosition(E4_DISTANCIA_AVION, E4_ALTITUD_AVION, 0);
+			mAvion_ = new Avion(ficticioAvionNode, 1, 1, 5, E4_TRUCO, E4_DISTANCIA_AVION, true, false);
+		}
+		else {
+			medioAvionNode = ficticioAvionNode->createChildSceneNode(); // para el (no-truco)
+			medioAvionNode->setPosition(E4_DISTANCIA_AVION, E4_ALTITUD_AVION, 0);
+			mAvion_ = new Avion(medioAvionNode, 1, 1, 5, E4_TRUCO, E4_DISTANCIA_AVION, true, false);
+		}
 	}
 	else { // ENTREGA_???
 

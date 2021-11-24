@@ -31,6 +31,7 @@ protected:
 	Ogre::SceneManager* mSM = nullptr;
 	OgreBites::TrayManager* mTrayMgr = nullptr;
 	Ogre::SceneNode* mLightNode = nullptr;
+	Ogre::SceneNode* mLightNode2 = nullptr;
 	Ogre::SceneNode* mCamNode = nullptr;
 	OgreBites::CameraMan* mCamMgr = nullptr;
 
@@ -64,7 +65,7 @@ protected:
 	Ogre::SceneNode* ficticioAvionNode;
 	Ogre::SceneNode* medioAvionNode = nullptr;
 
-	//E3
+	// E3
 	Sinbad* mSinbad = nullptr;
 	Ogre::SceneNode* mSinbadNode = nullptr;
 	Ogre::SceneNode* mNoTrucoSinbadNode = nullptr;
