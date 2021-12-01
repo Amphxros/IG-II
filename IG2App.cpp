@@ -67,12 +67,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 
 	case SDLK_t:
-		// parada animación bomba en E3
-		/*if (ENTREGA_ACTUAL == Entregas::Ent3_2) { // MAL
-			if (bombaNode) {
-				bomba->sendEvent(bomba);
-			}
-		}*/
+		
 		break;
 	}
 	// evento pasa al molino
@@ -199,6 +194,12 @@ void IG2App::setupScene(void)
 	cam->setFarClipDistance(10000);
 	cam->setAutoAspectRatio(true);
 	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
+
+	// añadir y configurar cámara para el reflejo
+	Camera* camRef = mSM->createCamera("RefCam");
+	camRef->setNearClipDistance(1);
+	camRef->setFarClipDistance(10000);
+	camRef->setAutoAspectRatio(true); //
 
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
