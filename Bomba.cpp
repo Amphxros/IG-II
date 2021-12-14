@@ -4,8 +4,8 @@
 #include <SDL_keycode.h>
 
 Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
-    Ogre::Entity* ent = mSM->createEntity("Barrel.mesh");
-    mNode_->setScale(20,20,20);
+    Ogre::Entity* ent = mSM->createEntity("uv_sphere.mesh");
+    //mNode_->setScale(20, 20, 20);
     ent->setMaterialName(mat);
     mNode_->attachObject(ent);
 
@@ -23,31 +23,31 @@ Bomba::Bomba(Ogre::SceneNode* mNode, std::string mat) : EntidadIG(mNode) {
     kf = track->createNodeKeyFrame(durPaso * 0);
     kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
     kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
-    kf->setScale({ 30, 30, 30 });
+    //kf->setScale({ 20, 20, 20 });
     // Arriba
     kf = track->createNodeKeyFrame(durPaso * 1);
     kf->setTranslate(Ogre::Vector3(-100.0, 100.0, 100.0));
     angulo += (45/2);
     kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
-    kf->setScale({ 30, 30, 30 });
+    //kf->setScale({ 20, 20, 20 });
     // Origen
     kf = track->createNodeKeyFrame(durPaso * 2);
     kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
     angulo -= (45 / 2);
     kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
-    kf->setScale({ 30, 30, 30 });
+    //kf->setScale({ 20, 20, 20 });
     // Abajo
     kf = track->createNodeKeyFrame(durPaso * 3);
     kf->setTranslate(Ogre::Vector3(-100.0, -100.0, 100.0));
     angulo -= (45 / 2);
     kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
-    kf->setScale({ 30, 30, 30 });
+    //kf->setScale({ 20, 20, 20 });
     // Origen
     kf = track->createNodeKeyFrame(durPaso * 4);
     kf->setTranslate(Ogre::Vector3(-100.0, 0.0, 100.0));
     angulo += (45 / 2);
     kf->setRotation(Ogre::Quaternion(Ogre::Degree(angulo), eje));
-    kf->setScale({ 30, 30, 30 });
+    //kf->setScale({ 20, 20, 20 });
 
     animationState = mSM->createAnimationState("BombaFlota");
     animationState->setLoop(true);
