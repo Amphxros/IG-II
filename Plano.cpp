@@ -50,6 +50,7 @@ void Plano::frameRendered(const Ogre::FrameEvent& evt)
 }
 
 void Plano::setReflejo(Ogre::Camera* cam) {
+	/*
 	Ogre::SceneNode* espejoNode = mNode_->createChildSceneNode();
 	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Z, 20);
 	espejoNode->attachObject(mpRef);
@@ -73,6 +74,7 @@ void Plano::setReflejo(Ogre::Camera* cam) {
 	tu->setColourOperation(Ogre::LBO_MODULATE); // (i) hay otros modos
 	tu->setTextureAdressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 	tu-> setProjectiveTexturing(true, cam);
+	*/
 
 	// añadir la nueva unidad de textura al material del reflejo-espejo
 	//"..."
