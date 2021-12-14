@@ -469,7 +469,7 @@ void IG2App::setupScene(void)
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		bombaNode->setPosition(0, 10, 0);
 		bombaNode->setScale(30, 30, 30);
-		mBomba_ = new Bomba(bombaNode, "BombaTeselada");
+		mBomba_ = new Bomba(bombaNode, "BombaAgujereada"); // (i) antes: "BombaTeselada"
 		EntidadIG::addListener(mBomba_);
 
 		// cara perturbadora
