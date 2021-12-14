@@ -438,7 +438,7 @@ void IG2App::setupScene(void)
 			/*plane*/
 			Plane(Vector3::UNIT_Z, -20),
 			/*materialName*/ // nombre del material
-			"Space",
+			"PlanoCeleste", // (i) anteriormente "Space"
 			/*scale = 1000*/
 			0.25,
 			/*tiling = 10*/
