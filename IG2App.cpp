@@ -12,10 +12,10 @@
 using namespace Ogre;
 
 enum Entregas {
-	Ent1, Ent2, Ent3_1, Ent3_2, P2_Ent1
+	Ent1, Ent2, Ent3_1, Ent3_2, P2_Ent
 };
 
-const Entregas ENTREGA_ACTUAL = Entregas::P2_Ent1;
+const Entregas ENTREGA_ACTUAL = Entregas::P2_Ent;
 //
 const bool E1_RELOJ = 1;
 //
@@ -27,7 +27,7 @@ const bool E3_TRUCO = 1;
 const float E3_ALTURA_SINBAD = 600;
 const float E3_DISTANCIA_AVION = 400;
 const float E3_ALTITUD_AVION = 500;
-// (para P2_Ent1) --v
+// (para P2_Ent) --v
 const bool E4_TRUCO = 1;
 const float E4_DISTANCIA_AVION = 400;
 const float E4_ALTITUD_AVION = 500;
@@ -211,7 +211,7 @@ void IG2App::setupScene(void)
 	// and tell it to render into the main window
 	Viewport* vp = getRenderWindow()->addViewport(cam);
 	//
-	if (ENTREGA_ACTUAL == Entregas::P2_Ent1)
+	if (ENTREGA_ACTUAL == Entregas::P2_Ent)
 		// el puto espacio interestelar
 		vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 	else
@@ -221,7 +221,7 @@ void IG2App::setupScene(void)
 
 	// without light we would just get a black screen
 
-	if (ENTREGA_ACTUAL == Entregas::P2_Ent1) {
+	if (ENTREGA_ACTUAL == Entregas::P2_Ent) {
 		Light* luz = mSM->createLight("Luz");
 		luz->setType(Ogre::Light::LT_DIRECTIONAL);
 		luz->setDiffuseColour(1.0, 1.0, 1.0);
@@ -430,7 +430,7 @@ void IG2App::setupScene(void)
 		}
 		nieblaNode->attachObject(nieblaSet);
 	}
-	else if (ENTREGA_ACTUAL == Entregas::P2_Ent1) { // ENTREGA_4
+	else if (ENTREGA_ACTUAL == Entregas::P2_Ent) { // ENTREGA_4 y ENTREGA_5
 		// plano celeste
 		mSM->setSkyPlane(
 			/*enable*/
@@ -469,7 +469,7 @@ void IG2App::setupScene(void)
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		bombaNode->setPosition(0, 10, 0);
 		bombaNode->setScale(30, 30, 30);
-		mBomba_ = new Bomba(bombaNode, "BombaAgujereada"); // (i) antes: "BombaTeselada"
+		mBomba_ = new Bomba(bombaNode, "BombaAgujereadaIluminada"); // (i) anteriormente: "BombaTeselada", "BombaAgujereada"; ahora: "BombaAgujereadaIluminada"
 		EntidadIG::addListener(mBomba_);
 
 		// cara perturbadora
