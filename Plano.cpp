@@ -50,47 +50,98 @@ void Plano::frameRendered(const Ogre::FrameEvent& evt)
 }
 
 void Plano::setReflejo(Ogre::Camera* cam) {
-	/*
-	Ogre::SceneNode* espejoNode = mNode_->createChildSceneNode();
-	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Z, 20);
-	espejoNode->attachObject(mpRef);
+	//creamos un plano 
+	Ogre::MeshManager::getSingleton().createPlane("reflejo",
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::Plane(Ogre::Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Ogre::Vector3::UNIT_Z);
 
-	Ogre::TexturePtr rttRef = Ogre::TextureManager::getSingleton().createManual(
-		"rttReflejo" + material, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Ogre::TEX_TYPE_2D,
-		(Ogre::Real)(cam->getViewport()->getActualWidth()), // ejemplo
-		(Ogre::Real)(cam->getViewport()->getActualHeight()), // ejemplo
-		0, Ogre::PF_R8G8B8, Ogre::TU_RENDERTARGET);
+	//cargamos la malla y iniciamos el nodo
+	Ogre::Entity* mRef_ = mSM->createEntity("reflejo");
+	Ogre::SceneNode* mRefNode = mNode_->createChildSceneNode();
+	mRef_->setMaterialName(material);
+	mRefNode->attachObject(mRef_);
+
+	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Y, 0);
+	mRefNode->attachObject(mpRef);
 
 	cam->enableReflection(mpRef);
 	cam->enableCustomNearClipPlane(mpRef);
 
-	Ogre::RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
-	Ogre::Viewport* vpt = renderTexture->addViewport(cam);
-	vpt->setClearEveryFrame(true);
-	vpt->setBackgroundColour(Ogre::ColourValue::Black);
+	Ogre::TexturePtr rttRef = Ogre::TextureManager::getSingleton().createManual(
+		"rttReflejo" + material,
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::TEX_TYPE_2D,
+		1080,
+		800,
+		0,
+		Ogre::PF_R8G8B8,
+		Ogre::TU_RENDERTARGET
+	);
+	Ogre::RenderTexture* mRenderTexture_ = rttRef->getBuffer()->getRenderTarget();
+	Ogre::Viewport* vp = mRenderTexture_->addViewport(cam);
+	vp->setClearEveryFrame(true);
+	vp->setBackgroundColour(Ogre::ColourValue::Black);
 
-	Ogre::TextureUnitState* tu = mPlano->getSubEntity(0)->getMaterial()->getTechnique(0)->getPass(0)->createTextureUnitState("rttReflejo");
-	tu->setColourOperation(Ogre::LBO_MODULATE); // (i) hay otros modos
-	tu->setTextureAdressingMode(Ogre::TextureUnitState::TAM_CLAMP);
-	tu-> setProjectiveTexturing(true, cam);
-	*/
 
-	// añadir la nueva unidad de textura al material del reflejo-espejo
-	//"..."
-	//...
-	//... //// sin esto no funciona: algo sobre la perspectiva
+	//creamos la textura
+	Ogre::TextureUnitState* mTU_ = mRef_->
+		getSubEntity(0)->
+		getMaterial()->
+		getTechnique(0)->
+		getPass(0)->createTextureUnitState("rttReflejo" + material);
+	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_REPLACE o LBO_ALPHA_BLEND tambien
+	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
+	mTU_->setProjectiveTexturing(true, cam);
 
-	//
-	//// aqui se gira la cara perturbadora: pone la textura boca abajo en el pre render y lo restaura en el post render
-	//...
-	//...
+
+
 }
 
-/*
-// añadir un puerto de vista al RenderTarget con la nueva cámara
-RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
-Viviewport* vpt = renderTexture->addViewport(camRef);
-vpt->setClearEveryFrame(true);
-vpt->setBackgroundColour(ColourValue::Black);
-*/
+void Plano::setEspejo(Ogre::Camera* cam)
+{
+	//creamos un plano 
+	Ogre::MeshManager::getSingleton().createPlane("espejo" + material,
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::Plane(Ogre::Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Ogre::Vector3::UNIT_Z);
+
+	//cargamos la malla y iniciamos el nodo
+	Ogre::Entity* mMirror_ = mSM->createEntity("espejo" + material);
+	Ogre::SceneNode* mMirrorNode = mNode_->createChildSceneNode();
+	mMirror_->setMaterialName(material);
+	mMirrorNode->attachObject(mMirror_);
+
+	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Y, 0);
+	mMirrorNode->attachObject(mpRef);
+
+	cam->enableReflection(mpRef);
+	cam->enableCustomNearClipPlane(mpRef);
+
+	Ogre::TexturePtr rttRef = Ogre::TextureManager::getSingleton().createManual(
+		"rttRef" + material,
+		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Ogre::TEX_TYPE_2D,
+		1080,
+		800,
+		0,
+		Ogre::PF_R8G8B8,
+		Ogre::TU_RENDERTARGET);
+
+	Ogre::RenderTexture* mRenderTexture_ = rttRef->getBuffer()->getRenderTarget();
+	Ogre::Viewport* vp = mRenderTexture_->addViewport(cam);
+	vp->setClearEveryFrame(true);
+	vp->setBackgroundColour(Ogre::ColourValue::Black);
+
+	//creamos la textura
+	Ogre::TextureUnitState* mTU_ = mMirror_->
+		getSubEntity(0)->
+		getMaterial()->
+		getTechnique(0)->
+		getPass(0)->createTextureUnitState("rttRef" + material);
+	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_REPLACE o LBO_ALPHA_BLEND tambien
+	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
+	mTU_->setProjectiveTexturing(true, cam);
+
+
+}

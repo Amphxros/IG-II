@@ -203,7 +203,7 @@ void IG2App::setupScene(void)
 
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
-
+	mCamNode->attachObject(camRef);
 	mCamNode->setPosition(0, 0, 1000);
 	mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
 	//mCamNode->setDirection(Ogre::Vector3(0, 0, -1));  
@@ -458,6 +458,7 @@ void IG2App::setupScene(void)
 		planoNode->setScale(3, 3, 3);
 		planoNode->setPosition(0, 0, 0);
 		plano = new Plano(planoNode, "RioAgua");
+		plano->setReflejo(camRef);
 		EntidadIG::addListener(plano);
 
 		// plataforma amarilla

@@ -20,7 +20,8 @@ public:
     virtual void receiveEvent(EntidadIG* entidad);
     virtual void frameRendered(const Ogre::FrameEvent& evt);
 
-    void setReflejo(Ogre::Camera*cam);
+    void setReflejo(Ogre::Camera* cam);
+    void setEspejo(Ogre::Camera* cam);
 protected:
     Ogre::Entity* mPlano;
     std::string material;
