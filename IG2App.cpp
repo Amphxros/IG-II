@@ -380,7 +380,7 @@ void IG2App::setupScene(void)
 		
 		// plataforma roja
 		Ogre::SceneNode* platRoja= mSM->getRootSceneNode()->createChildSceneNode();
-		platRoja->setPosition(1000, 10, -1000);
+		platRoja->setPosition(1000, 5, -1000);
 		Plano* pRoja = new Plano(platRoja, "PlataformaRoja");
 
 		// bomba
@@ -439,7 +439,7 @@ void IG2App::setupScene(void)
 			/*enable*/
 			true,
 			/*plane*/
-			Plane(Vector3::UNIT_Z, -20),
+			Plane(Vector3::UNIT_Z, -30),
 			/*materialName*/ // nombre del material
 			"Espacio", // (i) anteriormente: "Space", "PlanoCeleste"; ahora: "Espacio"
 			/*scale = 1000*/
@@ -465,7 +465,7 @@ void IG2App::setupScene(void)
 		EntidadIG::addListener(plano);
 
 		Ogre::SceneNode* esp = mSM->getRootSceneNode()->createChildSceneNode();
-		Plano* p = new Plano(esp, "RioAgua_");
+		Plano* p = new Plano(esp, "espejo");
 		esp->setScale(5, 5, 5);
 		esp->roll(Ogre::Degree(90.0));
 		esp->setPosition(2000, 10, 0);
@@ -476,6 +476,11 @@ void IG2App::setupScene(void)
 		Ogre::SceneNode* platAmarilla = mSM->getRootSceneNode()->createChildSceneNode();
 		platAmarilla->setPosition(1000, 5, -1000);
 		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
+		
+		// plataforma roja
+		Ogre::SceneNode* platRoja = mSM->getRootSceneNode()->createChildSceneNode();
+		platRoja->setPosition(-1000, 5, 1000);
+		Plano* pRoja = new Plano(platRoja, "PlataformaRoja");
 		
 		// bomba
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();

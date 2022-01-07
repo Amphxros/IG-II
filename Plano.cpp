@@ -62,12 +62,14 @@ void Plano::setReflejo(Ogre::Camera* cam) {
 	mRef_->setMaterialName(material);
 	mRefNode->attachObject(mRef_);
 
+	//creamos el plano reflrjo
 	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Y, 0);
 	mRefNode->attachObject(mpRef);
 
 	cam->enableReflection(mpRef);
 	cam->enableCustomNearClipPlane(mpRef);
 
+	//creamos la textura
 	Ogre::TexturePtr rttRef = Ogre::TextureManager::getSingleton().createManual(
 		"rttReflejo" + material,
 		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
@@ -84,7 +86,7 @@ void Plano::setReflejo(Ogre::Camera* cam) {
 	vp->setBackgroundColour(Ogre::ColourValue::Black);
 
 
-	//creamos la textura
+	//asignamos la textura
 	Ogre::TextureUnitState* mTU_ = mRef_->
 		getSubEntity(0)->
 		getMaterial()->
@@ -112,14 +114,16 @@ void Plano::setEspejo(Ogre::Camera* cam)
 	mMirror_->setMaterialName(material);
 	mMirrorNode->attachObject(mMirror_);
 
+	//creamos el plano espejo
 	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Y, 0);
 	mMirrorNode->attachObject(mpRef);
 
 	cam->enableReflection(mpRef);
 	cam->enableCustomNearClipPlane(mpRef);
 
+	//creamos la textura
 	Ogre::TexturePtr rttRef = Ogre::TextureManager::getSingleton().createManual(
-		"rttRef" + material,
+		"rttRef" + material,	//nombre unico por eso el + material
 		Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Ogre::TEX_TYPE_2D,
 		1080,
@@ -133,12 +137,12 @@ void Plano::setEspejo(Ogre::Camera* cam)
 	vp->setClearEveryFrame(true);
 	vp->setBackgroundColour(Ogre::ColourValue::Black);
 
-	//creamos la textura
+	//asignamos la textura
 	Ogre::TextureUnitState* mTU_ = mMirror_->
 		getSubEntity(0)->
 		getMaterial()->
 		getTechnique(0)->
-		getPass(0)->createTextureUnitState("rttRef" + material);
+		getPass(0)->createTextureUnitState("rttRef" + material); //nombre igual al rttRef
 	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_adD o LBO_ALPHA_BLEND tambien
 	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 	mTU_->setProjectiveTexturing(true, cam);
