@@ -478,24 +478,24 @@ U:\UCM_Repos\IG\Practica2\OGREsdk\include\OGRE\Bites\OgreTrays.h(189): message :
 U:\UCM_Repos\IG\Practica2\IG2App\Dron.h(42,22): warning C4305: 'inicializando': truncamiento de 'int' a 'const bool'
 U:\UCM_Repos\IG\Practica2\IG2App\Avion.h(52,22): warning C4305: 'inicializando': truncamiento de 'int' a 'const bool'
 U:\UCM_Repos\IG\Practica2\IG2App\Sinbad.h(66,22): warning C4305: 'inicializando': truncamiento de 'int' a 'const bool'
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(218,58): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(300,67): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(306,48): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(307,70): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(311,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(319,64): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(326,45): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(327,67): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(332,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(409,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(414,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(427,70): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(427,47): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(427,24): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(495,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
-U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(500,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(220,58): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(302,67): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(308,48): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(309,70): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(313,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(321,64): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(328,45): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(329,67): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(334,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(412,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(417,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(430,70): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(430,47): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(430,24): warning C4244: 'argumento': conversión de 'int' a 'const Ogre::Real'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(506,62): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
+U:\UCM_Repos\IG\Practica2\IG2App\IG2App.cpp(511,59): warning C4244: 'argumento': conversión de 'const float' a 'int'; posible pérdida de datos
   Generando código
-  2 of 979 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  1 of 979 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada

@@ -201,6 +201,8 @@ void IG2App::setupScene(void)
 	camRef->setFarClipDistance(10000);
 	camRef->setAutoAspectRatio(true); //
 
+	
+
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
 	mCamNode->attachObject(camRef);
@@ -212,7 +214,7 @@ void IG2App::setupScene(void)
 	Viewport* vp = getRenderWindow()->addViewport(cam);
 	//
 	if (ENTREGA_ACTUAL == Entregas::P2_Ent)
-		// el puto espacio interestelar
+		// el espacio interestelar
 		vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 	else
 		vp->setBackgroundColour(Ogre::ColourValue(0.7, 0.8, 0.9));
@@ -374,10 +376,11 @@ void IG2App::setupScene(void)
 		Ogre::SceneNode* platAmarilla= mSM->getRootSceneNode()->createChildSceneNode();
 		platAmarilla->setPosition(-1000, 5, 1000);
 		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
-
+		//pAmarilla->setEspejo(camRef);
+		
 		// plataforma roja
 		Ogre::SceneNode* platRoja= mSM->getRootSceneNode()->createChildSceneNode();
-		platRoja->setPosition(1000, 5, -1000);
+		platRoja->setPosition(1000, 10, -1000);
 		Plano* pRoja = new Plano(platRoja, "PlataformaRoja");
 
 		// bomba
@@ -458,14 +461,22 @@ void IG2App::setupScene(void)
 		planoNode->setScale(3, 3, 3);
 		planoNode->setPosition(0, 0, 0);
 		plano = new Plano(planoNode, "RioAgua");
-		plano->setReflejo(camRef);
+		//plano->setReflejo(camRef);
 		EntidadIG::addListener(plano);
 
+		Ogre::SceneNode* esp = mSM->getRootSceneNode()->createChildSceneNode();
+		Plano* p = new Plano(esp, "RioAgua_");
+		esp->setScale(5, 5, 5);
+		esp->roll(Ogre::Degree(90.0));
+		esp->setPosition(2000, 10, 0);
+		p->setEspejo(camRef);
+		
+		
 		// plataforma amarilla
 		Ogre::SceneNode* platAmarilla = mSM->getRootSceneNode()->createChildSceneNode();
 		platAmarilla->setPosition(1000, 5, -1000);
 		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
-
+		
 		// bomba
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
 		bombaNode->setPosition(0, 10, 0);

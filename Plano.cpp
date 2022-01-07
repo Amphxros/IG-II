@@ -139,7 +139,7 @@ void Plano::setEspejo(Ogre::Camera* cam)
 		getMaterial()->
 		getTechnique(0)->
 		getPass(0)->createTextureUnitState("rttRef" + material);
-	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_REPLACE o LBO_ALPHA_BLEND tambien
+	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_adD o LBO_ALPHA_BLEND tambien
 	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 	mTU_->setProjectiveTexturing(true, cam);
 
