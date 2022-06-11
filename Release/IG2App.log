@@ -1,1 +1,14 @@
-﻿
+﻿  Plano.cpp
+D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180,58): warning C4251: 'Ogre::HardwareBuffer::mShadowBuffer': class 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::HardwareBuffer'
+D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\OGREsdk\include\OGRE\OgreHardwareBuffer.h(180): message : vea la declaración de 'std::unique_ptr<Ogre::HardwareBuffer,std::default_delete<Ogre::HardwareBuffer>>'
+D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\OGREsdk\include\OGRE\OgreTimer.h(41,52): warning C4251: 'Ogre::Timer::start': class 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::Timer'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\chrono(609): message : vea la declaración de 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\OGREsdk\include\OGRE\OgreTextureManager.h(409,35): warning C4251: 'Ogre::TextureManager::mWarningTexture': class 'Ogre::SharedPtr<Ogre::Texture>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'Ogre::TextureManager'
+D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\OGREsdk\include\OGRE\OgrePrerequisites.h(303): message : vea la declaración de 'Ogre::SharedPtr<Ogre::Texture>'
+  Generando código
+  2 of 921 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+SDL2main.lib(SDL_windows_main.obj) : warning LNK4099: no se encontró PDB 'SDL2main.pdb' con 'SDL2main.lib(SDL_windows_main.obj)' o en 'D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\bin\SDL2main.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+  IG2App.vcxproj -> D:\Mis archivos\Mis documentos\Universidad\3-1\IG2\Prácticas\Repositorio\bin\IG2AppRelease.exe

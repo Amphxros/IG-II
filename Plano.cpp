@@ -62,10 +62,9 @@ void Plano::setReflejo(Ogre::Camera* cam) {
 	mRef_->setMaterialName(material);
 	mRefNode->attachObject(mRef_);
 
-	//creamos el plano reflrjo
+	//creamos el plano del reflejo
 	Ogre::MovablePlane* mpRef = new Ogre::MovablePlane(Ogre::Vector3::UNIT_Y, 0);
 	mRefNode->attachObject(mpRef);
-
 	cam->enableReflection(mpRef);
 	cam->enableCustomNearClipPlane(mpRef);
 
@@ -85,19 +84,15 @@ void Plano::setReflejo(Ogre::Camera* cam) {
 	vp->setClearEveryFrame(true);
 	vp->setBackgroundColour(Ogre::ColourValue::Black);
 
-
 	//asignamos la textura
 	Ogre::TextureUnitState* mTU_ = mRef_->
 		getSubEntity(0)->
 		getMaterial()->
 		getTechnique(0)->
 		getPass(0)->createTextureUnitState("rttReflejo" + material);
-	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_REPLACE o LBO_ALPHA_BLEND tambien
+	mTU_->setColourOperation(Ogre::LBO_ADD); // puede ser LBO_MODULATE, LBO_REPLACE o LBO_ALPHA_BLEND tambien
 	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 	mTU_->setProjectiveTexturing(true, cam);
-
-
-
 }
 
 void Plano::setEspejo(Ogre::Camera* cam)
@@ -143,9 +138,7 @@ void Plano::setEspejo(Ogre::Camera* cam)
 		getMaterial()->
 		getTechnique(0)->
 		getPass(0)->createTextureUnitState("rttRef" + material); //nombre igual al rttRef
-	mTU_->setColourOperation(Ogre::LBO_ADD); //puede ser LBO_adD o LBO_ALPHA_BLEND tambien
+	mTU_->setColourOperation(Ogre::LBO_ADD); // puede ser LBO_MODULATE, LBO_REPLACE o LBO_ALPHA_BLEND tambien
 	mTU_->setTextureAddressingMode(Ogre::TextureUnitState::TAM_CLAMP);
 	mTU_->setProjectiveTexturing(true, cam);
-
-
 }

@@ -9,6 +9,7 @@
 #include "Plano.h"
 #include <OGRE/OgreBillboardSet.h>
 #include <OGRE/OgreBillboard.h>
+
 using namespace Ogre;
 
 enum Entregas {
@@ -67,7 +68,6 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 		break;
 
 	case SDLK_t:
-		
 		break;
 	}
 	// evento pasa al molino
@@ -201,8 +201,6 @@ void IG2App::setupScene(void)
 	camRef->setFarClipDistance(10000);
 	camRef->setAutoAspectRatio(true); //
 
-	
-
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
 	mCamNode->attachObject(camRef);
@@ -244,7 +242,6 @@ void IG2App::setupScene(void)
 		mLightNode->attachObject(luz);
 		mLightNode->setPosition(0, 100, 1000);
 		mLightNode->setDirection(Ogre::Vector3(-1, 1, -1));  //vec3.normalise();
-
 
 		Light* luz2 = mSM->createLight("Luz2");
 		luz2->setType(Ogre::Light::LT_DIRECTIONAL);
@@ -456,14 +453,15 @@ void IG2App::setupScene(void)
 			100
 		);
 
-		// río -> plano con textura 
+		// río con reflejo -> plano con textura 
 		planoNode = mSM->getRootSceneNode()->createChildSceneNode();
 		planoNode->setScale(3, 3, 3);
 		planoNode->setPosition(0, 0, 0);
 		plano = new Plano(planoNode, "RioAgua");
-		//plano->setReflejo(camRef);
+		plano->setReflejo(camRef); // /
 		EntidadIG::addListener(plano);
-
+		
+		// espejo
 		Ogre::SceneNode* esp = mSM->getRootSceneNode()->createChildSceneNode();
 		Plano* p = new Plano(esp, "espejo");
 		esp->setScale(5, 5, 5);
@@ -471,16 +469,10 @@ void IG2App::setupScene(void)
 		esp->setPosition(2000, 10, 0);
 		p->setEspejo(camRef);
 		
-		
 		// plataforma amarilla
 		Ogre::SceneNode* platAmarilla = mSM->getRootSceneNode()->createChildSceneNode();
 		platAmarilla->setPosition(1000, 5, -1000);
 		Plano* pAmarilla = new Plano(platAmarilla, "PlataformaAmarilla");
-		
-		// plataforma roja
-		Ogre::SceneNode* platRoja = mSM->getRootSceneNode()->createChildSceneNode();
-		platRoja->setPosition(-1000, 5, 1000);
-		Plano* pRoja = new Plano(platRoja, "PlataformaRoja");
 		
 		// bomba
 		bombaNode = mSM->getRootSceneNode()->createChildSceneNode();
